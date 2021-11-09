@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "392540845943",
+    "project_id": "transcribe-brintec",
+    "storage_bucket": "transcribe-brintec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392540845943:android:df7e59f8c9f481f5cb1372",
+        "android_client_info": {
+          "package_name": "brintec.transcribe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392540845943-352s4625d8t7iel8orei3h33ic4ool50.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "brintec.transcribe",
+            "certificate_hash": "35898efbfbfa958a56085cceb57d93a0e8bd4cf7"
+          }
+        },
+        {
+          "client_id": "392540845943-sk97gggce1fjo3b4d6824014ge40l5e6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABphZNZn0nLFiskz0fuWRnkP9Ye4Z9oTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392540845943-sk97gggce1fjo3b4d6824014ge40l5e6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

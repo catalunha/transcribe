@@ -23,13 +23,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dictation',
+      title: 'Transcribe',
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
       scrollBehavior: MyCustomScrollBehavior(),
       home: MyHomePage(
-          title: 'Dictation', frase: 'The three has tree branches .'),
+          title: 'Transcribe', frase: 'The three has tree branches .'),
     );
   }
 }

@@ -106,45 +106,45 @@ class _PlayerWidgetState extends State<PlayerWidget> {
             // ),
           ],
         ),
-        // Column(
-        //   mainAxisSize: MainAxisSize.min,
-        //   children: [
-        //     Padding(
-        //       padding: const EdgeInsets.all(12.0),
-        //       child: Stack(
-        //         children: [
-        //           Slider(
-        //             onChanged: (v) {
-        //               final duration = _duration;
-        //               if (duration == null) {
-        //                 return;
-        //               }
-        //               final Position = v * duration.inMilliseconds;
-        //               _audioPlayer
-        //                   .seek(Duration(milliseconds: Position.round()));
-        //             },
-        //             value: (_position != null &&
-        //                     _duration != null &&
-        //                     _position!.inMilliseconds > 0 &&
-        //                     _position!.inMilliseconds <
-        //                         _duration!.inMilliseconds)
-        //                 ? _position!.inMilliseconds / _duration!.inMilliseconds
-        //                 : 0.0,
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //     Text(
-        //       _position != null
-        //           ? '$_positionText / $_durationText'
-        //           : _duration != null
-        //               ? _durationText
-        //               : '',
-        //       style: const TextStyle(fontSize: 24.0),
-        //     ),
-        //   ],
-        // ),
-        // Text('State: $_audioPlayerState'),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Stack(
+                children: [
+                  Slider(
+                    onChanged: (v) {
+                      final duration = _duration;
+                      if (duration == null) {
+                        return;
+                      }
+                      final Position = v * duration.inMilliseconds;
+                      _audioPlayer
+                          .seek(Duration(milliseconds: Position.round()));
+                    },
+                    value: (_position != null &&
+                            _duration != null &&
+                            _position!.inMilliseconds > 0 &&
+                            _position!.inMilliseconds <
+                                _duration!.inMilliseconds)
+                        ? _position!.inMilliseconds / _duration!.inMilliseconds
+                        : 0.0,
+                  ),
+                ],
+              ),
+            ),
+            Text(
+              _position != null
+                  ? '$_positionText / $_durationText'
+                  : _duration != null
+                      ? _durationText
+                      : '',
+              style: const TextStyle(fontSize: 24.0),
+            ),
+          ],
+        ),
+        Text('State: $_audioPlayerState'),
       ],
     );
   }
