@@ -5,11 +5,11 @@ import 'package:audioplayers/notifications.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class PlayerWidget extends StatefulWidget {
+class PlayerAudioWidget extends StatefulWidget {
   final String url;
   final PlayerMode mode;
 
-  const PlayerWidget({
+  const PlayerAudioWidget({
     Key? key,
     required this.url,
     this.mode = PlayerMode.MEDIA_PLAYER,
@@ -17,11 +17,11 @@ class PlayerWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _PlayerWidgetState(url, mode);
+    return _PlayerAudioWidgetState(url, mode);
   }
 }
 
-class _PlayerWidgetState extends State<PlayerWidget> {
+class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
   String url;
   PlayerMode mode;
 
@@ -47,7 +47,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
   // bool get _isPlayingThroughEarpiece =>
   //     _playingRouteState == PlayingRoute.EARPIECE;
 
-  _PlayerWidgetState(this.url, this.mode);
+  _PlayerAudioWidgetState(this.url, this.mode);
 
   @override
   void initState() {

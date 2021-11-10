@@ -1,51 +1,53 @@
-//User
-class UserModel {
-  late String uid;
-  late String email;
-  late String? photoURL;
-  late String? displayName;
-  late bool isActive;
-  late bool accessType; // student,teacher,admin
-}
+// //User
+// class UserModel {
+//   late String uid;
+//   late String email;
+//   late String? photoURL;
+//   late String? displayName;
+//   late bool isActive;
+//   late List<String> accessType; // [teacher,student,admin]
+// }
 
-class UserRef {
-  late String id;
-  late String? photoURL;
-  late String? displayName;
-}
+// class UserRef {
+//   late String id;
+//   late String? photoURL;
+//   late String? displayName;
+// }
 
-//Phrase
-class PhraseModel {
-  late UserRef userRef;
-  late String phrase;
-  late List<String> phraseList;
-  late String phraseAudio;
-  late String? phraseImage;
-  late List<String>? phraseListImage;
-  late String group;
-  late bool isArchived;
-  late bool isDeleted;
-  late bool showPhraseImage;
-  late bool showPhraseListImage;
-}
+// //team
+// class TeamModel {
+//   late UserRef teacher;
+//   late String name;
+//   late List<String> userList; //[userId]
+//   late Map<String, UserRef> userMap; //<userId,UserRef>
+// }
 
-class PhraseRef {
-  late String id;
-  late List<String> phraseList;
-}
+// //Phrase
+// class PhraseModel {
+//   late UserRef teacher;
+//   late List<String> phraseList;
+//   late String group;
+//   late String phraseAudio;
+//   late String? phraseImage;
+//   late bool? showPhraseImage;
+//   late List<String>? phraseListImage;
+//   late bool? showPhraseListImage;
+//   late bool isArchived;
+//   late bool isDeleted;
+// }
 
-//Transcription
-class TranscriptionModel {
-  late UserRef userRef;
-  late UserRef teacherRef;
-  late PhraseRef phraseRef;
-  late String phraseWritten;
-  late List<String> phraseOrdered;
-}
+// //Task
+// class TaskModel {
+//   late String group;
+//   late PhraseModel phrase;
+//   late TeamModel team;
+//   late Map<String, Transcription>? transcriptionMap; //<userId,Transcription
+//   late bool isArchivedByTeacher;
+//   late bool isArchivedByStudent;
+//   late bool isDeleted;
+// }
 
-//Task
-class TaskModel {
-  late UserRef teacherRef;
-  late PhraseRef phraseRef;
-  late List<UserRef> user;
-}
+// class Transcription {
+//   late String phraseWritten;
+//   late List<String> phraseOrdered;
+// }

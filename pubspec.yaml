@@ -27,6 +27,7 @@ dependencies:
   audioplayers: ^0.20.1
   # outros pacotes
   uuid: ^3.0.5
+  themed: ^2.3.0
 
 dev_dependencies:
   flutter_test:
