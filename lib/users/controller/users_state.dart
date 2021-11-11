@@ -4,16 +4,13 @@ import 'package:transcribe/user/controller/user_model.dart';
 class UsersState {
   final UserModel? usersCurrent;
   final List<UserModel>? usersList;
-  final int? countPhrases;
   UsersState({
     this.usersCurrent,
     this.usersList,
-    this.countPhrases,
   });
   factory UsersState.initialState() => UsersState(
         usersCurrent: null,
         usersList: [],
-        countPhrases: null,
       );
   UsersState copyWith({
     UserModel? usersCurrent,
@@ -25,7 +22,6 @@ class UsersState {
       usersCurrent:
           usersCurrentSetNull ? null : usersCurrent ?? this.usersCurrent,
       usersList: usersList ?? this.usersList,
-      countPhrases: countPhrases ?? this.countPhrases,
     );
   }
 
@@ -39,11 +35,9 @@ class UsersState {
 
     return other is UsersState &&
         other.usersCurrent == usersCurrent &&
-        other.countPhrases == countPhrases &&
         listEquals(other.usersList, usersList);
   }
 
   @override
-  int get hashCode =>
-      countPhrases.hashCode ^ usersCurrent.hashCode ^ usersList.hashCode;
+  int get hashCode => usersCurrent.hashCode ^ usersList.hashCode;
 }

@@ -99,6 +99,9 @@ class UserModel {
   }
 }
 
+/// [id]
+/// [photoURL]
+/// [displayName]
 class UserRef {
   final String id;
   final String? photoURL;

@@ -1,6 +1,7 @@
 import 'package:async_redux/async_redux.dart';
 
 import 'phrase/controller/phrase_state.dart';
+import 'team/controller/team_state.dart';
 import 'user/controller/user_state.dart';
 import 'users/controller/users_state.dart';
 
@@ -8,32 +9,37 @@ class AppState {
   final Wait wait;
   final UserState userState;
   final UsersState usersState;
+  final TeamState teamState;
   final PhraseState phraseState;
 
   AppState({
     required this.wait,
     required this.userState,
-    required this.phraseState,
     required this.usersState,
+    required this.teamState,
+    required this.phraseState,
   });
 
   static AppState initialState() => AppState(
         wait: Wait(),
         userState: UserState.initialState(),
-        phraseState: PhraseState.initialState(),
         usersState: UsersState.initialState(),
+        teamState: TeamState.initialState(),
+        phraseState: PhraseState.initialState(),
       );
   AppState copyWith({
     Wait? wait,
     UserState? userState,
-    PhraseState? phraseState,
     UsersState? usersState,
+    TeamState? teamState,
+    PhraseState? phraseState,
   }) {
     return AppState(
       wait: wait ?? this.wait,
       userState: userState ?? this.userState,
-      phraseState: phraseState ?? this.phraseState,
       usersState: usersState ?? this.usersState,
+      teamState: teamState ?? this.teamState,
+      phraseState: phraseState ?? this.phraseState,
     );
   }
 
@@ -43,6 +49,7 @@ class AppState {
 
     return other is AppState &&
         other.phraseState == phraseState &&
+        other.teamState == teamState &&
         other.usersState == usersState &&
         other.userState == userState &&
         other.wait == wait;
@@ -50,9 +57,10 @@ class AppState {
 
   @override
   int get hashCode {
-    return phraseState.hashCode ^
+    return userState.hashCode ^
         usersState.hashCode ^
-        userState.hashCode ^
+        teamState.hashCode ^
+        phraseState.hashCode ^
         wait.hashCode;
   }
 }

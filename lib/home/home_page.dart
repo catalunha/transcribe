@@ -27,14 +27,19 @@ class HomePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: const [
+          children: [
             Card(
               child: ListTile(
-                leading: Icon(Icons.people_alt),
-                title: Text('Create team'),
-              ),
+                  leading: const Icon(Icons.people_alt),
+                  title: const Text('Create team'),
+                  onTap: () async {
+                    Navigator.pushNamed(
+                      context,
+                      '/team_list',
+                    );
+                  }),
             ),
-            Card(
+            const Card(
               child: ListTile(
                 leading: Icon(Icons.text_fields_rounded),
                 title: Text('Create phrase'),
