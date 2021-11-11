@@ -5,126 +5,95 @@ import 'package:flutter/foundation.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 class PhraseModel {
-  static const String collection = 'phrases';
-
+  static const String collection = 'phrase';
   final String id;
-  final UserRef userRef;
-  final String phrase;
-  List<String> phraseList;
 
-  final Map<String, Classification> classifications;
-  final List<String>? allCategoryList;
-
-  final List<String> classOrder;
-  final String? font;
-  final String? diagramUrl;
-  final String? observer;
+  final UserRef teacher;
+  final String group;
+  final List<String> phraseList;
+  final String phraseAudio;
 
   final bool isArchived;
   final bool isDeleted;
-  final bool isPublic;
+
+  final String? phraseImage;
+  final bool? showPhraseImage;
+  final List<String>? phraseListImage;
+  final bool? showPhraseListImage;
   PhraseModel(
     this.id, {
-    required this.userRef,
-    required this.phrase,
+    required this.teacher,
+    required this.group,
     required this.phraseList,
-    required this.classifications,
-    required this.classOrder,
+    required this.phraseAudio,
     this.isArchived = false,
     this.isDeleted = false,
-    this.isPublic = false,
-    this.allCategoryList,
-    this.font,
-    this.diagramUrl,
-    this.observer,
+    this.phraseImage,
+    this.showPhraseImage,
+    this.phraseListImage,
+    this.showPhraseListImage,
   });
 
   PhraseModel copyWith({
-    UserRef? userRef,
-    String? phrase,
+    UserRef? teacher,
+    String? group,
     List<String>? phraseList,
-    String? font,
-    String? description,
+    String? phraseAudio,
     bool? isArchived,
-    bool? isPublic,
-    String? observer,
-    bool observerSetNull = false,
-    Map<String, Classification>? classifications,
-    List<String>? allCategoryList,
-    List<String>? classOrder,
     bool? isDeleted,
+    String? phraseImage,
+    List<String>? phraseListImage,
+    bool? showPhraseImage,
+    bool? showPhraseListImage,
   }) {
     return PhraseModel(
       id,
-      userRef: userRef ?? this.userRef,
-      phrase: phrase ?? this.phrase,
+      teacher: teacher ?? this.teacher,
+      group: group ?? this.group,
       phraseList: phraseList ?? this.phraseList,
-      font: font ?? this.font,
-      diagramUrl: description ?? this.diagramUrl,
+      phraseAudio: phraseAudio ?? this.phraseAudio,
       isArchived: isArchived ?? this.isArchived,
-      observer: observerSetNull ? null : observer ?? this.observer,
-      classifications: classifications ?? this.classifications,
-      allCategoryList: allCategoryList ?? this.allCategoryList,
-      classOrder: classOrder ?? this.classOrder,
       isDeleted: isDeleted ?? this.isDeleted,
-      isPublic: isPublic ?? this.isPublic,
+      phraseImage: phraseImage ?? this.phraseImage,
+      showPhraseImage: showPhraseImage ?? this.showPhraseImage,
+      phraseListImage: phraseListImage ?? this.phraseListImage,
+      showPhraseListImage: showPhraseListImage ?? this.showPhraseListImage,
     );
   }
 
   Map<String, dynamic> toMap() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['userRef'] = userRef.toMap();
-    data['phrase'] = phrase;
-    data['phraseList'] = phraseList.cast<dynamic>();
-
-    data["classifications"] = <String, dynamic>{};
-    for (var item in classifications.entries) {
-      data["classifications"][item.key] = item.value.toMap();
-    }
-    data['classOrder'] = classOrder.cast<dynamic>();
-    data['isArchived'] = isArchived;
-    data['isDeleted'] = isDeleted;
-    data['isPublic'] = isPublic;
-    if (font != null) data['font'] = font;
-    if (diagramUrl != null) data['diagramUrl'] = diagramUrl;
-    data['observer'] = observer;
-    return data;
+    return {
+      'teacher': teacher.toMap(),
+      'group': group,
+      'phraseList': phraseList.cast<String>(),
+      'phraseAudio': phraseAudio,
+      'isArchived': isArchived,
+      'isDeleted': isDeleted,
+      if (phraseImage != null) 'phraseImage': phraseImage,
+      if (showPhraseImage != null) 'showPhraseImage': showPhraseImage,
+      if (phraseListImage != null)
+        'phraseListImage': phraseListImage!.cast<String>(),
+      if (showPhraseListImage != null)
+        'showPhraseListImage': showPhraseListImage,
+    };
   }
 
   factory PhraseModel.fromMap(String id, Map<String, dynamic> map) {
-    Map<String, Classification>? _classifications = <String, Classification>{};
-    if (map["classifications"] != null && map["classifications"] is Map) {
-      _classifications = <String, Classification>{};
-      for (var item in map["classifications"].entries) {
-        _classifications[item.key] = Classification.fromMap(item.value);
-      }
-    }
-
-    List<String> _classOrder = [];
-    if (map["classOrder"] == null) {
-      for (var item in map["classifications"].entries) {
-        _classOrder.add(item.key);
-      }
-    } else {
-      _classOrder = map['classOrder'].cast<String>();
-    }
-    var temp = PhraseModel(
+    return PhraseModel(
       id,
-      userRef: UserRef.fromMap(map['userRef']),
-      phrase: map['phrase'],
-      classifications: _classifications,
-      classOrder: _classOrder,
-      phraseList: map['phraseList'] == null
-          ? setPhraseList(map['phrase'])
-          : map['phraseList'].cast<String>(),
+      teacher: UserRef.fromMap(map['teacher']),
+      group: map['group'],
+      phraseList: List<String>.from(map['phraseList']),
+      phraseAudio: map['phraseAudio'],
       isArchived: map['isArchived'],
       isDeleted: map['isDeleted'],
-      isPublic: map['isPublic'] ?? false,
-      font: map['font'],
-      diagramUrl: map['diagramUrl'],
-      observer: map['observer'],
+      phraseImage: map['phraseImage'],
+      showPhraseImage: map['showPhraseImage'],
+      phraseListImage: map['phraseListImage'] != null
+          ? map['phraseListImage'].cast<String>()
+          : null,
+      showPhraseListImage: map['showPhraseListImage'],
     );
-    return temp;
   }
 
   String toJson() => json.encode(toMap());
@@ -132,40 +101,9 @@ class PhraseModel {
   factory PhraseModel.fromJson(String id, String source) =>
       PhraseModel.fromMap(id, json.decode(source));
 
-  static List<String> setPhraseList(String phrase) {
-    String word = '';
-    List<String> _phraseList = [];
-    for (var i = 0; i < phrase.length; i++) {
-      if (phrase[i].contains(RegExp(
-          r"[A-Za-záàãâäÁÀÃÂÄéèêëÉÈÊËíìîïÍÌÎÏóòõôöÓÒÕÖÔúùûüÚÙÛÜçÇñÑ0123456789]"))) {
-        word += phrase[i];
-      } else {
-        if (word.isNotEmpty) {
-          _phraseList.add(word);
-          word = '';
-        }
-        _phraseList.add(phrase[i]);
-      }
-    }
-    if (word.isNotEmpty) {
-      _phraseList.add(word);
-      word = '';
-    }
-    return _phraseList;
-  }
-
-  static List<String> setAllCategoryList(
-      Map<String, Classification> classifications) {
-    List<String> _allCategoryList = [];
-    for (var item in classifications.entries) {
-      _allCategoryList.addAll(item.value.categoryIdList);
-    }
-    return _allCategoryList;
-  }
-
   @override
   String toString() {
-    return 'PhraseModel( phrase: $phrase, font: $font, description: $diagramUrl, isArchived: $isArchived, observer: $observer,  isDeleted: $isDeleted)';
+    return 'PhraseModel(teacher: $teacher, group: $group, phraseList: $phraseList, phraseAudio: $phraseAudio, isArchived: $isArchived, isDeleted: $isDeleted, phraseImage: $phraseImage, showPhraseImage: $showPhraseImage, phraseListImage: $phraseListImage, showPhraseListImage: $showPhraseListImage)';
   }
 
   @override
@@ -173,85 +111,29 @@ class PhraseModel {
     if (identical(this, other)) return true;
 
     return other is PhraseModel &&
-        other.userRef == userRef &&
-        other.phrase == phrase &&
-        other.phraseList == phraseList &&
-        other.font == font &&
-        other.diagramUrl == diagramUrl &&
+        other.teacher == teacher &&
+        other.group == group &&
+        listEquals(other.phraseList, phraseList) &&
+        other.phraseAudio == phraseAudio &&
         other.isArchived == isArchived &&
-        other.isPublic == isPublic &&
-        other.classOrder == classOrder &&
-        other.observer == observer &&
-        mapEquals(other.classifications, classifications) &&
-        other.isDeleted == isDeleted;
+        other.isDeleted == isDeleted &&
+        other.phraseImage == phraseImage &&
+        other.showPhraseImage == showPhraseImage &&
+        listEquals(other.phraseListImage, phraseListImage) &&
+        other.showPhraseListImage == showPhraseListImage;
   }
 
   @override
   int get hashCode {
-    return userRef.hashCode ^
-        phrase.hashCode ^
+    return teacher.hashCode ^
+        group.hashCode ^
         phraseList.hashCode ^
-        font.hashCode ^
-        diagramUrl.hashCode ^
+        phraseAudio.hashCode ^
         isArchived.hashCode ^
-        isPublic.hashCode ^
-        observer.hashCode ^
-        classOrder.hashCode ^
-        classifications.hashCode ^
-        isDeleted.hashCode;
+        isDeleted.hashCode ^
+        phraseImage.hashCode ^
+        showPhraseImage.hashCode ^
+        phraseListImage.hashCode ^
+        showPhraseListImage.hashCode;
   }
-}
-
-class Classification {
-  final List<int> posPhraseList;
-  final List<String> categoryIdList;
-  Classification({
-    required this.posPhraseList,
-    required this.categoryIdList,
-  });
-
-  Classification copyWith({
-    List<int>? posPhraseList,
-    List<String>? categoryIdList,
-  }) {
-    return Classification(
-      posPhraseList: posPhraseList ?? this.posPhraseList,
-      categoryIdList: categoryIdList ?? this.categoryIdList,
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      'posPhraseList': posPhraseList,
-      'categoryIdList': categoryIdList,
-    };
-  }
-
-  factory Classification.fromMap(Map<String, dynamic> map) {
-    return Classification(
-      posPhraseList: List<int>.from(map['posPhraseList']),
-      categoryIdList: List<String>.from(map['categoryIdList']),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory Classification.fromJson(String source) =>
-      Classification.fromMap(json.decode(source));
-
-  @override
-  String toString() =>
-      'Classification(posPhraseList: $posPhraseList, categoryIdList: $categoryIdList)';
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Classification &&
-        listEquals(other.posPhraseList, posPhraseList) &&
-        listEquals(other.categoryIdList, categoryIdList);
-  }
-
-  @override
-  int get hashCode => posPhraseList.hashCode ^ categoryIdList.hashCode;
 }

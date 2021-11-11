@@ -41,10 +41,16 @@ class HomePage extends StatelessWidget {
                   },
                 ),
               ),
-              const Card(
+              Card(
                 child: ListTile(
                   leading: Icon(Icons.text_fields_rounded),
                   title: Text('Create a sentence'),
+                  onTap: () async {
+                    Navigator.pushNamed(
+                      context,
+                      '/phrase_list',
+                    );
+                  },
                 ),
               ),
               Card(

@@ -35,13 +35,13 @@ class PhraseModel {
   late bool? showPhraseImage;
   late List<String>? phraseListImage;
   late bool? showPhraseListImage;
-  late bool isWritten;
 }
 
 //Task
 class TaskModel {
   late String group;
   late PhraseModel phrase;
+  late bool isWritten;
   late TeamModel team;
   late Map<String, Transcription>? transcriptionMap; //<userId,Transcription
   late bool isArchivedByTeacher;

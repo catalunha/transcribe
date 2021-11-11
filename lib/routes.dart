@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:transcribe/phrase/controller/phrase_addedit_connector.dart';
 
 import 'home/controller/home_page_connector.dart';
 import 'home/information.dart';
 import 'login/controller/login_connector.dart';
 import 'login/controller/splash_connector.dart';
+import 'phrase/controller/phrase_list_connector.dart';
 import 'team/controller/team_addedit_connector.dart';
 import 'team/controller/team_list_connector.dart';
 import 'users/controller/users_list_connector.dart';
@@ -21,5 +23,10 @@ class Routes {
         ),
     //Users
     '/users_list': (BuildContext context) => const UsersListConnector(),
+    //phrase
+    '/phrase_list': (BuildContext context) => const PhraseListConnector(),
+    '/phrase_addOrEdit': (BuildContext context) => PhraseAddEditConnector(
+          addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
+        ),
   };
 }

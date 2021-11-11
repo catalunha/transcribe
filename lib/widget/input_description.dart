@@ -41,12 +41,12 @@ class InputDescription extends StatelessWidget {
                   ? Text(
                       ' *',
                       style: TextStyle(
-                          // color: ThemeApp.error,
-                          ),
+                        color: Colors.red,
+                      ),
                     )
                   : Container(),
             ]),
-            // color: ThemeApp.backgroundLight,
+            color: Colors.green.shade900,
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -55,13 +55,13 @@ class InputDescription extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Icon(
                   icon,
-                  // color: ThemeApp.secondary,
+                  color: Colors.blue,
                 ),
               ),
               Container(
                 width: 1,
                 height: 48,
-                // color: ThemeApp.backgroundLight,
+                color: Colors.blue,
               ),
               SizedBox(
                 width: 10,
@@ -75,7 +75,7 @@ class InputDescription extends StatelessWidget {
                   onChanged: onChanged,
                   // style: AppTextStyles.input,
                   keyboardType: TextInputType.multiline,
-                  maxLines: 5,
+                  maxLines: 10,
                   decoration: InputDecoration(
                     // labelStyle: AppTextStyles.input,
                     border: InputBorder.none,

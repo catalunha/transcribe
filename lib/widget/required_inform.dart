@@ -19,7 +19,7 @@ class RequiredInForm extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                'Campos com ',
+                'This data ',
                 style: TextStyle(
                   color: Colors.blue,
                 ),
@@ -31,7 +31,7 @@ class RequiredInForm extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              Text(' tem preenchimento obrigatório.',
+              Text(' is required.',
                   style: TextStyle(
                     color: Colors.blue,
                   )),
