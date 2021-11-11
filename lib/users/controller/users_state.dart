@@ -2,42 +2,42 @@ import 'package:flutter/foundation.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 class UsersState {
-  final UserModel? usersCurrent;
-  final List<UserModel>? usersList;
+  final UserRef? userRefCurrent;
+  final List<UserRef>? userRefList;
   UsersState({
-    this.usersCurrent,
-    this.usersList,
+    this.userRefCurrent,
+    this.userRefList,
   });
   factory UsersState.initialState() => UsersState(
-        usersCurrent: null,
-        usersList: [],
+        userRefCurrent: null,
+        userRefList: [],
       );
   UsersState copyWith({
-    UserModel? usersCurrent,
-    bool usersCurrentSetNull = false,
-    List<UserModel>? usersList,
+    UserRef? userRefCurrent,
+    bool userRefCurrentSetNull = false,
+    List<UserRef>? userRefList,
     int? countPhrases,
   }) {
     return UsersState(
-      usersCurrent:
-          usersCurrentSetNull ? null : usersCurrent ?? this.usersCurrent,
-      usersList: usersList ?? this.usersList,
+      userRefCurrent:
+          userRefCurrentSetNull ? null : userRefCurrent ?? this.userRefCurrent,
+      userRefList: userRefList ?? this.userRefList,
     );
   }
 
   @override
   String toString() =>
-      'UsersState(usersCurrent: $usersCurrent, usersList: $usersList)';
+      'UsersState(userRefCurrent: $userRefCurrent, userRefList: $userRefList)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is UsersState &&
-        other.usersCurrent == usersCurrent &&
-        listEquals(other.usersList, usersList);
+        other.userRefCurrent == userRefCurrent &&
+        listEquals(other.userRefList, userRefList);
   }
 
   @override
-  int get hashCode => usersCurrent.hashCode ^ usersList.hashCode;
+  int get hashCode => userRefCurrent.hashCode ^ userRefList.hashCode;
 }

@@ -1,3 +1,10 @@
+# Compilar e deploy
+flutter build web --web-renderer canvaskit
+
+firebase deploy --only hosting:transcribing
+
+
+
 # keytool
 catalunha@pop-os:~/myapps/transcribe$ keytool -list -v -alias <your-key-name> -keystore <path-to-production-keystore>
 bash: syntax error near unexpected token `newline'
@@ -24,7 +31,3 @@ Warning:
 The certificate uses the SHA1withRSA signature algorithm which is considered a security risk. This algorithm will be disabled in a future update.
 catalunha@pop-os:~/myapps/transcribe$ 
 
-# Compilar e deploy
-flutter build web --web-renderer canvaskit
-
-firebase deploy --only hosting:transcribing

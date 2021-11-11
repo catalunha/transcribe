@@ -10,7 +10,6 @@ class TeamModel {
   final String id;
   final UserRef teacher;
   final String name;
-  final List<String> userList; //[userId]
   final Map<String, UserRef> userMap; //<userId,UserRef>
   final bool isArchived;
   final bool isDeleted;
@@ -18,7 +17,7 @@ class TeamModel {
     this.id, {
     required this.teacher,
     required this.name,
-    required this.userList,
+    // required this.userList,
     required this.userMap,
     this.isArchived = false,
     this.isDeleted = false,
@@ -27,7 +26,7 @@ class TeamModel {
   TeamModel copyWith({
     UserRef? teacher,
     String? name,
-    List<String>? userList,
+    // List<String>? userList,
     Map<String, UserRef>? userMap,
     bool? isArchived,
     bool? isDeleted,
@@ -36,7 +35,7 @@ class TeamModel {
       id,
       teacher: teacher ?? this.teacher,
       name: name ?? this.name,
-      userList: userList ?? this.userList,
+      // userList: userList ?? this.userList,
       userMap: userMap ?? this.userMap,
       isArchived: isArchived ?? this.isArchived,
       isDeleted: isDeleted ?? this.isDeleted,
@@ -44,23 +43,40 @@ class TeamModel {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'teacher': teacher.toMap(),
-      'name': name,
-      'userList': userMap.keys.toList(),
-      'userMap': userMap,
-      'isArchived': isArchived,
-      'isDeleted': isDeleted,
-    };
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['teacher'] = teacher.toMap();
+    data['name'] = name;
+    data['isArchived'] = isArchived;
+    data['isDeleted'] = isDeleted;
+    data['userList'] = userMap.keys.toList();
+    data["userMap"] = <String, dynamic>{};
+    for (var item in userMap.entries) {
+      data["userMap"][item.key] = item.value.toMap();
+    }
+    return data;
+
+    // return {
+    //   'teacher': teacher.toMap(),
+    //   'name': name,
+    //   'userList': userMap.keys.toList(),
+    //   'userMap': userMap.cast(<{}>)
+    //   'isArchived': isArchived,
+    //   'isDeleted': isDeleted,
+    // };
   }
 
   factory TeamModel.fromMap(String id, Map<String, dynamic> map) {
+    Map<String, UserRef>? _userMap = <String, UserRef>{};
+    if (map["userMap"] != null && map["userMap"] is Map) {
+      for (var item in map["userMap"].entries) {
+        _userMap[item.key] = UserRef.fromMap(item.value);
+      }
+    }
     return TeamModel(
       id,
       teacher: UserRef.fromMap(map['teacher']),
       name: map['name'],
-      userList: Map<String, UserRef>.from(map['userMap']).keys.toList(),
-      userMap: Map<String, UserRef>.from(map['userMap']),
+      userMap: _userMap,
       isArchived: map['isArchived'],
       isDeleted: map['isDeleted'],
     );
@@ -73,7 +89,7 @@ class TeamModel {
 
   @override
   String toString() {
-    return 'TeamModel(teacher: $teacher, name: $name, userList: $userList, userMap: $userMap)';
+    return 'TeamModel(teacher: $teacher, name: $name, userMap: $userMap)';
   }
 
   @override
@@ -85,7 +101,7 @@ class TeamModel {
         other.name == name &&
         other.isArchived == isArchived &&
         other.isDeleted == isDeleted &&
-        listEquals(other.userList, userList) &&
+        // listEquals(other.userList, userList) &&
         mapEquals(other.userMap, userMap);
   }
 
@@ -95,7 +111,7 @@ class TeamModel {
         name.hashCode ^
         isArchived.hashCode ^
         isDeleted.hashCode ^
-        userList.hashCode ^
+        // userList.hashCode ^
         userMap.hashCode;
   }
 }

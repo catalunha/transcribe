@@ -34,10 +34,11 @@ class TeamList extends StatelessWidget {
         tooltip: 'Create new team.',
         child: Icon(AppIconData.addInCloud),
         onPressed: () {
-          // showDialog(
-          //     context: context,
-          //     builder: (BuildContext context) =>
-          //         TeamAddEditPageConnector(addOrEditId: ''));
+          Navigator.pushNamed(
+            context,
+            '/team_addOrEdit',
+            arguments: '',
+          );
         },
       ),
     );
@@ -56,10 +57,11 @@ class TeamList extends StatelessWidget {
               tooltip: 'Edit this team.',
               icon: Icon(AppIconData.edit),
               onPressed: () {
-                // showDialog(
-                //     context: context,
-                //     builder: (BuildContext context) =>
-                //         TeamAddEditPageConnector(addOrEditId: team.id));
+                Navigator.pushNamed(
+                  context,
+                  '/team_addOrEdit',
+                  arguments: team.id,
+                );
               },
             ),
           ],

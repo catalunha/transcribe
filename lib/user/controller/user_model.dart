@@ -104,21 +104,25 @@ class UserModel {
 /// [displayName]
 class UserRef {
   final String id;
+  final String email;
   final String? photoURL;
   final String? displayName;
   UserRef({
     required this.id,
+    required this.email,
     this.photoURL,
     this.displayName,
   });
 
   UserRef copyWith({
     String? id,
+    String? email,
     String? photoURL,
     String? displayName,
   }) {
     return UserRef(
       id: id ?? this.id,
+      email: email ?? this.email,
       photoURL: photoURL ?? this.photoURL,
       displayName: displayName ?? this.displayName,
     );
@@ -127,6 +131,7 @@ class UserRef {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'email': email,
       'photoURL': photoURL,
       'displayName': displayName,
     };
@@ -135,6 +140,7 @@ class UserRef {
   factory UserRef.fromMap(Map<String, dynamic> map) {
     return UserRef(
       id: map['id'],
+      email: map['email'],
       photoURL: map['photoURL'],
       displayName: map['displayName'],
     );
@@ -155,10 +161,12 @@ class UserRef {
 
     return other is UserRef &&
         other.id == id &&
+        other.email == email &&
         other.photoURL == photoURL &&
         other.displayName == displayName;
   }
 
   @override
-  int get hashCode => id.hashCode ^ photoURL.hashCode ^ displayName.hashCode;
+  int get hashCode =>
+      id.hashCode ^ email.hashCode ^ photoURL.hashCode ^ displayName.hashCode;
 }

@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.dark,
-          primaryColor: Colors.green,
-          primarySwatch: Colors.blue,
+          primaryColor: Colors.blue,
+          primarySwatch: Colors.green,
         ),
         scrollBehavior: MyCustomScrollBehavior(),
         navigatorKey: navigatorKey,

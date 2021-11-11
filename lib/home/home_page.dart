@@ -28,33 +28,36 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Card(
-              child: ListTile(
+            if (accessType.contains('teacher')) ...[
+              Card(
+                child: ListTile(
                   leading: const Icon(Icons.people_alt),
-                  title: const Text('Create team'),
+                  title: const Text('Create a team'),
                   onTap: () async {
                     Navigator.pushNamed(
                       context,
                       '/team_list',
                     );
-                  }),
-            ),
-            const Card(
-              child: ListTile(
-                leading: Icon(Icons.text_fields_rounded),
-                title: Text('Create phrase'),
+                  },
+                ),
               ),
-            ),
-            Card(
-              child: ListTile(
-                leading: Icon(Icons.task),
-                title: Text('Create task'),
+              const Card(
+                child: ListTile(
+                  leading: Icon(Icons.text_fields_rounded),
+                  title: Text('Create a sentence'),
+                ),
               ),
-            ),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.task),
+                  title: Text('Create a task'),
+                ),
+              ),
+            ],
             Card(
               child: ListTile(
                 leading: Icon(Icons.multitrack_audio),
-                title: Text('Transcribe audio'),
+                title: Text('Transcribe an audio'),
               ),
             )
           ],

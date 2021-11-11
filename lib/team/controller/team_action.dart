@@ -56,25 +56,26 @@ class SetTeamListTeamAction extends ReduxAction<AppState> {
 }
 
 class SetTeamCurrentTeamAction extends ReduxAction<AppState> {
-  final String? id;
+  final String id;
   SetTeamCurrentTeamAction({
     required this.id,
   });
   @override
   AppState reduce() {
     TeamModel teamModel;
-    if (id != null) {
+    if (id.isNotEmpty) {
       teamModel =
           state.teamState.teamList!.firstWhere((element) => element.id == id);
     } else {
       teamModel = TeamModel('',
           teacher: UserRef.fromMap({
             'id': state.userState.userCurrent!.id,
+            'email': state.userState.userCurrent!.email,
             'photoURL': state.userState.userCurrent!.photoURL,
             'displayName': state.userState.userCurrent!.displayName
           }),
           name: '',
-          userList: <String, UserRef>{}.keys.toList(),
+          // userList: <String, UserRef>{}.keys.toList(),
           userMap: <String, UserRef>{});
     }
     return state.copyWith(
@@ -123,13 +124,39 @@ class UpdateDocTeamAction extends ReduxAction<AppState> {
     DocumentReference docRef =
         firebaseFirestore.collection(TeamModel.collection).doc(teamModel.id);
 
-    dispatch(SetTeamCurrentTeamAction(id: null));
+    dispatch(SetTeamCurrentTeamAction(id: ''));
 
     await docRef.update(teamModel.toMap());
 
     return null;
   }
 }
+
+class AddOrDeleteUserTeamAction extends ReduxAction<AppState> {
+  final bool addOrDelete;
+  final String userId;
+
+  AddOrDeleteUserTeamAction({required this.addOrDelete, required this.userId});
+  @override
+  AppState reduce() {
+    UserRef userRef = state.usersState.userRefList!
+        .firstWhere((element) => element.id == userId);
+    TeamModel teamModel = state.teamState.teamCurrent!;
+    if (addOrDelete) {
+      teamModel.userMap.addAll({userRef.id: userRef});
+    } else {
+      teamModel.userMap.remove(userRef.id);
+    }
+
+    return state.copyWith(
+      teamState: state.teamState.copyWith(
+        teamCurrent: teamModel,
+      ),
+    );
+  }
+}
+
+
 
 // class GetDocsPhraseObservedAndSetNullTeamAction extends ReduxAction<AppState> {
 //   final String teamId;

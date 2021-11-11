@@ -1,6 +1,7 @@
 // //User
 // class UserModel {
 //   late String uid;
+//   late String id;
 //   late String email;
 //   late String? photoURL;
 //   late String? displayName;
@@ -34,6 +35,7 @@
 //   late bool? showPhraseListImage;
 //   late bool isArchived;
 //   late bool isDeleted;
+//   late bool isWrittenOrOrdened;
 // }
 
 // //Task
