@@ -68,18 +68,18 @@ class _TeamAddEditState extends State<TeamAddEdit> {
                   );
                 },
               ),
-              formControllerTeam.teamModel.id.isEmpty
-                  ? Container()
-                  : InputCheckBox(
-                      title: 'Archived this team',
-                      subtitle: 'Select to archive this team.',
-                      icon: AppIconData.inbox,
-                      value: formControllerTeam.teamModel.isArchived,
-                      onChanged: (value) {
-                        formControllerTeam.onChange(isArchived: value);
-                        setState(() {});
-                      },
-                    ),
+              // formControllerTeam.teamModel.id.isEmpty
+              //     ? Container()
+              //     : InputCheckBox(
+              //         title: 'Archived this team',
+              //         subtitle: 'Select to archive this team.',
+              //         icon: AppIconData.inbox,
+              //         value: formControllerTeam.teamModel.isArchived,
+              //         onChanged: (value) {
+              //           formControllerTeam.onChange(isArchived: value);
+              //           setState(() {});
+              //         },
+              //       ),
               formControllerTeam.teamModel.id.isEmpty
                   ? Container()
                   : InputCheckBoxDelete(

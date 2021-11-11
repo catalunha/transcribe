@@ -46,13 +46,14 @@ class InputCheckBoxDelete extends StatelessWidget {
             Expanded(
               child: CheckboxListTile(
                 // activeColor: AppColors.delete,
-                // selectedTileColor: AppColors.delete,
+                checkColor: Colors.black,
+                selectedTileColor: Colors.yellow,
                 selected: value!,
                 controlAffinity: ListTileControlAffinity.leading,
                 title: value!
                     ? Text(
                         subtitle,
-                        // style: TextStyle(color: AppColors.stroke),
+                        style: TextStyle(color: Colors.black),
                       )
                     : Text(subtitle),
                 onChanged: onChanged,

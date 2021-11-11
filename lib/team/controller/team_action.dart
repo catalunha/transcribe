@@ -125,8 +125,11 @@ class UpdateDocTeamAction extends ReduxAction<AppState> {
         firebaseFirestore.collection(TeamModel.collection).doc(teamModel.id);
 
     dispatch(SetTeamCurrentTeamAction(id: ''));
-
-    await docRef.update(teamModel.toMap());
+    if (teamModel.isDeleted) {
+      await docRef.delete();
+    } else {
+      await docRef.update(teamModel.toMap());
+    }
 
     return null;
   }

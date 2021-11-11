@@ -34,18 +34,34 @@ class InputUsers extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(
+                  // IconButton(
+                  //   onPressed: () {
+                  //     search();
+                  //   },
+                  //   icon: Icon(AppIconData.search),
+                  // ),
+                  // Text(
+                  //   label,
+                  //   softWrap: true,
+                  //   style: TextStyle(
+                  //       // color: Colors.white,
+                  //       ),
+                  // ),
+                  TextButton.icon(
                     onPressed: () {
                       search();
                     },
-                    icon: Icon(AppIconData.search),
-                  ),
-                  Text(
-                    label,
-                    softWrap: true,
-                    style: TextStyle(
-                        // color: Colors.white,
-                        ),
+                    icon: Icon(
+                      AppIconData.search,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      label,
+                      softWrap: true,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                   required
                       ? Text(
