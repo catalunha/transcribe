@@ -33,7 +33,7 @@ class UsersPageVmFactory extends VmFactory<AppState, UsersListConnector> {
         userIdListInTeam: state.teamState.teamCurrent!.userMap.keys.toList(),
         userRefList: state.usersState.userRefList!,
         onAddOrDeleteUser: (bool addOrDelete, String userId) {
-          dispatch(AddOrDeleteUserTeamAction(
+          dispatch(AddOrDeleteUserInTeamUsersAction(
               addOrDelete: addOrDelete, userId: userId));
         },
       );

@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:transcribe/team/controller/team_model.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 import '../../app_state.dart';
@@ -79,6 +80,30 @@ class SetUserRefListUsersAction extends ReduxAction<AppState> {
   }
 }
 
+class AddOrDeleteUserInTeamUsersAction extends ReduxAction<AppState> {
+  final bool addOrDelete;
+  final String userId;
+
+  AddOrDeleteUserInTeamUsersAction(
+      {required this.addOrDelete, required this.userId});
+  @override
+  AppState reduce() {
+    UserRef userRef = state.usersState.userRefList!
+        .firstWhere((element) => element.id == userId);
+    TeamModel teamModel = state.teamState.teamCurrent!;
+    if (addOrDelete) {
+      teamModel.userMap.addAll({userRef.id: userRef});
+    } else {
+      teamModel.userMap.remove(userRef.id);
+    }
+
+    return state.copyWith(
+      teamState: state.teamState.copyWith(
+        teamCurrent: teamModel,
+      ),
+    );
+  }
+}
 // class SetUsersCurrentUsersAction extends ReduxAction<AppState> {
 //   final String id;
 //   SetUsersCurrentUsersAction({

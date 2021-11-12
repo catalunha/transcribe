@@ -135,21 +135,15 @@ class UpdateDocTeamAction extends ReduxAction<AppState> {
   }
 }
 
-class AddOrDeleteUserTeamAction extends ReduxAction<AppState> {
-  final bool addOrDelete;
+class DeleteUserTeamAction extends ReduxAction<AppState> {
   final String userId;
 
-  AddOrDeleteUserTeamAction({required this.addOrDelete, required this.userId});
+  DeleteUserTeamAction({required this.userId});
   @override
   AppState reduce() {
-    UserRef userRef = state.usersState.userRefList!
-        .firstWhere((element) => element.id == userId);
     TeamModel teamModel = state.teamState.teamCurrent!;
-    if (addOrDelete) {
-      teamModel.userMap.addAll({userRef.id: userRef});
-    } else {
-      teamModel.userMap.remove(userRef.id);
-    }
+
+    teamModel.userMap.remove(userId);
 
     return state.copyWith(
       teamState: state.teamState.copyWith(

@@ -42,9 +42,8 @@ class TeamAddEditFactory extends VmFactory<AppState, TeamAddEditConnector> {
             dispatch(UpdateDocTeamAction(teamModel: teamModel));
           }
         },
-        onDeleteUser: (bool addOrDelete, String userId) {
-          dispatch(AddOrDeleteUserTeamAction(
-              addOrDelete: addOrDelete, userId: userId));
+        onDeleteUser: (String userId) {
+          dispatch(DeleteUserTeamAction(userId: userId));
         },
       );
 }
@@ -52,7 +51,7 @@ class TeamAddEditFactory extends VmFactory<AppState, TeamAddEditConnector> {
 class TeamAddEditVm extends Vm {
   final FormControllerTeam formControllerTeam;
   final Function(TeamModel) onSave;
-  final Function(bool, String) onDeleteUser;
+  final Function(String) onDeleteUser;
 
   TeamAddEditVm({
     required this.formControllerTeam,

@@ -11,6 +11,8 @@ import 'task/controller/task_list_connector.dart';
 import 'team/controller/team_addedit_connector.dart';
 import 'team/controller/team_list_connector.dart';
 import 'team/team_page.dart';
+import 'transcription/controller/transcription_edit_connector.dart';
+import 'transcription/controller/transcription_list_connector.dart';
 import 'users/controller/users_list_connector.dart';
 
 class Routes {
@@ -35,6 +37,12 @@ class Routes {
     //task
     '/task_list': (BuildContext context) => const TaskListConnector(),
     '/task_addOrEdit': (BuildContext context) => TaskAddEditConnector(
+          addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
+        ),
+    //task
+    '/transcription_list': (BuildContext context) =>
+        const TranscriptionListConnector(),
+    '/transcription_edit': (BuildContext context) => TranscriptionEditConnector(
           addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
         ),
   };

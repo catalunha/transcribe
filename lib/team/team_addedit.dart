@@ -12,7 +12,7 @@ import 'controller/team_model.dart';
 class TeamAddEdit extends StatefulWidget {
   final FormControllerTeam formControllerTeam;
   final Function(TeamModel) onSave;
-  final Function(bool, String) onDeleteUser;
+  final Function(String) onDeleteUser;
 
   const TeamAddEdit({
     Key? key,
@@ -59,7 +59,7 @@ class _TeamAddEditState extends State<TeamAddEdit> {
                     widget.formControllerTeam.teamModel.userMap.values.toList(),
                 required: true,
                 onDeleteUser: (String value) {
-                  widget.onDeleteUser(false, value);
+                  widget.onDeleteUser(value);
                 },
                 search: () async {
                   Navigator.pushNamed(

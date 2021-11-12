@@ -70,6 +70,12 @@ class HomePage extends StatelessWidget {
               child: ListTile(
                 leading: Icon(Icons.multitrack_audio),
                 title: Text('Transcribe an audio'),
+                onTap: () async {
+                  Navigator.pushNamed(
+                    context,
+                    '/transcription_list',
+                  );
+                },
               ),
             )
           ],
