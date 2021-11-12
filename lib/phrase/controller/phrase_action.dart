@@ -21,8 +21,7 @@ class StreamDocsPhraseAction extends ReduxAction<AppState> {
 
     Stream<List<PhraseModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
-            .map((docSnapshot) =>
-                PhraseModel.fromMap(docSnapshot.id, docSnapshot.data()))
+            .map((docSnapshot) => PhraseModel.fromMap(docSnapshot.data()))
             .toList());
     streamList.listen((List<PhraseModel> phraseModelList) {
       dispatch(SetPhraseListPhraseAction(phraseList: phraseModelList));
@@ -74,7 +73,7 @@ class SetPhraseCurrentPhraseAction extends ReduxAction<AppState> {
       String idNew = docRef.doc().id;
       // String idNew = '';
       phraseModel = PhraseModel(
-        idNew,
+        id: idNew,
         teacher: UserRef.fromMap({
           'id': state.userState.userCurrent!.id,
           'email': state.userState.userCurrent!.email,

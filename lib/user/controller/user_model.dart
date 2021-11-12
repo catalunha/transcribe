@@ -12,8 +12,8 @@ class UserModel {
   final bool isActive;
   late List<String> accessType; // [teacher,student,admin]
 
-  UserModel(
-    this.id, {
+  UserModel({
+    required this.id,
     required this.email,
     required this.uid,
     this.displayName,
@@ -31,7 +31,7 @@ class UserModel {
     List<String>? accessType,
   }) {
     return UserModel(
-      id,
+      id: id,
       displayName: displayName ?? this.displayName,
       email: email ?? this.email,
       uid: uid ?? this.uid,
@@ -41,9 +41,9 @@ class UserModel {
     );
   }
 
-  factory UserModel.fromMap(String id, Map<String, dynamic> map) {
+  factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id,
+      id: map['id'],
       uid: map['uid'],
       email: map['email'],
       displayName: map['displayName'],
@@ -54,10 +54,11 @@ class UserModel {
   }
 
   factory UserModel.fromJson(String id, String source) =>
-      UserModel.fromMap(id, json.decode(source));
+      UserModel.fromMap(json.decode(source));
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'uid': uid,
       'email': email,
       if (photoURL != null) 'photoURL': photoURL,

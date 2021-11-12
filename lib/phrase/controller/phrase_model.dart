@@ -18,8 +18,8 @@ class PhraseModel {
 
   final String? phraseImage;
   final List<String>? phraseListImage;
-  PhraseModel(
-    this.id, {
+  PhraseModel({
+    required this.id,
     required this.teacher,
     required this.group,
     required this.phraseList,
@@ -41,7 +41,7 @@ class PhraseModel {
     List<String>? phraseListImage,
   }) {
     return PhraseModel(
-      id,
+      id: id,
       teacher: teacher ?? this.teacher,
       group: group ?? this.group,
       phraseList: phraseList ?? this.phraseList,
@@ -55,6 +55,7 @@ class PhraseModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'teacher': teacher.toMap(),
       'group': group,
       'phraseList': phraseList.cast<String>(),
@@ -67,9 +68,9 @@ class PhraseModel {
     };
   }
 
-  factory PhraseModel.fromMap(String id, Map<String, dynamic> map) {
+  factory PhraseModel.fromMap(Map<String, dynamic> map) {
     return PhraseModel(
-      id,
+      id: map['id'],
       teacher: UserRef.fromMap(map['teacher']),
       group: map['group'],
       phraseList: List<String>.from(map['phraseList']),
@@ -85,8 +86,8 @@ class PhraseModel {
 
   String toJson() => json.encode(toMap());
 
-  factory PhraseModel.fromJson(String id, String source) =>
-      PhraseModel.fromMap(id, json.decode(source));
+  factory PhraseModel.fromJson(String source) =>
+      PhraseModel.fromMap(json.decode(source));
 
   @override
   String toString() {

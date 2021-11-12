@@ -37,7 +37,6 @@ class ReadDocsUserUsersAction extends ReduxAction<AppState> {
     userModelList = querySnapshot.docs
         .map(
           (queryDocumentSnapshot) => UserModel.fromMap(
-            queryDocumentSnapshot.id,
             queryDocumentSnapshot.data(),
           ),
         )

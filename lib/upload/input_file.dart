@@ -91,7 +91,7 @@ class InputFile extends StatelessWidget {
                         if (urlForDownload.isNotEmpty) {
                           bool can = await canLaunch(urlForDownload);
                           if (can) {
-                            await launch(urlForDownload);
+                            await launch(urlForDownload, forceWebView: true);
                           } else {
                             print('launch nao possivel');
                           }

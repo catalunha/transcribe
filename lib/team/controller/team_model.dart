@@ -13,8 +13,8 @@ class TeamModel {
   final Map<String, UserRef> userMap; //<userId,UserRef>
   final bool isArchived;
   final bool isDeleted;
-  TeamModel(
-    this.id, {
+  TeamModel({
+    required this.id,
     required this.teacher,
     required this.name,
     // required this.userList,
@@ -32,7 +32,7 @@ class TeamModel {
     bool? isDeleted,
   }) {
     return TeamModel(
-      id,
+      id: id,
       teacher: teacher ?? this.teacher,
       name: name ?? this.name,
       // userList: userList ?? this.userList,
@@ -44,6 +44,7 @@ class TeamModel {
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
     data['teacher'] = teacher.toMap();
     data['name'] = name;
     data['isArchived'] = isArchived;
@@ -54,18 +55,9 @@ class TeamModel {
       data["userMap"][item.key] = item.value.toMap();
     }
     return data;
-
-    // return {
-    //   'teacher': teacher.toMap(),
-    //   'name': name,
-    //   'userList': userMap.keys.toList(),
-    //   'userMap': userMap.cast(<{}>)
-    //   'isArchived': isArchived,
-    //   'isDeleted': isDeleted,
-    // };
   }
 
-  factory TeamModel.fromMap(String id, Map<String, dynamic> map) {
+  factory TeamModel.fromMap(Map<String, dynamic> map) {
     Map<String, UserRef>? _userMap = <String, UserRef>{};
     if (map["userMap"] != null && map["userMap"] is Map) {
       for (var item in map["userMap"].entries) {
@@ -73,7 +65,7 @@ class TeamModel {
       }
     }
     return TeamModel(
-      id,
+      id: map['id'],
       teacher: UserRef.fromMap(map['teacher']),
       name: map['name'],
       userMap: _userMap,
@@ -84,8 +76,8 @@ class TeamModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TeamModel.fromJson(String id, String source) =>
-      TeamModel.fromMap(id, json.decode(source));
+  factory TeamModel.fromJson(String source) =>
+      TeamModel.fromMap(json.decode(source));
 
   @override
   String toString() {

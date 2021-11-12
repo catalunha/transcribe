@@ -87,8 +87,7 @@ class ReadDocUserUserAction extends ReduxAction<AppState> {
 
     DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
         await docRef.get();
-    UserModel userModel =
-        UserModel.fromMap(documentSnapshot.id, documentSnapshot.data()!);
+    UserModel userModel = UserModel.fromMap(documentSnapshot.data()!);
 
     return state.copyWith(
       userState: state.userState.copyWith(

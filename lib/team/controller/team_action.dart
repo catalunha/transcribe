@@ -21,8 +21,7 @@ class StreamDocsTeamAction extends ReduxAction<AppState> {
 
     Stream<List<TeamModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
-            .map((docSnapshot) =>
-                TeamModel.fromMap(docSnapshot.id, docSnapshot.data()))
+            .map((docSnapshot) => TeamModel.fromMap(docSnapshot.data()))
             .toList());
     streamList.listen((List<TeamModel> teamModelList) {
       dispatch(SetTeamListTeamAction(teamList: teamModelList));
@@ -67,7 +66,8 @@ class SetTeamCurrentTeamAction extends ReduxAction<AppState> {
       teamModel =
           state.teamState.teamList!.firstWhere((element) => element.id == id);
     } else {
-      teamModel = TeamModel('',
+      teamModel = TeamModel(
+          id: '',
           teacher: UserRef.fromMap({
             'id': state.userState.userCurrent!.id,
             'email': state.userState.userCurrent!.email,
