@@ -125,7 +125,9 @@ class CreateDocWithGoogleAccountUserAction extends ReduxAction<AppState> {
 
     CollectionReference docRef =
         firebaseFirestore.collection(UserModel.collection);
+    String idNew = docRef.doc().id;
     Map<String, dynamic> googleUser = {};
+    googleUser['id'] = idNew;
     googleUser['uid'] = state.userState.userFirebaseAuth!.uid;
     googleUser['displayName'] = state.userState.userFirebaseAuth!.displayName;
     googleUser['photoURL'] = state.userState.userFirebaseAuth!.photoURL;

@@ -89,6 +89,7 @@ class TeamModel {
     if (identical(this, other)) return true;
 
     return other is TeamModel &&
+        other.id == id &&
         other.teacher == teacher &&
         other.name == name &&
         other.isArchived == isArchived &&
@@ -100,6 +101,7 @@ class TeamModel {
   @override
   int get hashCode {
     return teacher.hashCode ^
+        id.hashCode ^
         name.hashCode ^
         isArchived.hashCode ^
         isDeleted.hashCode ^

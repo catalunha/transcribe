@@ -85,6 +85,7 @@ class UserModel {
         other.displayName == displayName &&
         other.email == email &&
         other.uid == uid &&
+        other.id == id &&
         other.photoURL == photoURL;
   }
 

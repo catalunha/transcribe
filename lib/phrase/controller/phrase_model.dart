@@ -99,6 +99,7 @@ class PhraseModel {
     if (identical(this, other)) return true;
 
     return other is PhraseModel &&
+        other.id == id &&
         other.teacher == teacher &&
         other.group == group &&
         listEquals(other.phraseList, phraseList) &&
@@ -112,6 +113,7 @@ class PhraseModel {
   @override
   int get hashCode {
     return teacher.hashCode ^
+        id.hashCode ^
         group.hashCode ^
         phraseList.hashCode ^
         phraseAudio.hashCode ^

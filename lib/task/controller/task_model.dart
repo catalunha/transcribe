@@ -6,9 +6,12 @@ import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 
 class TaskModel {
-  final String group;
-  final TeamModel team;
-  final PhraseModel phrase;
+  static const String collection = 'tasks';
+
+  final String id;
+  final String name;
+  late TeamModel? team;
+  late PhraseModel? phrase;
   final bool? isWritten;
   final bool? isShowPhraseImage;
   final bool? isShowPhraseListImage;
@@ -17,9 +20,10 @@ class TaskModel {
   final bool isArchivedByStudent;
   final bool isDeleted;
   TaskModel({
-    required this.group,
-    required this.team,
-    required this.phrase,
+    required this.id,
+    required this.name,
+    this.team,
+    this.phrase,
     this.isWritten,
     this.isShowPhraseImage,
     this.isShowPhraseListImage,
@@ -30,7 +34,7 @@ class TaskModel {
   });
 
   TaskModel copyWith({
-    String? group,
+    String? name,
     TeamModel? team,
     PhraseModel? phrase,
     bool? isWritten,
@@ -42,7 +46,8 @@ class TaskModel {
     bool? isDeleted,
   }) {
     return TaskModel(
-      group: group ?? this.group,
+      id: id,
+      name: name ?? this.name,
       team: team ?? this.team,
       phrase: phrase ?? this.phrase,
       isWritten: isWritten ?? this.isWritten,
@@ -59,15 +64,19 @@ class TaskModel {
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> data = Map<String, dynamic>();
 
-    data['group'] = group;
-    data['team'] = team.toMap();
-    data['phrase'] = phrase.toMap();
-    if (isWritten != null) data['isWritten'] = isWritten;
-    if (isShowPhraseImage != null)
+    data['id'] = id;
+    data['name'] = name;
+    data['team'] = team!.toMap();
+    data['phrase'] = phrase!.toMap();
+    if (isWritten != null) {
+      data['isWritten'] = isWritten;
+    }
+    if (isShowPhraseImage != null) {
       data['isShowPhraseImage'] = isShowPhraseImage;
-    if (isShowPhraseListImage != null)
+    }
+    if (isShowPhraseListImage != null) {
       data['isShowPhraseListImage'] = isShowPhraseListImage;
-    data['transcriptionMap'] = transcriptionMap;
+    }
     if (transcriptionMap != null) {
       data["transcriptionMap"] = <String, dynamic>{};
       for (var item in transcriptionMap!.entries) {
@@ -81,14 +90,16 @@ class TaskModel {
   }
 
   factory TaskModel.fromMap(Map<String, dynamic> map) {
-    Map<String, Transcription>? _transcriptionMap = <String, Transcription>{};
-    if (map["transcriptionMap"] != null && map["transcriptionMap"] is Map) {
+    Map<String, Transcription>? _transcriptionMap;
+    if (map["transcriptionMap"] != null) {
+      _transcriptionMap = <String, Transcription>{};
       for (var item in map["transcriptionMap"].entries) {
         _transcriptionMap[item.key] = Transcription.fromMap(item.value);
       }
     }
     return TaskModel(
-      group: map['group'],
+      id: map['id'],
+      name: map['name'],
       team: TeamModel.fromMap(map['team']),
       phrase: PhraseModel.fromMap(map['phrase']),
       isWritten: map['isWritten'] ?? false,
@@ -108,7 +119,7 @@ class TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(group: $group, team: $team, phrase: $phrase, isWritten: $isWritten, isShowPhraseImage: $isShowPhraseImage, isShowPhraseListImage: $isShowPhraseListImage, transcriptionMap: $transcriptionMap, isArchivedByTeacher: $isArchivedByTeacher, isArchivedByStudent: $isArchivedByStudent, isDeleted: $isDeleted)';
+    return 'TaskModel(name: $name, team: $team, phrase: $phrase, isWritten: $isWritten, isShowPhraseImage: $isShowPhraseImage, isShowPhraseListImage: $isShowPhraseListImage, transcriptionMap: $transcriptionMap, isArchivedByTeacher: $isArchivedByTeacher, isArchivedByStudent: $isArchivedByStudent, isDeleted: $isDeleted)';
   }
 
   @override
@@ -116,7 +127,8 @@ class TaskModel {
     if (identical(this, other)) return true;
 
     return other is TaskModel &&
-        other.group == group &&
+        other.id == id &&
+        other.name == name &&
         other.team == team &&
         other.phrase == phrase &&
         other.isWritten == isWritten &&
@@ -130,7 +142,8 @@ class TaskModel {
 
   @override
   int get hashCode {
-    return group.hashCode ^
+    return name.hashCode ^
+        id.hashCode ^
         team.hashCode ^
         phrase.hashCode ^
         isWritten.hashCode ^

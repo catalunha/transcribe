@@ -30,6 +30,7 @@ class AppIconData {
   static const description = Icons.text_snippet_outlined;
   static const delete = Icons.delete_forever_outlined;
   static const check = Icons.rule;
+  static const select = Icons.check;
 
   static const letter = Icons.format_color_text;
   static const smile = Icons.sentiment_satisfied_alt_outlined;

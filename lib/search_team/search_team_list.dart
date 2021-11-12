@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:transcribe/team/controller/team_model.dart';
+import 'package:transcribe/team/team_card.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
-import 'controller/team_model.dart';
-import 'team_card.dart';
-
-class TeamList extends StatelessWidget {
+class SearchTeamList extends StatelessWidget {
   final List<TeamModel> teamList;
+  final Function(String) onSetTeam;
 
-  const TeamList({
+  const SearchTeamList({
     Key? key,
     required this.teamList,
+    required this.onSetTeam,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: buildItens(context),
-            ),
+    return Dialog(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: buildItens(context),
           ),
         ),
-      ],
+      ),
     );
   }
 
@@ -38,14 +38,11 @@ class TeamList extends StatelessWidget {
           team: team,
           widgetList: [
             IconButton(
-              tooltip: 'Edit this team.',
-              icon: Icon(AppIconData.edit),
+              tooltip: 'Select this team.',
+              icon: Icon(AppIconData.select),
               onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/team_addOrEdit',
-                  arguments: team.id,
-                );
+                onSetTeam(team.id);
+                Navigator.pop(context);
               },
             ),
           ],

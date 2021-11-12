@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
-import 'controller/team_model.dart';
+import 'controller/task_model.dart';
 
-class TeamCard extends StatelessWidget {
-  final TeamModel team;
+class TaskCard extends StatelessWidget {
+  final TaskModel task;
   final List<Widget>? widgetList;
-  const TeamCard({
+  const TaskCard({
     Key? key,
-    required this.team,
+    required this.task,
     this.widgetList,
   }) : super(key: key);
 
@@ -22,25 +22,32 @@ class TeamCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            team.name,
-            textAlign: TextAlign.start,
-            style: TextStyle(fontSize: 20),
+          Container(
+            width: double.infinity,
+            child: Text(
+              task.name,
+              textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 20),
+            ),
           ),
-          // Container(
-          //   height: 1,
-          //   color: Colors.blue,
-          // ),
+          Container(
+            width: double.infinity,
+            color: Colors.blue,
+            child: Text(
+              task.phrase!.phraseList.join(' '),
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 20, color: Colors.black),
+            ),
+          ),
           Wrap(
             children: personList(
-                context: context, userRefList: team.userMap.values.toList()),
+                context: context,
+                userRefList: task.team!.userMap.values.toList()),
           ),
-          widgetList?.isNotEmpty != null
-              ? Container(
-                  height: 1,
-                  color: Colors.green,
-                )
-              : Container(),
+          Container(
+            height: 1,
+            color: Colors.green,
+          ),
           Wrap(
             children: widgetList ?? [],
           )

@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
                   onTap: () async {
                     Navigator.pushNamed(
                       context,
-                      '/team_list',
+                      '/team_page',
                     );
                   },
                 ),
@@ -57,6 +57,12 @@ class HomePage extends StatelessWidget {
                 child: ListTile(
                   leading: Icon(Icons.task),
                   title: Text('Create a task'),
+                  onTap: () async {
+                    Navigator.pushNamed(
+                      context,
+                      '/task_list',
+                    );
+                  },
                 ),
               ),
             ],
