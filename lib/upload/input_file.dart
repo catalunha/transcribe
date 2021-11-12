@@ -9,6 +9,8 @@ class InputFile extends StatelessWidget {
   final VoidCallback uploadingFile;
   final double percentageOfUpload;
   final String urlForDownload;
+  final bool requiredField;
+
   const InputFile({
     Key? key,
     required this.label,
@@ -17,6 +19,7 @@ class InputFile extends StatelessWidget {
     required this.uploadingFile,
     required this.percentageOfUpload,
     required this.urlForDownload,
+    required this.requiredField,
   }) : super(key: key);
 
   @override
@@ -28,8 +31,22 @@ class InputFile extends StatelessWidget {
           Container(
             width: double.infinity,
             alignment: Alignment.topCenter,
-            child: Text(label),
-            color: Colors.black12,
+            color: Colors.green.shade900,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(label),
+                requiredField
+                    ? Text(
+                        ' *',
+                        style: TextStyle(
+                          color: Colors.red,
+                        ),
+                      )
+                    : Container(),
+              ],
+            ),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -38,7 +55,7 @@ class InputFile extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Icon(
                   AppIconData.attachFile,
-                  color: Colors.pink,
+                  color: Colors.blue,
                 ),
               ),
               Container(
@@ -59,7 +76,7 @@ class InputFile extends StatelessWidget {
                     ListTile(
                       leading: Icon(AppIconData.saveInCloud),
                       title: Text('2º Send for clound'),
-                      subtitle: urlForDownload.isNotEmpty
+                      subtitle: percentageOfUpload > 0
                           ? Text('Sending...')
                           : Text(''),
                       onTap: uploadingFile,
@@ -75,6 +92,8 @@ class InputFile extends StatelessWidget {
                           bool can = await canLaunch(urlForDownload);
                           if (can) {
                             await launch(urlForDownload);
+                          } else {
+                            print('launch nao possivel');
                           }
                         }
                       },
@@ -84,11 +103,11 @@ class InputFile extends StatelessWidget {
               ),
             ],
           ),
-          Divider(
-            height: 1,
-            thickness: 1,
-            color: Colors.white,
-          ),
+          // Divider(
+          //   height: 1,
+          //   thickness: 1,
+          //   color: Colors.white,
+          // ),
         ],
       ),
     );

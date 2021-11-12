@@ -12,11 +12,13 @@ import 'controller/phrase_model.dart';
 class PhraseAddEdit extends StatefulWidget {
   final FormControllerPhase formControllerPhrase;
   final Function(PhraseModel) onSave;
+  final bool addOrEditId;
 
   const PhraseAddEdit({
     Key? key,
     required this.formControllerPhrase,
     required this.onSave,
+    required this.addOrEditId,
   }) : super(key: key);
 
   @override
@@ -28,14 +30,16 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
   final FormControllerPhase formControllerPhrase;
 
   _PhraseAddEditState(this.formControllerPhrase);
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.formControllerPhrase.phraseModel.id.isEmpty
-            ? 'Add sentence.'
-            : 'Edit sentence.'),
+        title: Text(widget.addOrEditId ? 'Add sentence.' : 'Edit sentence.'),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -43,6 +47,11 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                InputFileConnector(
+                  label: 'Send the audio',
+                  requiredField: true,
+                ),
+
                 InputDescription(
                   label: 'Input the sentence',
                   required: true,
@@ -54,25 +63,25 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
                     widget.formControllerPhrase.onChange(phrase: value);
                   },
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    'Observation: if the sentence for change. All imagens is deleted.',
-                    // style: TextStyle(color: ThemeApp.onBackground),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                // const Padding(
+                //   padding: EdgeInsets.all(8.0),
+                //   child: Text(
+                //     'Observation: if the sentence for change. All imagens is deleted.',
+                //     // style: TextStyle(color: ThemeApp.onBackground),
+                //     textAlign: TextAlign.center,
+                //   ),
+                // ),
                 InputTitle(
                   label: 'Group for this sentence',
+                  required: true,
+                  validator: widget.formControllerPhrase.validateRequiredText,
                   initialValue: widget.formControllerPhrase.phraseModel.group,
                   onChanged: (value) {
                     widget.formControllerPhrase.onChange(group: value);
                   },
                 ),
-                InputFileConnector(
-                  label: 'Send the audio',
-                ),
-                formControllerPhrase.phraseModel.id.isEmpty
+
+                widget.addOrEditId
                     ? Container()
                     : InputCheckBox(
                         title: 'Archived this sentence',
@@ -84,7 +93,7 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
                           setState(() {});
                         },
                       ),
-                formControllerPhrase.phraseModel.id.isEmpty
+                widget.addOrEditId
                     ? Container()
                     : InputCheckBoxDelete(
                         title: 'Delete this sentence',

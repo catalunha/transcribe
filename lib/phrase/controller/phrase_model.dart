@@ -17,9 +17,7 @@ class PhraseModel {
   final bool isDeleted;
 
   final String? phraseImage;
-  final bool? showPhraseImage;
   final List<String>? phraseListImage;
-  final bool? showPhraseListImage;
   PhraseModel(
     this.id, {
     required this.teacher,
@@ -29,9 +27,7 @@ class PhraseModel {
     this.isArchived = false,
     this.isDeleted = false,
     this.phraseImage,
-    this.showPhraseImage,
     this.phraseListImage,
-    this.showPhraseListImage,
   });
 
   PhraseModel copyWith({
@@ -43,8 +39,6 @@ class PhraseModel {
     bool? isDeleted,
     String? phraseImage,
     List<String>? phraseListImage,
-    bool? showPhraseImage,
-    bool? showPhraseListImage,
   }) {
     return PhraseModel(
       id,
@@ -55,9 +49,7 @@ class PhraseModel {
       isArchived: isArchived ?? this.isArchived,
       isDeleted: isDeleted ?? this.isDeleted,
       phraseImage: phraseImage ?? this.phraseImage,
-      showPhraseImage: showPhraseImage ?? this.showPhraseImage,
       phraseListImage: phraseListImage ?? this.phraseListImage,
-      showPhraseListImage: showPhraseListImage ?? this.showPhraseListImage,
     );
   }
 
@@ -70,11 +62,8 @@ class PhraseModel {
       'isArchived': isArchived,
       'isDeleted': isDeleted,
       if (phraseImage != null) 'phraseImage': phraseImage,
-      if (showPhraseImage != null) 'showPhraseImage': showPhraseImage,
       if (phraseListImage != null)
         'phraseListImage': phraseListImage!.cast<String>(),
-      if (showPhraseListImage != null)
-        'showPhraseListImage': showPhraseListImage,
     };
   }
 
@@ -88,11 +77,9 @@ class PhraseModel {
       isArchived: map['isArchived'],
       isDeleted: map['isDeleted'],
       phraseImage: map['phraseImage'],
-      showPhraseImage: map['showPhraseImage'],
       phraseListImage: map['phraseListImage'] != null
           ? map['phraseListImage'].cast<String>()
           : null,
-      showPhraseListImage: map['showPhraseListImage'],
     );
   }
 
@@ -103,7 +90,7 @@ class PhraseModel {
 
   @override
   String toString() {
-    return 'PhraseModel(teacher: $teacher, group: $group, phraseList: $phraseList, phraseAudio: $phraseAudio, isArchived: $isArchived, isDeleted: $isDeleted, phraseImage: $phraseImage, showPhraseImage: $showPhraseImage, phraseListImage: $phraseListImage, showPhraseListImage: $showPhraseListImage)';
+    return 'PhraseModel(teacher: $teacher, group: $group, phraseList: $phraseList, phraseAudio: $phraseAudio, isArchived: $isArchived, isDeleted: $isDeleted, phraseImage: $phraseImage,  phraseListImage: $phraseListImage)';
   }
 
   @override
@@ -118,9 +105,7 @@ class PhraseModel {
         other.isArchived == isArchived &&
         other.isDeleted == isDeleted &&
         other.phraseImage == phraseImage &&
-        other.showPhraseImage == showPhraseImage &&
-        listEquals(other.phraseListImage, phraseListImage) &&
-        other.showPhraseListImage == showPhraseListImage;
+        listEquals(other.phraseListImage, phraseListImage);
   }
 
   @override
@@ -132,8 +117,6 @@ class PhraseModel {
         isArchived.hashCode ^
         isDeleted.hashCode ^
         phraseImage.hashCode ^
-        showPhraseImage.hashCode ^
-        phraseListImage.hashCode ^
-        showPhraseListImage.hashCode;
+        phraseListImage.hashCode;
   }
 }
