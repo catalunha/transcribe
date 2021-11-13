@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,12 +8,12 @@ import 'package:transcribe/theme/app_icon.dart';
 import 'transcription_card.dart';
 
 class TranscriptionList extends StatelessWidget {
-  final List<TaskModel> taskList;
+  final IList<TaskModel> taskIList;
   final String userId;
 
   const TranscriptionList({
     Key? key,
-    required this.taskList,
+    required this.taskIList,
     required this.userId,
   }) : super(key: key);
 
@@ -52,7 +53,7 @@ class TranscriptionList extends StatelessWidget {
   List<Widget> buildItens(context) {
     List<Widget> list = [];
 
-    for (var task in taskList) {
+    for (var task in taskIList) {
       list.add(
         Container(
           key: ValueKey(task),

@@ -43,26 +43,35 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
       ),
       body: SingleChildScrollView(
         child: Form(
-            key: widget.formControllerPhrase.formKey,
+            key: formControllerPhrase.formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                InputFileConnector(
-                  label: 'Send the audio',
-                  requiredField: true,
+                InputTitle(
+                  label: 'Group for this sentence',
+                  required: true,
+                  validator: formControllerPhrase.validateRequiredText,
+                  initialValue: formControllerPhrase.phraseModel.group,
+                  onChanged: (value) {
+                    formControllerPhrase.onChange(group: value);
+                  },
                 ),
 
                 InputDescription(
                   label: 'Input the sentence',
                   required: true,
-                  initialValue: widget
-                      .formControllerPhrase.phraseModel.phraseList
-                      .join('\n'),
-                  validator: widget.formControllerPhrase.validateRequiredText,
+                  initialValue:
+                      formControllerPhrase.phraseModel.phraseList.join('\n'),
+                  validator: formControllerPhrase.validateRequiredText,
                   onChanged: (value) {
-                    widget.formControllerPhrase.onChange(phrase: value);
+                    formControllerPhrase.onChange(phrase: value);
                   },
                 ),
+                InputFileConnector(
+                  label: 'Send the audio',
+                  requiredField: true,
+                ),
+
                 // const Padding(
                 //   padding: EdgeInsets.all(8.0),
                 //   child: Text(
@@ -71,15 +80,6 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
                 //     textAlign: TextAlign.center,
                 //   ),
                 // ),
-                InputTitle(
-                  label: 'Group for this sentence',
-                  required: true,
-                  validator: widget.formControllerPhrase.validateRequiredText,
-                  initialValue: widget.formControllerPhrase.phraseModel.group,
-                  onChanged: (value) {
-                    widget.formControllerPhrase.onChange(group: value);
-                  },
-                ),
 
                 widget.addOrEditId
                     ? Container()
@@ -98,17 +98,15 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
                     : InputCheckBoxDelete(
                         title: 'Delete this sentence',
                         subtitle: 'Delete forever',
-                        value:
-                            widget.formControllerPhrase.phraseModel.isDeleted,
+                        value: formControllerPhrase.phraseModel.isDeleted,
                         onChanged: (value) {
-                          widget.formControllerPhrase
-                              .onChange(isDeleted: value);
+                          formControllerPhrase.onChange(isDeleted: value);
                           setState(() {});
                         },
                       ),
                 RequiredInForm(
                   message:
-                      'Sentence id: ${widget.formControllerPhrase.phraseModel.id}',
+                      'Sentence id: ${formControllerPhrase.phraseModel.id}',
                 ),
               ],
             )),
@@ -117,10 +115,10 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
         tooltip: 'Save this data in cloud',
         child: Icon(AppIconData.saveInCloud),
         onPressed: () {
-          widget.formControllerPhrase.onCheckValidation();
-          if (widget.formControllerPhrase.isFormValid) {
+          formControllerPhrase.onCheckValidation();
+          if (formControllerPhrase.isFormValid) {
             Navigator.pop(context);
-            widget.onSave(widget.formControllerPhrase.phraseModel.copyWith());
+            widget.onSave(formControllerPhrase.phraseModel.copyWith());
           }
         },
       ),

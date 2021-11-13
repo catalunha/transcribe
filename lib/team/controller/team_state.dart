@@ -1,32 +1,34 @@
 import 'package:flutter/foundation.dart';
 import 'package:transcribe/team/controller/team_model.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 class TeamState {
-  final List<TeamModel>? teamList;
+  final IList<TeamModel>? teamIList;
   final TeamModel? teamCurrent;
   TeamState({
     this.teamCurrent,
-    this.teamList,
+    this.teamIList,
   });
   factory TeamState.initialState() => TeamState(
         teamCurrent: null,
-        teamList: [],
+        teamIList: IList(),
       );
   TeamState copyWith({
     TeamModel? teamCurrent,
     List<TeamModel>? teamList,
-    bool teamPhraseCurrentSetNull = false,
-    bool teamPhraseListSetNull = false,
+    IList<TeamModel>? teamIList,
+    bool teamCurrentSetNull = false,
+    bool teamIListSetNull = false,
   }) {
     return TeamState(
       teamCurrent: teamCurrent ?? this.teamCurrent,
-      teamList: teamList ?? this.teamList,
+      teamIList: teamIList ?? this.teamIList,
     );
   }
 
   @override
   String toString() =>
-      'TeamState(teamCurrent: $teamCurrent, teamList: $teamList)';
+      'TeamState(teamCurrent: $teamCurrent, teamList: $teamIList)';
 
   @override
   bool operator ==(Object other) {
@@ -34,9 +36,10 @@ class TeamState {
 
     return other is TeamState &&
         other.teamCurrent == teamCurrent &&
-        listEquals(other.teamList, teamList);
+        other.teamIList == teamIList;
+    // listEquals(other.teamIList, teamIList);
   }
 
   @override
-  int get hashCode => teamCurrent.hashCode ^ teamList.hashCode;
+  int get hashCode => teamCurrent.hashCode ^ teamIList.hashCode;
 }

@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/task/controller/task_model.dart';
 import 'package:transcribe/task/controller/task_action.dart';
@@ -19,7 +20,7 @@ class TranscriptionListConnector extends StatelessWidget {
         store.dispatch(StreamDocsTranscriptionAction());
       },
       builder: (context, vm) => TranscriptionList(
-        taskList: vm.taskList,
+        taskIList: vm.taskIList,
         userId: vm.userId,
       ),
     );
@@ -31,19 +32,19 @@ class TranscriptionListVmFactory
   TranscriptionListVmFactory(widget) : super(widget);
   @override
   TranscriptionListVm fromStore() => TranscriptionListVm(
-        taskList: state.taskState.taskList!,
+        taskIList: state.taskState.taskIList!,
         userId: state.userState.userCurrent!.id,
       );
 }
 
 class TranscriptionListVm extends Vm {
-  final List<TaskModel> taskList;
+  final IList<TaskModel> taskIList;
   final String userId;
   TranscriptionListVm({
-    required this.taskList,
+    required this.taskIList,
     required this.userId,
   }) : super(equals: [
-          taskList,
+          taskIList,
           userId,
         ]);
 }

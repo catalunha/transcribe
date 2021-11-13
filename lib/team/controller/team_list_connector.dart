@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/team/controller/team_action.dart';
 import 'package:transcribe/team/controller/team_model.dart';
@@ -17,7 +18,7 @@ class TeamListConnector extends StatelessWidget {
         store.dispatch(StreamDocsTeamAction());
       },
       builder: (context, vm) => TeamList(
-        teamList: vm.teamList,
+        teamIList: vm.teamIList,
       ),
     );
   }
@@ -27,15 +28,15 @@ class TeamListVmFactory extends VmFactory<AppState, TeamListConnector> {
   TeamListVmFactory(widget) : super(widget);
   @override
   TeamListVm fromStore() => TeamListVm(
-        teamList: state.teamState.teamList!,
+        teamIList: state.teamState.teamIList!,
       );
 }
 
 class TeamListVm extends Vm {
-  final List<TeamModel> teamList;
+  final IList<TeamModel> teamIList;
   TeamListVm({
-    required this.teamList,
+    required this.teamIList,
   }) : super(equals: [
-          teamList,
+          teamIList,
         ]);
 }

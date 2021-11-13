@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
@@ -19,11 +20,11 @@ class StreamDocsPhraseAction extends ReduxAction<AppState> {
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
 
-    Stream<List<PhraseModel>> streamList = streamQuerySnapshot.map(
+    Stream<IList<PhraseModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
             .map((docSnapshot) => PhraseModel.fromMap(docSnapshot.data()))
-            .toList());
-    streamList.listen((List<PhraseModel> phraseModelList) {
+            .toIList());
+    streamList.listen((IList<PhraseModel> phraseModelList) {
       dispatch(SetPhraseListPhraseAction(phraseList: phraseModelList));
     });
 
@@ -32,7 +33,7 @@ class StreamDocsPhraseAction extends ReduxAction<AppState> {
 }
 
 class SetPhraseListPhraseAction extends ReduxAction<AppState> {
-  final List<PhraseModel> phraseList;
+  final IList<PhraseModel> phraseList;
 
   SetPhraseListPhraseAction({required this.phraseList});
   @override
@@ -41,7 +42,7 @@ class SetPhraseListPhraseAction extends ReduxAction<AppState> {
     phraseList.sort((a, b) => a.group.compareTo(b.group));
     return state.copyWith(
       phraseState: state.phraseState.copyWith(
-        phraseList: phraseList,
+        phraseIList: phraseList,
       ),
     );
   }
@@ -64,7 +65,7 @@ class SetPhraseCurrentPhraseAction extends ReduxAction<AppState> {
   AppState reduce() {
     PhraseModel phraseModel;
     if (id.isNotEmpty) {
-      phraseModel = state.phraseState.phraseList!
+      phraseModel = state.phraseState.phraseIList!
           .firstWhere((element) => element.id == id);
     } else {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;

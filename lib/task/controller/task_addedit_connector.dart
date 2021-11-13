@@ -35,13 +35,17 @@ class TaskAddEditFactory extends VmFactory<AppState, TaskAddEditConnector> {
   TaskAddEditFactory(widget) : super(widget);
   @override
   TaskAddEditVm fromStore() => TaskAddEditVm(
-        formControllerTask: FormControllerTask(
-            taskModel: state.taskState.taskCurrent!.copyWith()),
+        formControllerTask:
+            FormControllerTask(taskModel: state.taskState.taskCurrent!),
         onSave: (TaskModel taskModel) {
+          TaskModel taskModelTemp = taskModel.copyWith(
+            team: state.taskState.taskCurrent!.team,
+            phrase: state.taskState.taskCurrent!.phrase,
+          );
           if (widget!.addOrEditId.isEmpty) {
-            dispatch(AddDocTaskAction(taskModel: taskModel));
+            dispatch(AddDocTaskAction(taskModel: taskModelTemp));
           } else {
-            dispatch(UpdateDocTaskAction(taskModel: taskModel));
+            dispatch(UpdateDocTaskAction(taskModel: taskModelTemp));
           }
         },
       );

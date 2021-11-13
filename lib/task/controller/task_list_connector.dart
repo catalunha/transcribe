@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/task/controller/task_model.dart';
 import 'package:transcribe/task/controller/task_action.dart';
@@ -19,7 +20,7 @@ class TaskListConnector extends StatelessWidget {
         store.dispatch(StreamDocsTaskAction());
       },
       builder: (context, vm) => TaskList(
-        taskList: vm.taskList,
+        taskIList: vm.taskIList,
       ),
     );
   }
@@ -29,15 +30,15 @@ class TaskListVmFactory extends VmFactory<AppState, TaskListConnector> {
   TaskListVmFactory(widget) : super(widget);
   @override
   TaskListVm fromStore() => TaskListVm(
-        taskList: state.taskState.taskList!,
+        taskIList: state.taskState.taskIList!,
       );
 }
 
 class TaskListVm extends Vm {
-  final List<TaskModel> taskList;
+  final IList<TaskModel> taskIList;
   TaskListVm({
-    required this.taskList,
+    required this.taskIList,
   }) : super(equals: [
-          taskList,
+          taskIList,
         ]);
 }

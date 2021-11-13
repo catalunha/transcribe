@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 import '../../app_state.dart';
@@ -19,11 +20,12 @@ class StreamDocsTeamAction extends ReduxAction<AppState> {
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
 
-    Stream<List<TeamModel>> streamList = streamQuerySnapshot.map(
+    Stream<IList<TeamModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
             .map((docSnapshot) => TeamModel.fromMap(docSnapshot.data()))
-            .toList());
-    streamList.listen((List<TeamModel> teamModelList) {
+            .toIList());
+    streamList.listen((IList<TeamModel> teamModelList) {
+      print('${teamModelList.length}');
       dispatch(SetTeamListTeamAction(teamList: teamModelList));
     });
 
@@ -32,7 +34,7 @@ class StreamDocsTeamAction extends ReduxAction<AppState> {
 }
 
 class SetTeamListTeamAction extends ReduxAction<AppState> {
-  final List<TeamModel> teamList;
+  final IList<TeamModel> teamList;
 
   SetTeamListTeamAction({required this.teamList});
   @override
@@ -41,7 +43,7 @@ class SetTeamListTeamAction extends ReduxAction<AppState> {
 
     return state.copyWith(
       teamState: state.teamState.copyWith(
-        teamList: teamList,
+        teamIList: teamList,
       ),
     );
   }
@@ -64,7 +66,7 @@ class SetTeamCurrentTeamAction extends ReduxAction<AppState> {
     TeamModel teamModel;
     if (id.isNotEmpty) {
       teamModel =
-          state.teamState.teamList!.firstWhere((element) => element.id == id);
+          state.teamState.teamIList!.firstWhere((element) => element.id == id);
     } else {
       teamModel = TeamModel(
           id: '',

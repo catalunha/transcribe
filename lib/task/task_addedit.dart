@@ -34,23 +34,23 @@ class _TaskAddEditState extends State<TaskAddEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.formControllerTask.taskModel.id.isEmpty
+        title: Text(formControllerTask.taskModel.id.isEmpty
             ? 'Add task.'
             : 'Edit task.'),
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: widget.formControllerTask.formKey,
+          key: formControllerTask.formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               InputTitle(
                 label: 'Name for the task',
                 required: true,
-                initialValue: widget.formControllerTask.taskModel.name,
-                validator: widget.formControllerTask.validateRequiredText,
+                initialValue: formControllerTask.taskModel.name,
+                validator: formControllerTask.validateRequiredText,
                 onChanged: (value) {
-                  widget.formControllerTask.onChange(name: value);
+                  formControllerTask.onChange(name: value);
                 },
               ),
               SearchTeam(
@@ -80,14 +80,14 @@ class _TaskAddEditState extends State<TaskAddEdit> {
                   : InputCheckBoxDelete(
                       title: 'Delete this task',
                       subtitle: 'Delete forever',
-                      value: widget.formControllerTask.taskModel.isDeleted,
+                      value: formControllerTask.taskModel.isDeleted,
                       onChanged: (value) {
-                        widget.formControllerTask.onChange(isDeleted: value);
+                        formControllerTask.onChange(isDeleted: value);
                         setState(() {});
                       },
                     ),
               RequiredInForm(
-                message: 'task id: ${widget.formControllerTask.taskModel.id}',
+                message: 'task id: ${formControllerTask.taskModel.id}',
               ),
             ],
           ),
@@ -97,10 +97,10 @@ class _TaskAddEditState extends State<TaskAddEdit> {
         tooltip: 'Save this data in cloud',
         child: Icon(AppIconData.saveInCloud),
         onPressed: () {
-          widget.formControllerTask.onCheckValidation();
-          if (widget.formControllerTask.isFormValid) {
+          formControllerTask.onCheckValidation();
+          if (formControllerTask.isFormValid) {
             Navigator.pop(context);
-            widget.onSave(widget.formControllerTask.taskModel);
+            widget.onSave(formControllerTask.taskModel);
           }
         },
       ),

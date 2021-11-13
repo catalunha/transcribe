@@ -119,7 +119,7 @@ class TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(name: $name, team: $team, phrase: $phrase, isWritten: $isWritten, isShowPhraseImage: $isShowPhraseImage, isShowPhraseListImage: $isShowPhraseListImage, transcriptionMap: $transcriptionMap, isArchivedByTeacher: $isArchivedByTeacher, isArchivedByStudent: $isArchivedByStudent, isDeleted: $isDeleted)';
+    return 'TaskModel(id:$id, transcriptionMap: $transcriptionMap)';
   }
 
   @override

@@ -1,35 +1,35 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:transcribe/task/controller/task_model.dart';
 
 import 'task_model.dart';
 
 class TaskState {
-  final List<TaskModel>? taskList;
+  final IList<TaskModel>? taskIList;
   final TaskModel? taskCurrent;
   TaskState({
     this.taskCurrent,
-    this.taskList,
+    this.taskIList,
   });
   factory TaskState.initialState() => TaskState(
         taskCurrent: null,
-        taskList: [],
+        taskIList: IList(),
       );
   TaskState copyWith({
     TaskModel? taskCurrent,
-    List<TaskModel>? taskList,
+    IList<TaskModel>? taskIList,
     bool taskPhraseCurrentSetNull = false,
     bool taskPhraseListSetNull = false,
   }) {
     return TaskState(
-      taskCurrent:
-          taskPhraseCurrentSetNull ? null : taskCurrent ?? this.taskCurrent,
-      taskList: taskList ?? this.taskList,
+      taskCurrent: taskCurrent ?? this.taskCurrent,
+      taskIList: taskIList ?? this.taskIList,
     );
   }
 
   @override
   String toString() =>
-      'TaskState(taskCurrent: $taskCurrent, taskList: $taskList)';
+      'TaskState(taskCurrent: $taskCurrent, taskList: $taskIList)';
 
   @override
   bool operator ==(Object other) {
@@ -37,9 +37,9 @@ class TaskState {
 
     return other is TaskState &&
         other.taskCurrent == taskCurrent &&
-        listEquals(other.taskList, taskList);
+        other.taskIList == taskIList;
   }
 
   @override
-  int get hashCode => taskCurrent.hashCode ^ taskList.hashCode;
+  int get hashCode => taskCurrent.hashCode ^ taskIList.hashCode;
 }

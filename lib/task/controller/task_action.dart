@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 import 'package:transcribe/user/controller/user_model.dart';
@@ -21,12 +22,12 @@ class StreamDocsTaskAction extends ReduxAction<AppState> {
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
 
-    Stream<List<TaskModel>> streamList = streamQuerySnapshot.map(
+    Stream<IList<TaskModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
             .map((docSnapshot) => TaskModel.fromMap(docSnapshot.data()))
-            .toList());
-    streamList.listen((List<TaskModel> taskModelList) {
-      dispatch(SetTaskListTaskAction(taskList: taskModelList));
+            .toIList());
+    streamList.listen((IList<TaskModel> taskModelList) {
+      dispatch(SetTaskListTaskAction(taskList: IList(taskModelList)));
     });
 
     return null;
@@ -34,24 +35,29 @@ class StreamDocsTaskAction extends ReduxAction<AppState> {
 }
 
 class SetTaskListTaskAction extends ReduxAction<AppState> {
-  final List<TaskModel> taskList;
+  final IList<TaskModel> taskList;
 
   SetTaskListTaskAction({required this.taskList});
   @override
   AppState reduce() {
     taskList.sort((a, b) => a.name.compareTo(b.name));
-
+    for (var task in taskList) {
+      print('SetTaskListTaskAction: $task');
+    }
     return state.copyWith(
       taskState: state.taskState.copyWith(
-        taskList: taskList,
+        taskIList: taskList,
       ),
     );
   }
 
   @override
   void after() {
+    super.after();
+
     if (state.taskState.taskCurrent != null) {
       dispatch(SetTaskCurrentTaskAction(id: state.taskState.taskCurrent!.id));
+      print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
     }
   }
 }
@@ -66,8 +72,8 @@ class SetTaskCurrentTaskAction extends ReduxAction<AppState> {
     TaskModel taskModelTemp;
     TaskModel taskModel;
     if (id.isNotEmpty) {
-      taskModelTemp =
-          state.taskState.taskList!.firstWhere((element) => element.id == id);
+      IList<TaskModel> taskModelIList = state.taskState.taskIList!;
+      taskModelTemp = taskModelIList.firstWhere((element) => element.id == id);
       taskModel = taskModelTemp.copyWith();
     } else {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -79,6 +85,9 @@ class SetTaskCurrentTaskAction extends ReduxAction<AppState> {
         name: '',
       );
     }
+    print('SetTaskCurrentTaskAction: ${state.taskState.taskCurrent}');
+    print('SetTaskCurrentTaskAction: ${taskModel.id}');
+
     return state.copyWith(
       taskState: state.taskState.copyWith(
         taskCurrent: taskModel,
@@ -143,17 +152,26 @@ class SetTeamTaskAction extends ReduxAction<AppState> {
   SetTeamTaskAction({required this.teamId});
   @override
   AppState reduce() {
-    TeamModel teamModel =
-        state.teamState.teamList!.firstWhere((element) => element.id == teamId);
+    TeamModel teamModel = state.teamState.teamIList!
+        .firstWhere((element) => element.id == teamId);
+    print('team selected ${teamModel.id}');
+    print('team taskcurrent 1: ${state.taskState.taskCurrent!.team?.id}');
+
     TaskModel taskModel =
         state.taskState.taskCurrent!.copyWith(team: teamModel);
     // taskModel.team = teamModel;
-
     return state.copyWith(
       taskState: state.taskState.copyWith(
         taskCurrent: taskModel,
       ),
     );
+  }
+
+  @override
+  void after() {
+    // TODO: implement after
+    super.after();
+    print('team taskcurrent 2: ${state.taskState.taskCurrent!.team}');
   }
 }
 
@@ -163,7 +181,7 @@ class SetPhraseTaskAction extends ReduxAction<AppState> {
   SetPhraseTaskAction({required this.phraseId});
   @override
   AppState reduce() {
-    PhraseModel phraseModel = state.phraseState.phraseList!
+    PhraseModel phraseModel = state.phraseState.phraseIList!
         .firstWhere((element) => element.id == phraseId);
     TaskModel taskModel = state.taskState.taskCurrent!.copyWith();
     taskModel.phrase = phraseModel;

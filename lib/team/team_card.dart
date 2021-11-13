@@ -27,6 +27,7 @@ class TeamCard extends StatelessWidget {
             textAlign: TextAlign.start,
             style: TextStyle(fontSize: 20),
           ),
+          Text(team.id),
           // Container(
           //   height: 1,
           //   color: Colors.blue,

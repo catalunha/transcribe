@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/phrase/controller/phrase_action.dart';
 import 'package:transcribe/phrase/controller/phrase_model.dart';
@@ -16,7 +17,7 @@ class PhraseListConnector extends StatelessWidget {
         store.dispatch(StreamDocsPhraseAction());
       },
       builder: (context, vm) => PhraseList(
-        phraseList: vm.phraseList,
+        phraseIList: vm.phraseIList,
       ),
     );
   }
@@ -27,17 +28,17 @@ class PhraseArchivedPageVmFactory
   PhraseArchivedPageVmFactory(widget) : super(widget);
   @override
   PhraseArchivedPageVm fromStore() => PhraseArchivedPageVm(
-        phraseList: state.phraseState.phraseList!,
+        phraseIList: state.phraseState.phraseIList!,
       );
 }
 
 class PhraseArchivedPageVm extends Vm {
-  final List<PhraseModel> phraseList;
+  final IList<PhraseModel> phraseIList;
   PhraseArchivedPageVm({
-    required this.phraseList,
+    required this.phraseIList,
   }) : super(
           equals: [
-            phraseList,
+            phraseIList,
           ],
         );
 }

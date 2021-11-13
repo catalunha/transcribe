@@ -9,7 +9,6 @@ import 'phrase/controller/phrase_list_connector.dart';
 import 'task/controller/task_addedit_connector.dart';
 import 'task/controller/task_list_connector.dart';
 import 'team/controller/team_addedit_connector.dart';
-import 'team/controller/team_list_connector.dart';
 import 'team/team_page.dart';
 import 'transcription/controller/transcription_edit_connector.dart';
 import 'transcription/controller/transcription_list_connector.dart';

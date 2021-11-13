@@ -1,33 +1,34 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 class UsersState {
   final UserRef? userRefCurrent;
-  final List<UserRef>? userRefList;
+  final IList<UserRef>? userRefIList;
   UsersState({
     this.userRefCurrent,
-    this.userRefList,
+    this.userRefIList,
   });
   factory UsersState.initialState() => UsersState(
         userRefCurrent: null,
-        userRefList: [],
+        userRefIList: IList(),
       );
   UsersState copyWith({
     UserRef? userRefCurrent,
     bool userRefCurrentSetNull = false,
-    List<UserRef>? userRefList,
+    IList<UserRef>? userRefIList,
     int? countPhrases,
   }) {
     return UsersState(
       userRefCurrent:
           userRefCurrentSetNull ? null : userRefCurrent ?? this.userRefCurrent,
-      userRefList: userRefList ?? this.userRefList,
+      userRefIList: userRefIList ?? this.userRefIList,
     );
   }
 
   @override
   String toString() =>
-      'UsersState(userRefCurrent: $userRefCurrent, userRefList: $userRefList)';
+      'UsersState(userRefCurrent: $userRefCurrent, userRefList: $userRefIList)';
 
   @override
   bool operator ==(Object other) {
@@ -35,9 +36,9 @@ class UsersState {
 
     return other is UsersState &&
         other.userRefCurrent == userRefCurrent &&
-        listEquals(other.userRefList, userRefList);
+        other.userRefIList == userRefIList;
   }
 
   @override
-  int get hashCode => userRefCurrent.hashCode ^ userRefList.hashCode;
+  int get hashCode => userRefCurrent.hashCode ^ userRefIList.hashCode;
 }

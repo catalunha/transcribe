@@ -34,29 +34,29 @@ class _TeamAddEditState extends State<TeamAddEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.formControllerTeam.teamModel.id.isEmpty
+        title: Text(formControllerTeam.teamModel.id.isEmpty
             ? 'Add team.'
             : 'Edit team.'),
       ),
       body: SingleChildScrollView(
         child: Form(
-          key: widget.formControllerTeam.formKey,
+          key: formControllerTeam.formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               InputTitle(
                 label: 'Name for the team',
                 required: true,
-                initialValue: widget.formControllerTeam.teamModel.name,
-                validator: widget.formControllerTeam.validateRequiredText,
+                initialValue: formControllerTeam.teamModel.name,
+                validator: formControllerTeam.validateRequiredText,
                 onChanged: (value) {
-                  widget.formControllerTeam.onChange(name: value);
+                  formControllerTeam.onChange(name: value);
                 },
               ),
               InputUsers(
                 label: 'Select people for this team',
                 userRefList:
-                    widget.formControllerTeam.teamModel.userMap.values.toList(),
+                    formControllerTeam.teamModel.userMap.values.toList(),
                 required: true,
                 onDeleteUser: (String value) {
                   widget.onDeleteUser(value);
@@ -92,7 +92,7 @@ class _TeamAddEditState extends State<TeamAddEdit> {
                       },
                     ),
               RequiredInForm(
-                message: 'team id: ${widget.formControllerTeam.teamModel.id}',
+                message: 'team id: ${formControllerTeam.teamModel.id}',
               ),
             ],
           ),
@@ -102,10 +102,10 @@ class _TeamAddEditState extends State<TeamAddEdit> {
         tooltip: 'Save this data in cloud',
         child: Icon(AppIconData.saveInCloud),
         onPressed: () {
-          widget.formControllerTeam.onCheckValidation();
-          if (widget.formControllerTeam.isFormValid) {
+          formControllerTeam.onCheckValidation();
+          if (formControllerTeam.isFormValid) {
             Navigator.pop(context);
-            widget.onSave(widget.formControllerTeam.teamModel.copyWith());
+            widget.onSave(formControllerTeam.teamModel.copyWith());
           }
         },
       ),

@@ -1,5 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
@@ -34,26 +35,26 @@ class ReadDocsUserUsersAction extends ReduxAction<AppState> {
         .where('accessType', arrayContains: 'student')
         .where('isActive', isEqualTo: true)
         .get();
-    List<UserModel> userModelList = [];
+    IList<UserModel> userModelList = IList();
     userModelList = querySnapshot.docs
         .map(
           (queryDocumentSnapshot) => UserModel.fromMap(
             queryDocumentSnapshot.data(),
           ),
         )
-        .toList();
+        .toIList();
     dispatch(SetUserRefListUsersAction(userModelList: userModelList));
     return null;
   }
 }
 
 class SetUserRefListUsersAction extends ReduxAction<AppState> {
-  final List<UserModel> userModelList;
+  final IList<UserModel> userModelList;
 
   SetUserRefListUsersAction({required this.userModelList});
   @override
   AppState reduce() {
-    List<UserRef> userRefList = [];
+    IList<UserRef> userRefList = IList();
     // for (var userModel in userModelList) {
     //   userRefList.add(
     //     UserRef(
@@ -71,10 +72,10 @@ class SetUserRefListUsersAction extends ReduxAction<AppState> {
               photoURL: userModel.photoURL,
               displayName: userModel.displayName),
         )
-        .toList();
+        .toIList();
     return state.copyWith(
       usersState: state.usersState.copyWith(
-        userRefList: userRefList,
+        userRefIList: userRefList,
       ),
     );
   }
@@ -88,7 +89,7 @@ class AddOrDeleteUserInTeamUsersAction extends ReduxAction<AppState> {
       {required this.addOrDelete, required this.userId});
   @override
   AppState reduce() {
-    UserRef userRef = state.usersState.userRefList!
+    UserRef userRef = state.usersState.userRefIList!
         .firstWhere((element) => element.id == userId);
     TeamModel teamModel = state.teamState.teamCurrent!;
     if (addOrDelete) {

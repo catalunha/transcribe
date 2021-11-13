@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
@@ -6,11 +7,11 @@ import 'controller/task_model.dart';
 import 'task_card.dart';
 
 class TaskList extends StatelessWidget {
-  final List<TaskModel> taskList;
+  final IList<TaskModel> taskIList;
 
   const TaskList({
     Key? key,
-    required this.taskList,
+    required this.taskIList,
   }) : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ class TaskList extends StatelessWidget {
   List<Widget> buildItens(context) {
     List<Widget> list = [];
 
-    for (var task in taskList) {
+    for (var task in taskIList) {
       list.add(Container(
         key: ValueKey(task),
         child: TaskCard(

@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/team/controller/team_action.dart';
 import 'package:transcribe/user/controller/user_model.dart';
@@ -18,8 +19,8 @@ class UsersListConnector extends StatelessWidget {
         await store.dispatch(ReadDocsUserUsersAction());
       },
       builder: (context, vm) => UsersList(
-        userIdListInTeam: vm.userIdListInTeam,
-        userRefList: vm.userRefList,
+        userIdIListInTeam: vm.userIdIListInTeam,
+        userRefIList: vm.userRefIList,
         onAddOrDeleteUser: vm.onAddOrDeleteUser,
       ),
     );
@@ -30,8 +31,8 @@ class UsersPageVmFactory extends VmFactory<AppState, UsersListConnector> {
   UsersPageVmFactory(widget) : super(widget);
   @override
   UsersPageVm fromStore() => UsersPageVm(
-        userIdListInTeam: state.teamState.teamCurrent!.userMap.keys.toList(),
-        userRefList: state.usersState.userRefList!,
+        userIdIListInTeam: state.teamState.teamCurrent!.userMap.keys.toIList(),
+        userRefIList: state.usersState.userRefIList!,
         onAddOrDeleteUser: (bool addOrDelete, String userId) {
           dispatch(AddOrDeleteUserInTeamUsersAction(
               addOrDelete: addOrDelete, userId: userId));
@@ -40,16 +41,16 @@ class UsersPageVmFactory extends VmFactory<AppState, UsersListConnector> {
 }
 
 class UsersPageVm extends Vm {
-  final List<String> userIdListInTeam;
-  final List<UserRef> userRefList;
+  final IList<String> userIdIListInTeam;
+  final IList<UserRef> userRefIList;
   final Function(bool, String) onAddOrDeleteUser;
 
   UsersPageVm({
-    required this.userIdListInTeam,
-    required this.userRefList,
+    required this.userIdIListInTeam,
+    required this.userRefIList,
     required this.onAddOrDeleteUser,
   }) : super(equals: [
-          userIdListInTeam,
-          userRefList,
+          userIdIListInTeam,
+          userRefIList,
         ]);
 }

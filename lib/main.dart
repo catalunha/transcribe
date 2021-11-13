@@ -2,7 +2,6 @@ import 'package:async_redux/async_redux.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:themed/themed.dart';
 
 import 'app_state.dart';
 import 'routes.dart';

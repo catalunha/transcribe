@@ -1,3 +1,4 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:transcribe/phrase/controller/phrase_model.dart';
@@ -6,12 +7,12 @@ import 'package:transcribe/phrase/phrase_card.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
 class SearchPhraseList extends StatelessWidget {
-  final List<PhraseModel> phraseList;
+  final IList<PhraseModel> phraseIList;
   final Function(String) onSetPhrase;
 
   const SearchPhraseList({
     Key? key,
-    required this.phraseList,
+    required this.phraseIList,
     required this.onSetPhrase,
   }) : super(key: key);
 
@@ -32,7 +33,7 @@ class SearchPhraseList extends StatelessWidget {
   List<Widget> buildItens(context) {
     List<Widget> list = [];
 
-    for (var phrase in phraseList) {
+    for (var phrase in phraseIList) {
       list.add(Container(
         key: ValueKey(phrase),
         child: PhraseCard(

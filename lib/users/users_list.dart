@@ -1,25 +1,26 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 class UsersList extends StatelessWidget {
-  final List<String> userIdListInTeam;
-  final List<UserRef> userRefList;
+  final IList<String> userIdIListInTeam;
+  final IList<UserRef> userRefIList;
   final Function(bool, String) onAddOrDeleteUser;
 
   const UsersList({
     Key? key,
-    required this.userRefList,
+    required this.userRefIList,
     required this.onAddOrDeleteUser,
-    required this.userIdListInTeam,
+    required this.userIdIListInTeam,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('We have ${userRefList.length} users in app'),
+        title: Text('We have ${userRefIList.length} users in app'),
       ),
       body: Column(
         children: [
@@ -37,13 +38,13 @@ class UsersList extends StatelessWidget {
 
   List<Widget> buildItens(context) {
     List<Widget> list = [];
-    List<UserRef> userRefListSorted = userRefList;
+    IList<UserRef> userRefListSorted = userRefIList;
     userRefListSorted.sort((a, b) => a.displayName!.compareTo(b.displayName!));
     print('---');
     for (var user in userRefListSorted) {
       list.add(
         ListTile(
-          tileColor: userIdListInTeam.contains(user.id) ? Colors.green : null,
+          tileColor: userIdIListInTeam.contains(user.id) ? Colors.green : null,
           title: Text('${user.displayName}'),
           subtitle: Text(user.email),
           leading: user.photoURL == null
@@ -57,7 +58,7 @@ class UsersList extends StatelessWidget {
                   ),
                 ),
           onTap: () {
-            onAddOrDeleteUser(!userIdListInTeam.contains(user.id), user.id);
+            onAddOrDeleteUser(!userIdIListInTeam.contains(user.id), user.id);
           },
           trailing: IconButton(
             icon: const Icon(AppIconData.copy),

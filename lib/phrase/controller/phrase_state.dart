@@ -1,37 +1,38 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
 import 'phrase_model.dart';
 
 class PhraseState {
   final PhraseModel? phraseCurrent;
-  final List<PhraseModel>? phraseList;
-  final List<PhraseModel>? phraseArchivedList;
+  final IList<PhraseModel>? phraseIList;
+  final IList<PhraseModel>? phraseArchivedIList;
   PhraseState({
     this.phraseCurrent,
-    this.phraseList,
-    this.phraseArchivedList,
+    this.phraseIList,
+    this.phraseArchivedIList,
   });
   factory PhraseState.initialState() => PhraseState(
         phraseCurrent: null,
-        phraseList: [],
-        phraseArchivedList: [],
+        phraseIList: IList(),
+        phraseArchivedIList: IList(),
       );
   PhraseState copyWith({
     PhraseModel? phraseCurrent,
     bool phraseCurrentSetNull = false,
-    List<PhraseModel>? phraseList,
-    List<PhraseModel>? phraseArchivedList,
+    IList<PhraseModel>? phraseIList,
+    IList<PhraseModel>? phraseArchivedIList,
   }) {
     return PhraseState(
       phraseCurrent:
           phraseCurrentSetNull ? null : phraseCurrent ?? this.phraseCurrent,
-      phraseList: phraseList ?? this.phraseList,
-      phraseArchivedList: phraseArchivedList ?? this.phraseArchivedList,
+      phraseIList: phraseIList ?? this.phraseIList,
+      phraseArchivedIList: phraseArchivedIList ?? this.phraseArchivedIList,
     );
   }
 
   @override
   String toString() =>
-      'PhraseState(phraseCurrent: $phraseCurrent, phraseList: $phraseList)';
+      'PhraseState(phraseCurrent: $phraseCurrent, phraseList: $phraseIList)';
 
   @override
   bool operator ==(Object other) {
@@ -39,13 +40,13 @@ class PhraseState {
 
     return other is PhraseState &&
         other.phraseCurrent == phraseCurrent &&
-        listEquals(other.phraseList, phraseList) &&
-        listEquals(other.phraseArchivedList, phraseArchivedList);
+        other.phraseIList == phraseIList &&
+        other.phraseArchivedIList == phraseArchivedIList;
   }
 
   @override
   int get hashCode =>
       phraseCurrent.hashCode ^
-      phraseArchivedList.hashCode ^
-      phraseList.hashCode;
+      phraseArchivedIList.hashCode ^
+      phraseIList.hashCode;
 }

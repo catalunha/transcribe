@@ -1,16 +1,16 @@
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
 import 'controller/team_model.dart';
 import 'team_card.dart';
 
 class TeamList extends StatelessWidget {
-  final List<TeamModel> teamList;
+  final IList<TeamModel> teamIList;
 
   const TeamList({
     Key? key,
-    required this.teamList,
+    required this.teamIList,
   }) : super(key: key);
 
   @override
@@ -31,7 +31,7 @@ class TeamList extends StatelessWidget {
   List<Widget> buildItens(context) {
     List<Widget> list = [];
 
-    for (var team in teamList) {
+    for (var team in teamIList) {
       list.add(Container(
         key: ValueKey(team),
         child: TeamCard(
