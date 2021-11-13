@@ -75,26 +75,40 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            IconButton(
-              key: const Key('play_button'),
-              onPressed: _isPlaying ? null : _play,
-              iconSize: 24.0,
-              icon: const Icon(Icons.play_arrow),
-              // color: Colors.cyan,
+            Container(
+              color: Colors.green,
+              child: IconButton(
+                padding: EdgeInsets.all(20),
+                key: const Key('play_button'),
+                onPressed: _isPlaying ? null : _play,
+                iconSize: 34.0,
+                icon: const Icon(
+                  Icons.play_arrow,
+                ),
+                color: Colors.black,
+                // disabledColor: Colors.black,
+              ),
             ),
-            IconButton(
-              key: const Key('pause_button'),
-              onPressed: _isPlaying ? _pause : null,
-              iconSize: 24.0,
-              icon: const Icon(Icons.pause),
-              color: Colors.cyan,
+            // IconButton(
+            //   key: const Key('pause_button'),
+            //   onPressed: _isPlaying ? _pause : null,
+            //   iconSize: 24.0,
+            //   icon: const Icon(Icons.pause),
+            //   color: Colors.cyan,
+            // ),
+            SizedBox(
+              width: 20,
             ),
-            IconButton(
-              key: const Key('stop_button'),
-              onPressed: _isPlaying || _isPaused ? _stop : null,
-              iconSize: 24.0,
-              icon: const Icon(Icons.stop),
-              color: Colors.cyan,
+            Container(
+              color: Colors.green,
+              child: IconButton(
+                padding: EdgeInsets.all(20),
+                key: const Key('stop_button'),
+                onPressed: _isPlaying || _isPaused ? _stop : null,
+                iconSize: 34.0,
+                icon: const Icon(Icons.stop),
+                color: Colors.black,
+              ),
             ),
             // IconButton(
             //   onPressed: _earpieceOrSpeakersToggle,
@@ -106,45 +120,45 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
             // ),
           ],
         ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Stack(
-                children: [
-                  Slider(
-                    onChanged: (v) {
-                      final duration = _duration;
-                      if (duration == null) {
-                        return;
-                      }
-                      final Position = v * duration.inMilliseconds;
-                      _audioPlayer
-                          .seek(Duration(milliseconds: Position.round()));
-                    },
-                    value: (_position != null &&
-                            _duration != null &&
-                            _position!.inMilliseconds > 0 &&
-                            _position!.inMilliseconds <
-                                _duration!.inMilliseconds)
-                        ? _position!.inMilliseconds / _duration!.inMilliseconds
-                        : 0.0,
-                  ),
-                ],
-              ),
-            ),
-            Text(
-              _position != null
-                  ? '$_positionText / $_durationText'
-                  : _duration != null
-                      ? _durationText
-                      : '',
-              style: const TextStyle(fontSize: 24.0),
-            ),
-          ],
-        ),
-        Text('State: $_audioPlayerState'),
+        // Column(
+        //   mainAxisSize: MainAxisSize.min,
+        //   children: [
+        //     Padding(
+        //       padding: const EdgeInsets.all(12.0),
+        //       child: Stack(
+        //         children: [
+        //           Slider(
+        //             onChanged: (v) {
+        //               final duration = _duration;
+        //               if (duration == null) {
+        //                 return;
+        //               }
+        //               final Position = v * duration.inMilliseconds;
+        //               _audioPlayer
+        //                   .seek(Duration(milliseconds: Position.round()));
+        //             },
+        //             value: (_position != null &&
+        //                     _duration != null &&
+        //                     _position!.inMilliseconds > 0 &&
+        //                     _position!.inMilliseconds <
+        //                         _duration!.inMilliseconds)
+        //                 ? _position!.inMilliseconds / _duration!.inMilliseconds
+        //                 : 0.0,
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //     Text(
+        //       _position != null
+        //           ? '$_positionText / $_durationText'
+        //           : _duration != null
+        //               ? _durationText
+        //               : '',
+        //       style: const TextStyle(fontSize: 24.0),
+        //     ),
+        //   ],
+        // ),
+        // Text('State: $_audioPlayerState'),
       ],
     );
   }
@@ -260,7 +274,11 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
     return result;
   }
 
-  void _onComplete() {
-    setState(() => _playerState = PlayerState.STOPPED);
+  void _onComplete() async {
+    await _stop();
+    setState(() {
+      print('audio complete');
+      // _playerState = PlayerState.STOPPED;
+    });
   }
 }

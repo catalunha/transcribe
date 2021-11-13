@@ -20,7 +20,7 @@ class Information extends StatelessWidget {
                 '''
 Olá,
 
-Este aplicativo nasceu de uma parceria entre o Prof Fabio Costa e a familia Catalunha no processo de ensino e aprendizagem do inglês.
+Este aplicativo nasceu de uma parceria entre nossa familia Catalunha e o Prof Fabio Costa no processo de ensino e aprendizagem do inglês.
       ''',
                 // style: AppTextStyles.titleRegular,
               ),

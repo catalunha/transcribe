@@ -21,7 +21,8 @@ class TaskState {
     bool taskPhraseListSetNull = false,
   }) {
     return TaskState(
-      taskCurrent: taskCurrent ?? this.taskCurrent,
+      taskCurrent:
+          taskPhraseCurrentSetNull ? null : taskCurrent ?? this.taskCurrent,
       taskList: taskList ?? this.taskList,
     );
   }

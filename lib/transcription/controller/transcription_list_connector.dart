@@ -20,6 +20,7 @@ class TranscriptionListConnector extends StatelessWidget {
       },
       builder: (context, vm) => TranscriptionList(
         taskList: vm.taskList,
+        userId: vm.userId,
       ),
     );
   }
@@ -31,14 +32,18 @@ class TranscriptionListVmFactory
   @override
   TranscriptionListVm fromStore() => TranscriptionListVm(
         taskList: state.taskState.taskList!,
+        userId: state.userState.userCurrent!.id,
       );
 }
 
 class TranscriptionListVm extends Vm {
   final List<TaskModel> taskList;
+  final String userId;
   TranscriptionListVm({
     required this.taskList,
+    required this.userId,
   }) : super(equals: [
           taskList,
+          userId,
         ]);
 }

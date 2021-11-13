@@ -63,10 +63,12 @@ class SetTaskCurrentTaskAction extends ReduxAction<AppState> {
   });
   @override
   AppState reduce() {
+    TaskModel taskModelTemp;
     TaskModel taskModel;
     if (id.isNotEmpty) {
-      taskModel =
+      taskModelTemp =
           state.taskState.taskList!.firstWhere((element) => element.id == id);
+      taskModel = taskModelTemp.copyWith();
     } else {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       CollectionReference docRef =

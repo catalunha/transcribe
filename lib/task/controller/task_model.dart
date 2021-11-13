@@ -157,11 +157,11 @@ class TaskModel {
 }
 
 class Transcription {
-  final String phraseWritten;
-  final List<String> phraseOrdered;
+  late String? phraseWritten;
+  late List<String>? phraseOrdered;
   Transcription({
-    required this.phraseWritten,
-    required this.phraseOrdered,
+    this.phraseWritten,
+    this.phraseOrdered,
   });
 
   Transcription copyWith({
@@ -176,15 +176,17 @@ class Transcription {
 
   Map<String, dynamic> toMap() {
     return {
-      'phraseWritten': phraseWritten,
-      'phraseOrdered': phraseOrdered,
+      if (phraseWritten != null) 'phraseWritten': phraseWritten,
+      if (phraseOrdered != null) 'phraseOrdered': phraseOrdered,
     };
   }
 
   factory Transcription.fromMap(Map<String, dynamic> map) {
     return Transcription(
       phraseWritten: map['phraseWritten'],
-      phraseOrdered: List<String>.from(map['phraseOrdered']),
+      phraseOrdered: map['phraseOrdered'] != null
+          ? List<String>.from(map['phraseOrdered'])
+          : null,
     );
   }
 
