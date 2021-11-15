@@ -25,7 +25,7 @@ class StreamDocsTeamAction extends ReduxAction<AppState> {
             .map((docSnapshot) => TeamModel.fromMap(docSnapshot.data()))
             .toIList());
     streamList.listen((IList<TeamModel> teamModelList) {
-      print('${teamModelList.length}');
+      // print('${teamModelList.length}');
       dispatch(SetTeamListTeamAction(teamList: teamModelList));
     });
 

@@ -18,7 +18,6 @@ class TranscriptionEdit extends StatefulWidget {
   final String phraseAudio;
   final Function(List<String>) onNewOrder;
   final Function() onSave;
-  final Function() onNotSave;
 
   const TranscriptionEdit({
     Key? key,
@@ -27,7 +26,6 @@ class TranscriptionEdit extends StatefulWidget {
     required this.onNewOrder,
     required this.onSave,
     required this.phraseCorrect,
-    required this.onNotSave,
   }) : super(key: key);
 
   @override
@@ -95,11 +93,15 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
         newIndex -= 1;
       }
     });
-    List<String> listTemp = widget.phraseUnordened;
+    // print('widget.phraseUnordened 1: ${widget.phraseUnordened}');
+    List<String> listTemp = [];
+    listTemp.addAll(widget.phraseUnordened);
     String resourceId = listTemp[oldIndex];
     listTemp.removeAt(oldIndex);
     listTemp.insert(newIndex, resourceId);
+    // print('widget.phraseUnordened 2: ${widget.phraseUnordened}');
     widget.onNewOrder(listTemp);
+    // print('widget.phraseUnordened 3: ${widget.phraseUnordened}');
   }
 
   List<Widget> buildPhrase() {

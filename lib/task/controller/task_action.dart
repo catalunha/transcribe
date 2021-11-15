@@ -42,7 +42,7 @@ class SetTaskListTaskAction extends ReduxAction<AppState> {
   AppState reduce() {
     taskList.sort((a, b) => a.name.compareTo(b.name));
     for (var task in taskList) {
-      print('SetTaskListTaskAction: $task');
+      // print('SetTaskListTaskAction: $task');
     }
     return state.copyWith(
       taskState: state.taskState.copyWith(
@@ -57,7 +57,7 @@ class SetTaskListTaskAction extends ReduxAction<AppState> {
 
     if (state.taskState.taskCurrent != null) {
       dispatch(SetTaskCurrentTaskAction(id: state.taskState.taskCurrent!.id));
-      print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
+      // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
     }
   }
 }
@@ -85,8 +85,8 @@ class SetTaskCurrentTaskAction extends ReduxAction<AppState> {
         name: '',
       );
     }
-    print('SetTaskCurrentTaskAction: ${state.taskState.taskCurrent}');
-    print('SetTaskCurrentTaskAction: ${taskModel.id}');
+    // print('SetTaskCurrentTaskAction: ${state.taskState.taskCurrent}');
+    // print('SetTaskCurrentTaskAction: ${taskModel.id}');
 
     return state.copyWith(
       taskState: state.taskState.copyWith(
@@ -154,8 +154,8 @@ class SetTeamTaskAction extends ReduxAction<AppState> {
   AppState reduce() {
     TeamModel teamModel = state.teamState.teamIList!
         .firstWhere((element) => element.id == teamId);
-    print('team selected ${teamModel.id}');
-    print('team taskcurrent 1: ${state.taskState.taskCurrent!.team?.id}');
+    // print('team selected ${teamModel.id}');
+    // print('team taskcurrent 1: ${state.taskState.taskCurrent!.team?.id}');
 
     TaskModel taskModel =
         state.taskState.taskCurrent!.copyWith(team: teamModel);
@@ -171,7 +171,7 @@ class SetTeamTaskAction extends ReduxAction<AppState> {
   void after() {
     // TODO: implement after
     super.after();
-    print('team taskcurrent 2: ${state.taskState.taskCurrent!.team}');
+    // print('team taskcurrent 2: ${state.taskState.taskCurrent!.team}');
   }
 }
 
@@ -184,7 +184,7 @@ class SetPhraseTaskAction extends ReduxAction<AppState> {
     PhraseModel phraseModel = state.phraseState.phraseIList!
         .firstWhere((element) => element.id == phraseId);
     TaskModel taskModel = state.taskState.taskCurrent!.copyWith();
-    taskModel.phrase = phraseModel;
+    taskModel = taskModel.copyWith(phrase: phraseModel);
 
     return state.copyWith(
       taskState: state.taskState.copyWith(

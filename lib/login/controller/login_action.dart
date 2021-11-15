@@ -61,7 +61,7 @@ class SignInLoginAction extends ReduxAction<AppState> {
       var google = GoogleSignInOrSignOut();
       await google.googleLogin();
     } catch (e) {
-      print('--> SignInLoginAction: $e');
+      // print('--> SignInLoginAction: $e');
     }
 
     return null;

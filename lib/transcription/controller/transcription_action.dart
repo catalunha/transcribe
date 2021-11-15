@@ -1,11 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/task/controller/task_action.dart';
 import 'package:transcribe/task/controller/task_model.dart';
-import 'package:transcribe/team/controller/team_model.dart';
-import 'package:transcribe/user/controller/user_model.dart';
 
 import '../../app_state.dart';
 
@@ -23,15 +20,14 @@ class StreamDocsTranscriptionAction extends ReduxAction<AppState> {
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
 
-    Stream<IList<TaskModel>> streamList = streamQuerySnapshot.map(
+    Stream<List<TaskModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
             .map((docSnapshot) => TaskModel.fromMap(docSnapshot.data()))
-            .toIList());
-    streamList.listen((IList<TaskModel> taskModelList) {
-      for (var task in taskModelList) {
-        print('StreamDocsTranscriptionAction: $task');
-      }
-      dispatch(SetTaskListTaskAction(taskList: taskModelList));
+            .toList());
+    streamList.listen((List<TaskModel> taskModelList) {
+      dispatch(SetTaskListTaskAction(
+          taskList: IList(taskModelList).withConfig(
+              ConfigList(isDeepEquals: false, cacheHashCode: false))));
     });
 
     return null;
@@ -46,13 +42,12 @@ class ResetPhraseCurrentTranscriptionAction extends ReduxAction<AppState> {
 
     TaskModel taskModel;
     taskModel = state.taskState.taskIList!
-        .firstWhere((element) => element.id == phraseCurrentId);
-    print(
-        'ResetPhraseCurrentTranscriptionAction 1: ${taskModel.transcriptionMap ?? "null"}');
+        .firstWhere((element) => element.id == phraseCurrentId)
+        .copy();
 
     return state.copyWith(
       taskState: state.taskState.copyWith(
-        taskCurrent: taskModel.copyWith(),
+        taskCurrent: taskModel,
       ),
     );
   }
@@ -63,33 +58,20 @@ class SetTaskCurrentTranscriptionAction extends ReduxAction<AppState> {
   SetTaskCurrentTranscriptionAction({
     required this.id,
   });
-  @override
-  before() {
-    for (var task in state.taskState.taskIList!) {
-      print('SetTaskCurrentTranscriptionAction.before list : $task');
-    }
-    print(
-        'SetTaskCurrentTranscriptionAction.before current: ${state.taskState.taskCurrent!}');
-  }
 
   @override
   AppState reduce() {
-    IList<TaskModel> taskModelList = state.taskState.taskIList!;
-    // TaskModel taskModelTemp;
-    // taskModelTemp = taskModelList.firstWhere((element) => element.id == id);
-    late TaskModel taskModel;
-    for (var task in taskModelList) {
-      if (task.id == id) {
-        taskModel = task.copyWith();
-      }
-    }
+    TaskModel taskModel = state.taskState.taskIList!
+        .firstWhere((element) => element.id == id)
+        .copy();
+
     if (taskModel.transcriptionMap == null) {
       taskModel =
           taskModel.copyWith(transcriptionMap: <String, Transcription>{});
     }
+
     String userId = state.userState.userCurrent!.id;
     if (!taskModel.transcriptionMap!.containsKey(userId)) {
-      print('atualiznado o que ja conte,');
       List<String> temp = taskModel.phrase!.phraseList;
       temp.sort();
       Transcription transcription = Transcription(
@@ -100,23 +82,11 @@ class SetTaskCurrentTranscriptionAction extends ReduxAction<AppState> {
       transcriptionMapTemp.addAll({userId: transcription});
       taskModel = taskModel.copyWith(transcriptionMap: transcriptionMapTemp);
     }
-
     return state.copyWith(
       taskState: state.taskState.copyWith(
         taskCurrent: taskModel,
       ),
     );
-  }
-
-  @override
-  void after() {
-    // TODO: implement after
-    super.after();
-    for (var task in state.taskState.taskIList!) {
-      print('SetTaskCurrentTranscriptionAction.after list : $task');
-    }
-    print(
-        'SetTaskCurrentTranscriptionAction.after current: ${state.taskState.taskCurrent}');
   }
 }
 
@@ -126,10 +96,29 @@ class SetNewOrderTranscriptionAction extends ReduxAction<AppState> {
     required this.newOrder,
   });
   @override
+  before() {
+    for (var task in state.taskState.taskIList!) {
+      print('SetNewOrderTranscriptionAction.before list : $task');
+    }
+    print(
+        'SetNewOrderTranscriptionAction.before current: ${state.taskState.taskCurrent}');
+  }
+
+  @override
   AppState reduce() {
     String userId = state.userState.userCurrent!.id;
-    TaskModel taskModel = state.taskState.taskCurrent!.copyWith();
-    taskModel.transcriptionMap![userId]!.phraseOrdered = newOrder;
+    TaskModel taskModel = state.taskState.taskCurrent!;
+    print('SetNewOrderTranscriptionAction model: $taskModel');
+    Map<String, Transcription>? transcriptionMapTemp =
+        taskModel.transcriptionMap;
+    Transcription transcription =
+        transcriptionMapTemp![userId]!.copyWith(phraseOrdered: newOrder);
+
+    transcriptionMapTemp[userId] = transcription;
+
+    taskModel = taskModel.copyWith(transcriptionMap: transcriptionMapTemp);
+    // taskModel.transcriptionMap![userId]!.phraseOrdered = newOrder;
+    print('SetNewOrderTranscriptionAction model 2: $taskModel');
 
     return state.copyWith(
       taskState: state.taskState.copyWith(
@@ -140,8 +129,7 @@ class SetNewOrderTranscriptionAction extends ReduxAction<AppState> {
 
   @override
   void after() {
-    // TODO: implement after
-    super.after();
+    // super.after();
     for (var task in state.taskState.taskIList!) {
       print('SetNewOrderTranscriptionAction.after list : $task');
     }

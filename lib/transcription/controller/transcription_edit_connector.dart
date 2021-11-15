@@ -22,6 +22,9 @@ class TranscriptionEditConnector extends StatelessWidget {
       onInit: (store) {
         store.dispatch(SetTaskCurrentTranscriptionAction(id: addOrEditId));
       },
+      onDispose: (store) {
+        store.dispatch(ResetPhraseCurrentTranscriptionAction());
+      },
       vm: () => TranscriptionEditFactory(this),
       builder: (context, vm) => TranscriptionEdit(
         phraseAudio: vm.phraseAudio,
@@ -29,7 +32,6 @@ class TranscriptionEditConnector extends StatelessWidget {
         phraseCorrect: vm.phraseCorrect,
         onNewOrder: vm.onNewOrder,
         onSave: vm.onSave,
-        onNotSave: vm.onNotSave,
       ),
     );
   }
@@ -42,24 +44,20 @@ class TranscriptionEditFactory
   TranscriptionEditVm fromStore() => TranscriptionEditVm(
         phraseAudio: state.taskState.taskCurrent!.phrase!.phraseAudio,
         phraseUnordened: disorderPhrase(),
-        phraseCorrect:
-            state.taskState.taskCurrent!.copyWith().phrase!.phraseList,
+        phraseCorrect: state.taskState.taskCurrent!.phrase!.phraseList,
         onNewOrder: (List<String> newOrder) {
           dispatch(SetNewOrderTranscriptionAction(newOrder: newOrder));
         },
         onSave: () {
           dispatch(UpdateDocTranscriptionAction());
         },
-        onNotSave: () {
-          dispatch(ResetPhraseCurrentTranscriptionAction());
-        },
       );
 
   List<String> disorderPhrase() {
-    TaskModel taskModel = state.taskState.taskCurrent!.copyWith();
     String userId = state.userState.userCurrent!.id;
 
-    Transcription transcription = taskModel.transcriptionMap![userId]!;
+    Transcription transcription =
+        state.taskState.taskCurrent!.transcriptionMap![userId]!;
     return transcription.phraseOrdered!;
   }
 }
@@ -70,14 +68,12 @@ class TranscriptionEditVm extends Vm {
   final String phraseAudio;
   final Function(List<String>) onNewOrder;
   final Function() onSave;
-  final Function() onNotSave;
   TranscriptionEditVm({
     required this.phraseCorrect,
     required this.phraseUnordened,
     required this.phraseAudio,
     required this.onNewOrder,
     required this.onSave,
-    required this.onNotSave,
   }) : super(equals: [
           phraseCorrect,
           phraseUnordened,

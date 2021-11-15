@@ -20,7 +20,7 @@ Owner: C=US, O=Android, CN=Android Debug
 Issuer: C=US, O=Android, CN=Android Debug
 Serial number: 1
 Valid from: Wed Jun 30 14:38:17 BRT 2021 until: Fri Jun 23 14:38:17 BRT 2051
-Certificate fingerprints:
+Certificate finger// prints:
          SHA1: 35:89:8E:FB:FB:FA:95:8A:56:08:5C:CE:B5:7D:93:A0:E8:BD:4C:F7
          SHA256: E5:AB:93:21:D4:A3:B5:E6:B0:4C:98:05:EA:91:6E:54:DD:32:D1:23:69:88:AE:6F:2E:13:02:7D:50:89:1C:09
 Signature algorithm name: SHA1withRSA (weak)

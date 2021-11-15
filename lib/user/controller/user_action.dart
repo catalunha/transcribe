@@ -64,9 +64,9 @@ class GetDocGoogleAccountUserAction extends ReduxAction<AppState> {
         );
       }
     } else {
-      print(
-          '--> GetDocGoogleAccountUserAction: Foi encontrado mais de um usuário.');
-      // print('documentListMapIdData.length: ${documentListMapIdData.length}');
+      // print(
+      // '--> GetDocGoogleAccountUserAction: Foi encontrado mais de um usuário.');
+      // // print('documentListMapIdData.length: ${documentListMapIdData.length}');
       dispatch(ChangeStatusFirestoreUserUserAction(
           statusFirestoreUser: StatusFirestoreUser.errorFirestore));
       return null;

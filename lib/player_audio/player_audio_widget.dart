@@ -202,7 +202,7 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
     });
 
     _playerErrorSubscription = _audioPlayer.onPlayerError.listen((msg) {
-      print('audioPlayer error : $msg');
+      // print('audioPlayer error : $msg');
       setState(() {
         _playerState = PlayerState.STOPPED;
         _duration = const Duration();
@@ -212,7 +212,7 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
 
     _playerControlCommandSubscription =
         _audioPlayer.notificationService.onPlayerCommand.listen((command) {
-      print('command: $command');
+      // print('command: $command');
     });
 
     _audioPlayer.onPlayerStateChanged.listen((state) {
@@ -277,7 +277,7 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
   void _onComplete() async {
     await _stop();
     setState(() {
-      print('audio complete');
+      // print('audio complete');
       // _playerState = PlayerState.STOPPED;
     });
   }

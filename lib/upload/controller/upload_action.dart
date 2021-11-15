@@ -107,7 +107,7 @@ class StreamUploadTask extends ReduxAction<AppState> {
       streamTaskSnapshot.listen((TaskSnapshot event) {
         final progress = event.bytesTransferred / event.totalBytes;
         final percentage = (progress * 100);
-        print(percentage);
+        // print(percentage);
         dispatch(UpdateUploadPorcentageUploadAction(value: percentage));
       });
 
@@ -132,7 +132,7 @@ class UploadForFirebase {
     );
     if (pickFile?.files.first == null) return false;
     _choiceEnviroment();
-    print('$fileName');
+    // print('$fileName');
     return true;
   }
 
@@ -149,7 +149,7 @@ class UploadForFirebase {
   void _fileInWeb() {
     this.fileBytes = pickFile!.files.first.bytes;
     this.fileName = pickFile!.files.first.name;
-    print('$fileName');
+    // print('$fileName');
   }
 
   void _fileInAndroid() async {
@@ -158,7 +158,7 @@ class UploadForFirebase {
     file = File(path);
     this.fileBytes = file!.readAsBytesSync();
     this.fileName = basename(file!.path);
-    print('$fileName');
+    // print('$fileName');
   }
 
   UploadTask? uploadingFile(File file, String pathInFirestore) {
@@ -169,7 +169,7 @@ class UploadForFirebase {
       final ref = FirebaseStorage.instance.ref(destination);
       task = ref.putFile(file);
     } on FirebaseException catch (e) {
-      print('--> uploadingFile error $e');
+      // print('--> uploadingFile error $e');
       return null;
     }
     if (task == null) return null;
@@ -183,7 +183,7 @@ class UploadForFirebase {
       final ref = FirebaseStorage.instance.ref('$pathInFirestore/$fileName');
       task = ref.putData(fileBytes);
     } on FirebaseException catch (e) {
-      print('--> uploadingBytes error $e');
+      // print('--> uploadingBytes error $e');
       return null;
     }
     return task;

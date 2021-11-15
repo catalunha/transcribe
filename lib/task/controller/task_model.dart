@@ -5,13 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 
+@immutable
 class TaskModel {
   static const String collection = 'tasks';
 
   final String id;
   final String name;
-  late TeamModel? team;
-  late PhraseModel? phrase;
+  final TeamModel? team;
+  final PhraseModel? phrase;
   final bool? isWritten;
   final bool? isShowPhraseImage;
   final bool? isShowPhraseListImage;
@@ -19,7 +20,7 @@ class TaskModel {
   final bool isArchivedByTeacher;
   final bool isArchivedByStudent;
   final bool isDeleted;
-  TaskModel({
+  const TaskModel({
     required this.id,
     required this.name,
     this.team,
@@ -59,6 +60,10 @@ class TaskModel {
       isArchivedByStudent: isArchivedByStudent ?? this.isArchivedByStudent,
       isDeleted: isDeleted ?? this.isDeleted,
     );
+  }
+
+  TaskModel copy() {
+    return TaskModel.fromMap(toMap());
   }
 
   Map<String, dynamic> toMap() {
@@ -119,26 +124,25 @@ class TaskModel {
 
   @override
   String toString() {
-    return 'TaskModel(id:$id, transcriptionMap: $transcriptionMap)';
+    return 'TaskModel( hashCode:$hashCode, id:$id, transcriptionMap: $transcriptionMap)';
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is TaskModel &&
-        other.id == id &&
-        other.name == name &&
-        other.team == team &&
-        other.phrase == phrase &&
-        other.isWritten == isWritten &&
-        other.isShowPhraseImage == isShowPhraseImage &&
-        other.isShowPhraseListImage == isShowPhraseListImage &&
-        mapEquals(other.transcriptionMap, transcriptionMap) &&
-        other.isArchivedByTeacher == isArchivedByTeacher &&
-        other.isArchivedByStudent == isArchivedByStudent &&
-        other.isDeleted == isDeleted;
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TaskModel &&
+          runtimeType == other.runtimeType &&
+          other.id == id &&
+          other.name == name &&
+          other.team == team &&
+          other.phrase == phrase &&
+          other.isWritten == isWritten &&
+          other.isShowPhraseImage == isShowPhraseImage &&
+          other.isShowPhraseListImage == isShowPhraseListImage &&
+          mapEquals(other.transcriptionMap, transcriptionMap) &&
+          other.isArchivedByTeacher == isArchivedByTeacher &&
+          other.isArchivedByStudent == isArchivedByStudent &&
+          other.isDeleted == isDeleted;
 
   @override
   int get hashCode {
@@ -156,10 +160,11 @@ class TaskModel {
   }
 }
 
+@immutable
 class Transcription {
-  late String? phraseWritten;
-  late List<String>? phraseOrdered;
-  Transcription({
+  final String? phraseWritten;
+  final List<String>? phraseOrdered;
+  const Transcription({
     this.phraseWritten,
     this.phraseOrdered,
   });
@@ -197,13 +202,14 @@ class Transcription {
 
   @override
   String toString() =>
-      'Transcription(phraseWritten: $phraseWritten, phraseOrdered: $phraseOrdered)';
+      'Transcription(hashCode:$hashCode, phraseWritten: $phraseWritten, phraseOrdered: $phraseOrdered)';
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
     return other is Transcription &&
+        runtimeType == other.runtimeType &&
         other.phraseWritten == phraseWritten &&
         listEquals(other.phraseOrdered, phraseOrdered);
   }

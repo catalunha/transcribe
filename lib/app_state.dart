@@ -1,4 +1,5 @@
 import 'package:async_redux/async_redux.dart';
+import 'package:flutter/material.dart';
 
 import 'phrase/controller/phrase_state.dart';
 import 'task/controller/task_state.dart';
@@ -7,6 +8,7 @@ import 'upload/controller/upload_state.dart';
 import 'user/controller/user_state.dart';
 import 'users/controller/users_state.dart';
 
+@immutable
 class AppState {
   final Wait wait;
   final UserState userState;
@@ -16,7 +18,7 @@ class AppState {
   final UploadState uploadState;
   final TaskState taskState;
 
-  AppState({
+  const AppState({
     required this.wait,
     required this.userState,
     required this.usersState,
@@ -60,6 +62,7 @@ class AppState {
     if (identical(this, other)) return true;
 
     return other is AppState &&
+        runtimeType == other.runtimeType &&
         other.taskState == taskState &&
         other.uploadState == uploadState &&
         other.phraseState == phraseState &&
