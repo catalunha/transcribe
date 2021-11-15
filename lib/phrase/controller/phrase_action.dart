@@ -8,24 +8,32 @@ import '../../app_state.dart';
 import 'phrase_model.dart';
 
 class StreamDocsPhraseAction extends ReduxAction<AppState> {
+  final bool? isArchived;
+
+  StreamDocsPhraseAction({required this.isArchived});
   @override
   Future<AppState?> reduce() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     Query<Map<String, dynamic>> collRef;
+
     collRef = firebaseFirestore
         .collection(PhraseModel.collection)
         .where('teacher.id', isEqualTo: state.userState.userCurrent!.id)
-        .where('isArchived', isEqualTo: false);
-
+        .where('isArchived', isEqualTo: isArchived);
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
 
-    Stream<IList<PhraseModel>> streamList = streamQuerySnapshot.map(
+    Stream<List<PhraseModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
             .map((docSnapshot) => PhraseModel.fromMap(docSnapshot.data()))
-            .toIList());
-    streamList.listen((IList<PhraseModel> phraseModelList) {
-      dispatch(SetPhraseListPhraseAction(phraseList: phraseModelList));
+            .toList());
+    streamList.listen((List<PhraseModel> phraseModelList) {
+      if (isArchived != null && isArchived!) {
+        dispatch(SetPhraseListArchivedPhraseAction(
+            phraseList: IList(phraseModelList)));
+      } else {
+        dispatch(SetPhraseListPhraseAction(phraseList: IList(phraseModelList)));
+      }
     });
 
     return null;
@@ -38,7 +46,6 @@ class SetPhraseListPhraseAction extends ReduxAction<AppState> {
   SetPhraseListPhraseAction({required this.phraseList});
   @override
   AppState reduce() {
-    int amount = 0;
     phraseList.sort((a, b) => a.group.compareTo(b.group));
     return state.copyWith(
       phraseState: state.phraseState.copyWith(
@@ -53,6 +60,21 @@ class SetPhraseListPhraseAction extends ReduxAction<AppState> {
       dispatch(SetPhraseCurrentPhraseAction(
           id: state.phraseState.phraseCurrent!.id));
     }
+  }
+}
+
+class SetPhraseListArchivedPhraseAction extends ReduxAction<AppState> {
+  final IList<PhraseModel> phraseList;
+
+  SetPhraseListArchivedPhraseAction({required this.phraseList});
+  @override
+  AppState reduce() {
+    phraseList.sort((a, b) => a.group.compareTo(b.group));
+    return state.copyWith(
+      phraseState: state.phraseState.copyWith(
+        phraseIListArchived: phraseList,
+      ),
+    );
   }
 }
 
@@ -148,6 +170,45 @@ class UpdateDocPhraseAction extends ReduxAction<AppState> {
   }
 }
 
+class ArchiveDocPhraseAction extends ReduxAction<AppState> {
+  final String phraseId;
+  final bool isArchived;
+
+  ArchiveDocPhraseAction({
+    required this.phraseId,
+    this.isArchived = true,
+  });
+
+  @override
+  Future<AppState?> reduce() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    DocumentReference docRef =
+        firebaseFirestore.collection(PhraseModel.collection).doc(phraseId);
+
+    // dispatch(SetTaskCurrentTaskAction(id: null));
+
+    await docRef.update({'isArchived': isArchived});
+
+    return null;
+  }
+}
+
+class DeleteDocPhraseAction extends ReduxAction<AppState> {
+  final String phraseId;
+
+  DeleteDocPhraseAction({required this.phraseId});
+
+  @override
+  Future<AppState?> reduce() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    DocumentReference docRef =
+        firebaseFirestore.collection(PhraseModel.collection).doc(phraseId);
+
+    await docRef.delete();
+
+    return null;
+  }
+}
 
 
 // class ReadDocsPhraseAction extends ReduxAction<AppState> {

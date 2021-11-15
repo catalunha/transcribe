@@ -81,29 +81,29 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
                 //   ),
                 // ),
 
-                widget.addOrEditId
-                    ? Container()
-                    : InputCheckBox(
-                        title: 'Archived this sentence',
-                        subtitle: 'Select to archive this sentence.',
-                        icon: AppIconData.inbox,
-                        value: formControllerPhrase.phraseModel.isArchived,
-                        onChanged: (value) {
-                          formControllerPhrase.onChange(isArchived: value);
-                          setState(() {});
-                        },
-                      ),
-                widget.addOrEditId
-                    ? Container()
-                    : InputCheckBoxDelete(
-                        title: 'Delete this sentence',
-                        subtitle: 'Delete forever',
-                        value: formControllerPhrase.phraseModel.isDeleted,
-                        onChanged: (value) {
-                          formControllerPhrase.onChange(isDeleted: value);
-                          setState(() {});
-                        },
-                      ),
+                // widget.addOrEditId
+                //     ? Container()
+                //     : InputCheckBox(
+                //         title: 'Archived this sentence',
+                //         subtitle: 'Select to archive this sentence.',
+                //         icon: AppIconData.inbox,
+                //         value: formControllerPhrase.phraseModel.isArchived,
+                //         onChanged: (value) {
+                //           formControllerPhrase.onChange(isArchived: value);
+                //           setState(() {});
+                //         },
+                //       ),
+                // widget.addOrEditId
+                //     ? Container()
+                //     : InputCheckBoxDelete(
+                //         title: 'Delete this sentence',
+                //         subtitle: 'Delete forever',
+                //         value: formControllerPhrase.phraseModel.isDeleted,
+                //         onChanged: (value) {
+                //           formControllerPhrase.onChange(isDeleted: value);
+                //           setState(() {});
+                //         },
+                //       ),
                 RequiredInForm(
                   message:
                       'Sentence id: ${formControllerPhrase.phraseModel.id}',

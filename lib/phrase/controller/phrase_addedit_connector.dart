@@ -85,15 +85,15 @@ class FormControllerPhase {
     String? phrase,
     String? group,
     // String? phraseAudio,
-    bool? isArchived,
-    bool? isDeleted,
+    // bool? isArchived,
+    // bool? isDeleted,
   }) {
     phraseModel = phraseModel.copyWith(
       phraseList: phrase?.split('\n'),
       group: group,
       // phraseAudio: phraseAudio,
-      isArchived: isArchived,
-      isDeleted: isDeleted,
+      // isArchived: isArchived,
+      // isDeleted: isDeleted,
     );
     // // print('==--> FormController.onChange: $phraseModel');
   }

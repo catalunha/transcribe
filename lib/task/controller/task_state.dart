@@ -6,46 +6,31 @@ import 'task_model.dart';
 
 @immutable
 class TaskState {
-  // defaultConfig = ConfigList(isDeepEquals: false, cacheHashCode: false);
   final IList<TaskModel>? taskIList;
+  final IList<TaskModel>? taskIListArchived;
   final TaskModel? taskCurrent;
   const TaskState({
     this.taskCurrent,
     this.taskIList,
+    this.taskIListArchived,
   });
   factory TaskState.initialState() => TaskState(
         taskCurrent: null,
         taskIList: IList(),
+        taskIListArchived: IList(),
       );
   TaskState copyWith({
     TaskModel? taskCurrent,
     IList<TaskModel>? taskIList,
+    IList<TaskModel>? taskIListArchived,
     bool taskPhraseCurrentSetNull = false,
     bool taskPhraseListSetNull = false,
   }) {
-    // if (taskIList != null) {
-    //   for (var task in taskIList) {
-    //     print('copyWith list : $task');
-    //   }
-    // }
-    // if (taskIList == null || taskIList.isEmpty) {
-    //   print('copyWith list : null');
-    // }
-    // print('copyWith current: $taskCurrent');
-    // if (this.taskIList != null) {
-    //   for (var task in this.taskIList!) {
-    //     print('this list : $task');
-    //   }
-    // }
-    // if (this.taskIList == null || this.taskIList!.isEmpty) {
-    //   print('this list : null');
-    // }
-    // print('this current: ${this.taskCurrent}');
-
     return TaskState(
       taskCurrent:
           taskPhraseCurrentSetNull ? null : taskCurrent ?? this.taskCurrent,
       taskIList: taskIList ?? this.taskIList,
+      taskIListArchived: taskIListArchived ?? this.taskIListArchived,
     );
   }
 
@@ -60,9 +45,11 @@ class TaskState {
     return other is TaskState &&
         runtimeType == other.runtimeType &&
         other.taskCurrent == taskCurrent &&
-        other.taskIList == taskIList;
+        other.taskIList == taskIList &&
+        other.taskIListArchived == taskIListArchived;
   }
 
   @override
-  int get hashCode => taskCurrent.hashCode ^ taskIList.hashCode;
+  int get hashCode =>
+      taskCurrent.hashCode ^ taskIList.hashCode ^ taskIListArchived.hashCode;
 }

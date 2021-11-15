@@ -17,7 +17,7 @@ class TaskListConnector extends StatelessWidget {
     return StoreConnector<AppState, TaskListVm>(
       vm: () => TaskListVmFactory(this),
       onInit: (store) {
-        store.dispatch(StreamDocsTaskAction());
+        store.dispatch(StreamDocsTaskAction(isArchived: false));
       },
       builder: (context, vm) => TaskList(
         taskIList: vm.taskIList,

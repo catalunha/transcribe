@@ -11,6 +11,9 @@ import '../../app_state.dart';
 import 'task_model.dart';
 
 class StreamDocsTaskAction extends ReduxAction<AppState> {
+  final bool isArchived;
+
+  StreamDocsTaskAction({required this.isArchived});
   @override
   Future<AppState?> reduce() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -18,8 +21,7 @@ class StreamDocsTaskAction extends ReduxAction<AppState> {
     collRef = firebaseFirestore
         .collection(TaskModel.collection)
         .where('team.teacher.id', isEqualTo: state.userState.userCurrent!.id)
-        .where('isArchived', isEqualTo: false)
-        .where('isDeleted', isEqualTo: false);
+        .where('isArchived', isEqualTo: isArchived);
 
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
@@ -29,7 +31,11 @@ class StreamDocsTaskAction extends ReduxAction<AppState> {
             .map((docSnapshot) => TaskModel.fromMap(docSnapshot.data()))
             .toList());
     streamList.listen((List<TaskModel> taskModelList) {
-      dispatch(SetTaskListTaskAction(taskList: IList(taskModelList)));
+      if (isArchived) {
+        dispatch(SetTaskListArchivedTaskAction(taskList: IList(taskModelList)));
+      } else {
+        dispatch(SetTaskListTaskAction(taskList: IList(taskModelList)));
+      }
     });
 
     return null;
@@ -59,6 +65,22 @@ class SetTaskListTaskAction extends ReduxAction<AppState> {
       dispatch(SetTaskCurrentTaskAction(id: state.taskState.taskCurrent!.id));
       // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
     }
+  }
+}
+
+class SetTaskListArchivedTaskAction extends ReduxAction<AppState> {
+  final IList<TaskModel> taskList;
+
+  SetTaskListArchivedTaskAction({required this.taskList});
+  @override
+  AppState reduce() {
+    taskList.sort((a, b) => a.title.compareTo(b.title));
+
+    return state.copyWith(
+      taskState: state.taskState.copyWith(
+        taskIListArchived: taskList,
+      ),
+    );
   }
 }
 
@@ -181,8 +203,12 @@ class AddTranscriptionsTaskAction extends ReduxAction<AppState> {
 
 class ArchiveDocTaskAction extends ReduxAction<AppState> {
   final String taskId;
+  final bool isArchived;
 
-  ArchiveDocTaskAction({required this.taskId});
+  ArchiveDocTaskAction({
+    required this.taskId,
+    this.isArchived = true,
+  });
 
   @override
   Future<AppState?> reduce() async {
@@ -192,7 +218,7 @@ class ArchiveDocTaskAction extends ReduxAction<AppState> {
 
     dispatch(SetTaskCurrentTaskAction(id: null));
 
-    await docRef.update({'isArchived': true});
+    await docRef.update({'isArchived': isArchived});
 
     return null;
   }

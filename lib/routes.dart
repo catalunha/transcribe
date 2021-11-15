@@ -5,8 +5,10 @@ import 'home/controller/home_page_connector.dart';
 import 'home/information.dart';
 import 'login/controller/login_connector.dart';
 import 'login/controller/splash_connector.dart';
+import 'phrase/controller/phrase_list_archived_connector.dart';
 import 'phrase/controller/phrase_list_connector.dart';
 import 'task/controller/task_addedit_connector.dart';
+import 'task/controller/task_list_archived_connector.dart';
 import 'task/controller/task_list_connector.dart';
 import 'task/controller/task_people_list_connector.dart';
 import 'team/controller/team_addedit_connector.dart';
@@ -35,6 +37,8 @@ class Routes {
     '/phrase_addOrEdit': (BuildContext context) => PhraseAddEditConnector(
           addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
         ),
+    '/phrase_archived': (BuildContext context) =>
+        const PhraseListArchivedConnector(),
     //task
     '/task_list': (BuildContext context) => const TaskListConnector(),
     '/task_addOrEdit': (BuildContext context) => TaskAddEditConnector(
@@ -43,6 +47,8 @@ class Routes {
     '/task_people_list': (BuildContext context) => TaskPeopleListConnector(
           taskId: ModalRoute.of(context)!.settings.arguments.toString(),
         ),
+    '/task_archived': (BuildContext context) =>
+        const TaskListArchivedConnector(),
     //transcription
     '/transcription_list': (BuildContext context) =>
         const TranscriptionListConnector(),

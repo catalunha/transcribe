@@ -1,18 +1,18 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:transcribe/phrase/phrase_card.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
-import 'controller/task_model.dart';
-import 'task_card.dart';
+import 'controller/phrase_model.dart';
 
-class TaskArchivedList extends StatelessWidget {
-  final IList<TaskModel> taskIList;
+class PhraseArchivedList extends StatelessWidget {
+  final IList<PhraseModel> phraseIList;
   final Function(String) onArchive;
   final Function(String) onDelete;
-  const TaskArchivedList({
+
+  const PhraseArchivedList({
     Key? key,
-    required this.taskIList,
+    required this.phraseIList,
     required this.onArchive,
     required this.onDelete,
   }) : super(key: key);
@@ -21,7 +21,7 @@ class TaskArchivedList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My tasks archived'),
+        title: Text('My sentences'),
       ),
       body: Column(
         children: [
@@ -35,12 +35,12 @@ class TaskArchivedList extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Create new task.',
+        tooltip: 'Create new sentence.',
         child: Icon(AppIconData.addInCloud),
         onPressed: () {
           Navigator.pushNamed(
             context,
-            '/task_addOrEdit',
+            '/phrase_addOrEdit',
             arguments: '',
           );
         },
@@ -51,26 +51,26 @@ class TaskArchivedList extends StatelessWidget {
   List<Widget> buildItens(context) {
     List<Widget> list = [];
 
-    for (var task in taskIList) {
+    for (var phrase in phraseIList) {
       list.add(Container(
-        key: ValueKey(task),
-        child: TaskCard(
-          task: task,
+        key: ValueKey(phrase),
+        child: PhraseCard(
+          phrase: phrase,
           widgetList: [
             IconButton(
-              tooltip: 'Archive this task.',
+              tooltip: 'unarchive this sentence',
               icon: Icon(AppIconData.outbox),
               onPressed: () {
-                onArchive(task.id);
+                onArchive(phrase.id);
               },
             ),
             IconButton(
-              tooltip: 'Delete this task.',
+              tooltip: 'delete this sentence',
               icon: Icon(AppIconData.delete),
               onPressed: () {
-                onDelete(task.id);
+                onDelete(phrase.id);
               },
-            ),
+            )
           ],
         ),
       ));
@@ -78,7 +78,7 @@ class TaskArchivedList extends StatelessWidget {
     if (list.isEmpty) {
       list.add(ListTile(
         leading: Icon(AppIconData.smile),
-        title: Text("Ops. You don't have any task."),
+        title: Text("Ops. You don't have any sentence."),
       ));
     }
     return list;

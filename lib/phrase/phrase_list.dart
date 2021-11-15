@@ -7,10 +7,12 @@ import 'controller/phrase_model.dart';
 
 class PhraseList extends StatelessWidget {
   final IList<PhraseModel> phraseIList;
+  final Function(String) onArchive;
 
   const PhraseList({
     Key? key,
     required this.phraseIList,
+    required this.onArchive,
   }) : super(key: key);
 
   @override
@@ -18,6 +20,18 @@ class PhraseList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('My sentences'),
+        actions: [
+          IconButton(
+            tooltip: 'Archived sentences',
+            icon: Icon(AppIconData.box),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/phrase_archived',
+              );
+            },
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -64,6 +78,13 @@ class PhraseList extends StatelessWidget {
                 );
               },
             ),
+            IconButton(
+              tooltip: 'Archive this sentence',
+              icon: Icon(AppIconData.inbox),
+              onPressed: () {
+                onArchive(phrase.id);
+              },
+            )
           ],
         ),
       ));

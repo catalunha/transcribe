@@ -17,7 +17,7 @@ class SearchPhraseListConnector extends StatelessWidget {
       vm: () => PhraseListVmFactory(this),
       onInit: (store) {
         if (store.state.phraseState.phraseIList?.isEmpty ?? false) {
-          store.dispatch(StreamDocsPhraseAction());
+          store.dispatch(StreamDocsPhraseAction(isArchived: null));
         }
       },
       builder: (context, vm) => SearchPhraseList(

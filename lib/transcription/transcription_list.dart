@@ -72,7 +72,7 @@ class TranscriptionList extends StatelessWidget {
               },
               trailing: transcription.isSolved
                   ? IconButton(
-                      tooltip: 'Archive this sentence',
+                      tooltip: 'Archive this transcription',
                       icon: Icon(AppIconData.inbox),
                       onPressed: () {
                         onArchive(transcription.id);

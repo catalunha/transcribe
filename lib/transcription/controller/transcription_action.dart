@@ -28,7 +28,6 @@ class StreamDocsTranscriptionAction extends ReduxAction<AppState> {
                 (docSnapshot) => TranscriptionModel.fromMap(docSnapshot.data()))
             .toList());
     streamList.listen((List<TranscriptionModel> transcriptionList) {
-      print('stream isArchived=$isArchived: $transcriptionList');
       if (isArchived) {
         dispatch(SetTranscriptionListArchivedTranscriptionAction(
             transcriptionIList: IList(transcriptionList)));

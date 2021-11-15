@@ -22,6 +22,18 @@ class TaskList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('My tasks'),
+        actions: [
+          IconButton(
+            tooltip: 'Archived sentences',
+            icon: Icon(AppIconData.box),
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                '/task_archived',
+              );
+            },
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -75,13 +87,13 @@ class TaskList extends StatelessWidget {
                 onArchive(task.id);
               },
             ),
-            IconButton(
-              tooltip: 'Delete this task.',
-              icon: Icon(AppIconData.delete),
-              onPressed: () {
-                onDelete(task.id);
-              },
-            ),
+            // IconButton(
+            //   tooltip: 'Delete this task.',
+            //   icon: Icon(AppIconData.delete),
+            //   onPressed: () {
+            //     onDelete(task.id);
+            //   },
+            // ),
           ],
         ),
       ));
