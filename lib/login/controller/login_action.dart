@@ -78,6 +78,7 @@ class SignOutLoginAction extends ReduxAction<AppState> {
     );
   }
 
+  @override
   void after() => dispatch(ChangeStatusFirebaseAuthLoginAction(
       statusFirebaseAuth: StatusFirebaseAuth.unAuthenticated));
 }

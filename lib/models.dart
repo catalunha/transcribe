@@ -1,7 +1,7 @@
 // //User
 // class UserModel {
-//   late String uid;
 //   late String id;
+//   late String uid;
 //   late String email;
 //   late String? photoURL;
 //   late String? displayName;
@@ -11,22 +11,25 @@
 
 // class UserRef {
 //   late String id;
+//   late String email;
 //   late String? photoURL;
 //   late String? displayName;
 // }
 
 // //team
 // class TeamModel {
+//   late String id;
 //   late UserRef teacher;
-//   late String name;
+//   late String title;
 //   late List<String> userList; //[userId]
 //   late Map<String, UserRef> userMap; //<userId,UserRef>
 // }
 
 // //Phrase
 // class PhraseModel {
+//   late String id;
 //   late UserRef teacher;
-//   late String group;
+//   late String title;
 //   late List<String> phraseList;
 //   late String phraseAudio;
 //   late bool isArchived;
@@ -37,19 +40,25 @@
 
 // //Task
 // class TaskModel {
-//   late String group;
+//   late String id;
+//   late String title;
 //   late TeamModel team;
 //   late PhraseModel phrase;
 //   late bool isWritten;
 //   late bool? showPhraseImage;
 //   late bool? showPhraseListImage;
-//   late Map<String, Transcription>? transcriptionMap; //<userId,Transcription
-//   late bool isArchivedByTeacher;
-//   late bool isArchivedByStudent;
+//   late bool isArchived;
 //   late bool isDeleted;
 // }
 
-// class Transcription {
+// //Transcription
+// class TranscriptionModel {
+//   late String id;
+//   late String student;
+//   late TaskModel task;
 //   late String phraseWritten;
 //   late List<String> phraseOrdered;
+//   late bool isSolved;
+//   late bool isArchived;
+//   late bool isDeleted;
 // }

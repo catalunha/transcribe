@@ -34,9 +34,7 @@ class _TaskAddEditState extends State<TaskAddEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(formControllerTask.taskModel.id.isEmpty
-            ? 'Add task.'
-            : 'Edit task.'),
+        title: Text('Add task.'),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -47,7 +45,7 @@ class _TaskAddEditState extends State<TaskAddEdit> {
               InputTitle(
                 label: 'Name for the task',
                 required: true,
-                initialValue: formControllerTask.taskModel.name,
+                initialValue: formControllerTask.taskModel.title,
                 validator: formControllerTask.validateRequiredText,
                 onChanged: (value) {
                   formControllerTask.onChange(name: value);
@@ -63,29 +61,29 @@ class _TaskAddEditState extends State<TaskAddEdit> {
                 phrase: widget.formControllerTask.taskModel.phrase,
                 required: true,
               ),
-              formControllerTask.taskModel.id.isEmpty
-                  ? Container()
-                  : InputCheckBox(
-                      title: 'Archived this task',
-                      subtitle: 'Select to archive this task.',
-                      icon: AppIconData.inbox,
-                      value: formControllerTask.taskModel.isArchivedByTeacher,
-                      onChanged: (value) {
-                        formControllerTask.onChange(isArchivedByTeacher: value);
-                        setState(() {});
-                      },
-                    ),
-              formControllerTask.taskModel.id.isEmpty
-                  ? Container()
-                  : InputCheckBoxDelete(
-                      title: 'Delete this task',
-                      subtitle: 'Delete forever',
-                      value: formControllerTask.taskModel.isDeleted,
-                      onChanged: (value) {
-                        formControllerTask.onChange(isDeleted: value);
-                        setState(() {});
-                      },
-                    ),
+              // formControllerTask.taskModel.id.isEmpty
+              //     ? Container()
+              //     : InputCheckBox(
+              //         title: 'Archived this task',
+              //         subtitle: 'Select to archive this task.',
+              //         icon: AppIconData.inbox,
+              //         value: formControllerTask.taskModel.isArchived,
+              //         onChanged: (value) {
+              //           formControllerTask.onChange(isArchived: value);
+              //           setState(() {});
+              //         },
+              //       ),
+              // formControllerTask.taskModel.id.isEmpty
+              //     ? Container()
+              //     : InputCheckBoxDelete(
+              //         title: 'Delete this task',
+              //         subtitle: 'Delete forever',
+              //         value: formControllerTask.taskModel.isDeleted,
+              //         onChanged: (value) {
+              //           formControllerTask.onChange(isDeleted: value);
+              //           setState(() {});
+              //         },
+              //       ),
               RequiredInForm(
                 message: 'task id: ${formControllerTask.taskModel.id}',
               ),

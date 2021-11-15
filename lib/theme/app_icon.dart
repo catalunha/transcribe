@@ -14,6 +14,7 @@ class AppIconData {
   static const eye = Icons.remove_red_eye_outlined;
   static const people = Icons.people_alt;
   static const copy = Icons.content_copy;
+  static const email = Icons.email_outlined;
   static const change = Icons.change_circle_outlined;
   static const list = Icons.list_alt;
   static const public = Icons.public;

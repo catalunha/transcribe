@@ -42,11 +42,7 @@ class TaskAddEditFactory extends VmFactory<AppState, TaskAddEditConnector> {
             team: state.taskState.taskCurrent!.team,
             phrase: state.taskState.taskCurrent!.phrase,
           );
-          if (widget!.addOrEditId.isEmpty) {
-            dispatch(AddDocTaskAction(taskModel: taskModelTemp));
-          } else {
-            dispatch(UpdateDocTaskAction(taskModel: taskModelTemp));
-          }
+          dispatch(AddDocTaskAction(taskModel: taskModelTemp));
         },
       );
 }
@@ -74,12 +70,12 @@ class FormControllerTask {
       value?.isEmpty ?? true ? 'This field cannot be empty.' : null;
   void onChange({
     String? name,
-    bool? isArchivedByTeacher,
+    bool? isArchived,
     bool? isDeleted,
   }) {
     taskModel = taskModel.copyWith(
-      name: name,
-      isArchivedByTeacher: isArchivedByTeacher,
+      title: name,
+      isArchived: isArchived,
       isDeleted: isDeleted,
     );
   }

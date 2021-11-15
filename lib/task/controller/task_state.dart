@@ -23,27 +23,28 @@ class TaskState {
     bool taskPhraseCurrentSetNull = false,
     bool taskPhraseListSetNull = false,
   }) {
-    if (taskIList != null) {
-      for (var task in taskIList) {
-        print('copyWith list : $task');
-      }
-    }
-    if (taskIList == null || taskIList.isEmpty) {
-      print('copyWith list : null');
-    }
-    print('copyWith current: $taskCurrent');
-    if (this.taskIList != null) {
-      for (var task in this.taskIList!) {
-        print('this list : $task');
-      }
-    }
-    if (this.taskIList == null || this.taskIList!.isEmpty) {
-      print('this list : null');
-    }
-    print('this current: ${this.taskCurrent}');
+    // if (taskIList != null) {
+    //   for (var task in taskIList) {
+    //     print('copyWith list : $task');
+    //   }
+    // }
+    // if (taskIList == null || taskIList.isEmpty) {
+    //   print('copyWith list : null');
+    // }
+    // print('copyWith current: $taskCurrent');
+    // if (this.taskIList != null) {
+    //   for (var task in this.taskIList!) {
+    //     print('this list : $task');
+    //   }
+    // }
+    // if (this.taskIList == null || this.taskIList!.isEmpty) {
+    //   print('this list : null');
+    // }
+    // print('this current: ${this.taskCurrent}');
 
     return TaskState(
-      taskCurrent: taskCurrent ?? this.taskCurrent,
+      taskCurrent:
+          taskPhraseCurrentSetNull ? null : taskCurrent ?? this.taskCurrent,
       taskIList: taskIList ?? this.taskIList,
     );
   }

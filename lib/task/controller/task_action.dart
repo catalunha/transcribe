@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/team/controller/team_model.dart';
+import 'package:transcribe/transcription/controller/transcription_action.dart';
+import 'package:transcribe/transcription/controller/transcription_model.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 import '../../app_state.dart';
@@ -16,17 +18,17 @@ class StreamDocsTaskAction extends ReduxAction<AppState> {
     collRef = firebaseFirestore
         .collection(TaskModel.collection)
         .where('team.teacher.id', isEqualTo: state.userState.userCurrent!.id)
-        .where('isArchivedByTeacher', isEqualTo: false)
+        .where('isArchived', isEqualTo: false)
         .where('isDeleted', isEqualTo: false);
 
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
 
-    Stream<IList<TaskModel>> streamList = streamQuerySnapshot.map(
+    Stream<List<TaskModel>> streamList = streamQuerySnapshot.map(
         (querySnapshot) => querySnapshot.docs
             .map((docSnapshot) => TaskModel.fromMap(docSnapshot.data()))
-            .toIList());
-    streamList.listen((IList<TaskModel> taskModelList) {
+            .toList());
+    streamList.listen((List<TaskModel> taskModelList) {
       dispatch(SetTaskListTaskAction(taskList: IList(taskModelList)));
     });
 
@@ -40,10 +42,8 @@ class SetTaskListTaskAction extends ReduxAction<AppState> {
   SetTaskListTaskAction({required this.taskList});
   @override
   AppState reduce() {
-    taskList.sort((a, b) => a.name.compareTo(b.name));
-    for (var task in taskList) {
-      // print('SetTaskListTaskAction: $task');
-    }
+    taskList.sort((a, b) => a.title.compareTo(b.title));
+
     return state.copyWith(
       taskState: state.taskState.copyWith(
         taskIList: taskList,
@@ -63,36 +63,44 @@ class SetTaskListTaskAction extends ReduxAction<AppState> {
 }
 
 class SetTaskCurrentTaskAction extends ReduxAction<AppState> {
-  final String id;
+  final String? id;
   SetTaskCurrentTaskAction({
     required this.id,
   });
   @override
   AppState reduce() {
-    TaskModel taskModelTemp;
-    TaskModel taskModel;
-    if (id.isNotEmpty) {
-      IList<TaskModel> taskModelIList = state.taskState.taskIList!;
-      taskModelTemp = taskModelIList.firstWhere((element) => element.id == id);
-      taskModel = taskModelTemp.copyWith();
+    if (id == null) {
+      return state.copyWith(
+        taskState: state.taskState.copyWith(
+          taskPhraseCurrentSetNull: true,
+        ),
+      );
     } else {
-      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-      CollectionReference docRef =
-          firebaseFirestore.collection(TaskModel.collection);
-      String idNew = docRef.doc().id;
-      taskModel = TaskModel(
-        id: idNew,
-        name: '',
+      TaskModel taskModelTemp;
+      TaskModel taskModel;
+      if (id!.isNotEmpty) {
+        IList<TaskModel> taskModelIList = state.taskState.taskIList!;
+        taskModelTemp =
+            taskModelIList.firstWhere((element) => element.id == id);
+        taskModel = taskModelTemp.copyWith();
+      } else {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+        CollectionReference docRef =
+            firebaseFirestore.collection(TaskModel.collection);
+        String idNew = docRef.doc().id;
+        taskModel = TaskModel(
+          id: idNew,
+          title: '',
+        );
+      }
+      return state.copyWith(
+        taskState: state.taskState.copyWith(
+          taskCurrent: taskModel,
+        ),
       );
     }
     // print('SetTaskCurrentTaskAction: ${state.taskState.taskCurrent}');
     // print('SetTaskCurrentTaskAction: ${taskModel.id}');
-
-    return state.copyWith(
-      taskState: state.taskState.copyWith(
-        taskCurrent: taskModel,
-      ),
-    );
   }
 }
 
@@ -119,29 +127,123 @@ class AddDocTaskAction extends ReduxAction<AppState> {
     CollectionReference docRef =
         firebaseFirestore.collection(TaskModel.collection);
 
-    await docRef.doc(taskModel.id).set(taskModel.toMap());
+    await docRef.doc(taskModel.id).set(taskModel.toMap()).then(
+          (value) =>
+              dispatch(AddTranscriptionsTaskAction(taskModel: taskModel)),
+        );
     return null;
   }
 }
 
-class UpdateDocTaskAction extends ReduxAction<AppState> {
+class AddTranscriptionsTaskAction extends ReduxAction<AppState> {
   final TaskModel taskModel;
 
-  UpdateDocTaskAction({required this.taskModel});
+  AddTranscriptionsTaskAction({required this.taskModel});
+
+  @override
+  Future<AppState?> reduce() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    CollectionReference docRef =
+        firebaseFirestore.collection(TranscriptionModel.collection);
+    for (var userId in taskModel.team!.userMap.keys) {
+      String idNew = docRef.doc().id;
+      TranscriptionModel transcriptionModel = TranscriptionModel(
+          id: idNew,
+          student: taskModel.team!.userMap[userId]!,
+          task: taskModel.copyWith(teamSetNull: true));
+      await docRef.doc(transcriptionModel.id).set(transcriptionModel.toMap());
+    }
+    return null;
+  }
+}
+
+// class UpdateDocTaskAction extends ReduxAction<AppState> {
+//   final TaskModel taskModel;
+
+//   UpdateDocTaskAction({required this.taskModel});
+
+//   @override
+//   Future<AppState?> reduce() async {
+//     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+//     DocumentReference docRef =
+//         firebaseFirestore.collection(TaskModel.collection).doc(taskModel.id);
+
+//     dispatch(SetTaskCurrentTaskAction(id: ''));
+//     if (taskModel.isDeleted) {
+//       await docRef.delete();
+//     } else {
+//       await docRef.update(taskModel.toMap());
+//     }
+
+//     return null;
+//   }
+// }
+
+class ArchiveDocTaskAction extends ReduxAction<AppState> {
+  final String taskId;
+
+  ArchiveDocTaskAction({required this.taskId});
 
   @override
   Future<AppState?> reduce() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     DocumentReference docRef =
-        firebaseFirestore.collection(TaskModel.collection).doc(taskModel.id);
+        firebaseFirestore.collection(TaskModel.collection).doc(taskId);
 
-    dispatch(SetTaskCurrentTaskAction(id: ''));
-    if (taskModel.isDeleted) {
-      await docRef.delete();
-    } else {
-      await docRef.update(taskModel.toMap());
+    dispatch(SetTaskCurrentTaskAction(id: null));
+
+    await docRef.update({'isArchived': true});
+
+    return null;
+  }
+}
+
+class DeleteDocTaskAction extends ReduxAction<AppState> {
+  final String taskId;
+
+  DeleteDocTaskAction({required this.taskId});
+
+  @override
+  Future<AppState?> reduce() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    DocumentReference docRef =
+        firebaseFirestore.collection(TaskModel.collection).doc(taskId);
+
+    dispatch(DeleteTranscriptionsTaskAction(taskId: taskId));
+    dispatch(SetTaskCurrentTaskAction(id: null));
+    await docRef.delete();
+
+    return null;
+  }
+}
+
+class DeleteTranscriptionsTaskAction extends ReduxAction<AppState> {
+  final String taskId;
+
+  DeleteTranscriptionsTaskAction({required this.taskId});
+
+  @override
+  Future<AppState?> reduce() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    CollectionReference docRef =
+        firebaseFirestore.collection(TaskModel.collection);
+
+    Future<void> batchDelete() {
+      WriteBatch batch = FirebaseFirestore.instance.batch();
+
+      return docRef
+          .where('task.id', isEqualTo: taskId)
+          .get()
+          .then((querySnapshot) {
+        for (var document in querySnapshot.docs) {
+          batch.delete(document.reference);
+        }
+
+        return batch.commit();
+      });
     }
 
+    await batchDelete();
     return null;
   }
 }
@@ -194,6 +296,36 @@ class SetPhraseTaskAction extends ReduxAction<AppState> {
   }
 }
 
+class StreamDocsTranscriptionsTaskAction extends ReduxAction<AppState> {
+  final String taskId;
+
+  StreamDocsTranscriptionsTaskAction({required this.taskId});
+  @override
+  Future<AppState?> reduce() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    Query<Map<String, dynamic>> collRef;
+    collRef = firebaseFirestore
+        .collection(TranscriptionModel.collection)
+        .where('task.id', isEqualTo: taskId)
+        .where('isArchived', isEqualTo: false)
+        .where('isDeleted', isEqualTo: false);
+
+    Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
+        collRef.snapshots();
+
+    Stream<List<TranscriptionModel>> streamList = streamQuerySnapshot.map(
+        (querySnapshot) => querySnapshot.docs
+            .map(
+                (docSnapshot) => TranscriptionModel.fromMap(docSnapshot.data()))
+            .toList());
+    streamList.listen((List<TranscriptionModel> transcriptionModelModelList) {
+      dispatch(SetTranscriptionListTaskAction(
+          transcriptionIList: IList(transcriptionModelModelList)));
+    });
+
+    return null;
+  }
+}
 
 // // class GetDocsPhraseObservedAndSetNullTaskAction extends ReduxAction<AppState> {
 // //   final String taskId;

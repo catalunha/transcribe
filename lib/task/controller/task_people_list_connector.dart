@@ -4,52 +4,46 @@ import 'package:flutter/material.dart';
 import 'package:transcribe/task/controller/task_model.dart';
 import 'package:transcribe/task/controller/task_action.dart';
 import 'package:transcribe/task/controller/task_model.dart';
+import 'package:transcribe/transcription/controller/transcription_model.dart';
 
 import '../../app_state.dart';
 import '../task_list.dart';
+import '../task_people_list.dart';
 import 'task_action.dart';
 
-class TaskListConnector extends StatelessWidget {
-  const TaskListConnector({Key? key}) : super(key: key);
+class TaskPeopleListConnector extends StatelessWidget {
+  final String taskId;
+
+  const TaskPeopleListConnector({Key? key, required this.taskId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, TaskListVm>(
       vm: () => TaskListVmFactory(this),
       onInit: (store) {
-        store.dispatch(StreamDocsTaskAction());
+        store.dispatch(StreamDocsTranscriptionsTaskAction(taskId: taskId));
       },
-      builder: (context, vm) => TaskList(
-        taskIList: vm.taskIList,
-        onArchive: vm.onArchive,
-        onDelete: vm.onDelete,
+      builder: (context, vm) => TaskPeopleList(
+        transcriptionIList: vm.transcriptionIList,
       ),
     );
   }
 }
 
-class TaskListVmFactory extends VmFactory<AppState, TaskListConnector> {
+class TaskListVmFactory extends VmFactory<AppState, TaskPeopleListConnector> {
   TaskListVmFactory(widget) : super(widget);
   @override
   TaskListVm fromStore() => TaskListVm(
-        taskIList: state.taskState.taskIList!,
-        onArchive: (String taskId) =>
-            dispatch(ArchiveDocTaskAction(taskId: taskId)),
-        onDelete: (String taskId) =>
-            dispatch(DeleteDocTaskAction(taskId: taskId)),
+        transcriptionIList: state.transcriptionState.transcriptionIList!,
       );
 }
 
 class TaskListVm extends Vm {
-  final IList<TaskModel> taskIList;
-  final Function(String) onArchive;
-  final Function(String) onDelete;
-
+  final IList<TranscriptionModel> transcriptionIList;
   TaskListVm({
-    required this.taskIList,
-    required this.onArchive,
-    required this.onDelete,
+    required this.transcriptionIList,
   }) : super(equals: [
-          taskIList,
+          transcriptionIList,
         ]);
 }

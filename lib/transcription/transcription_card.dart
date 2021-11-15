@@ -24,7 +24,7 @@ class TranscriptionCard extends StatelessWidget {
           Container(
             width: double.infinity,
             child: Text(
-              task.name,
+              task.title,
               textAlign: TextAlign.start,
               style: TextStyle(fontSize: 20),
             ),

@@ -8,10 +8,13 @@ import 'task_card.dart';
 
 class TaskList extends StatelessWidget {
   final IList<TaskModel> taskIList;
-
+  final Function(String) onArchive;
+  final Function(String) onDelete;
   const TaskList({
     Key? key,
     required this.taskIList,
+    required this.onArchive,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -55,14 +58,28 @@ class TaskList extends StatelessWidget {
           task: task,
           widgetList: [
             IconButton(
-              tooltip: 'Edit this task.',
-              icon: Icon(AppIconData.edit),
+              tooltip: 'People in this task.',
+              icon: Icon(AppIconData.people),
               onPressed: () {
                 Navigator.pushNamed(
                   context,
-                  '/task_addOrEdit',
+                  '/task_people_list',
                   arguments: task.id,
                 );
+              },
+            ),
+            IconButton(
+              tooltip: 'Archive this task.',
+              icon: Icon(AppIconData.inbox),
+              onPressed: () {
+                onArchive(task.id);
+              },
+            ),
+            IconButton(
+              tooltip: 'Delete this task.',
+              icon: Icon(AppIconData.delete),
+              onPressed: () {
+                onDelete(task.id);
               },
             ),
           ],

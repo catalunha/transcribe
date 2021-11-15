@@ -8,6 +8,7 @@ import 'login/controller/splash_connector.dart';
 import 'phrase/controller/phrase_list_connector.dart';
 import 'task/controller/task_addedit_connector.dart';
 import 'task/controller/task_list_connector.dart';
+import 'task/controller/task_people_list_connector.dart';
 import 'team/controller/team_addedit_connector.dart';
 import 'team/team_page.dart';
 import 'transcription/controller/transcription_edit_connector.dart';
@@ -38,11 +39,14 @@ class Routes {
     '/task_addOrEdit': (BuildContext context) => TaskAddEditConnector(
           addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
         ),
-    //task
-    '/transcription_list': (BuildContext context) =>
-        const TranscriptionListConnector(),
-    '/transcription_edit': (BuildContext context) => TranscriptionEditConnector(
-          addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
+    '/task_people_list': (BuildContext context) => TaskPeopleListConnector(
+          taskId: ModalRoute.of(context)!.settings.arguments.toString(),
         ),
+    // //transcription
+    // '/transcription_list': (BuildContext context) =>
+    //     const TranscriptionListConnector(),
+    // '/transcription_edit': (BuildContext context) => TranscriptionEditConnector(
+    //       addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
+    //     ),
   };
 }

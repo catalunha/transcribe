@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'phrase/controller/phrase_state.dart';
 import 'task/controller/task_state.dart';
 import 'team/controller/team_state.dart';
+import 'transcription/controller/transcription_state.dart';
 import 'upload/controller/upload_state.dart';
 import 'user/controller/user_state.dart';
 import 'users/controller/users_state.dart';
@@ -17,6 +18,7 @@ class AppState {
   final PhraseState phraseState;
   final UploadState uploadState;
   final TaskState taskState;
+  final TranscriptionState transcriptionState;
 
   const AppState({
     required this.wait,
@@ -26,6 +28,7 @@ class AppState {
     required this.phraseState,
     required this.uploadState,
     required this.taskState,
+    required this.transcriptionState,
   });
 
   static AppState initialState() => AppState(
@@ -36,6 +39,7 @@ class AppState {
         phraseState: PhraseState.initialState(),
         uploadState: UploadState.initialState(),
         taskState: TaskState.initialState(),
+        transcriptionState: TranscriptionState.initialState(),
       );
   AppState copyWith({
     Wait? wait,
@@ -45,6 +49,7 @@ class AppState {
     PhraseState? phraseState,
     UploadState? uploadState,
     TaskState? taskState,
+    TranscriptionState? transcriptionState,
   }) {
     return AppState(
       wait: wait ?? this.wait,
@@ -54,6 +59,7 @@ class AppState {
       phraseState: phraseState ?? this.phraseState,
       uploadState: uploadState ?? this.uploadState,
       taskState: taskState ?? this.taskState,
+      transcriptionState: transcriptionState ?? this.transcriptionState,
     );
   }
 
@@ -63,6 +69,7 @@ class AppState {
 
     return other is AppState &&
         runtimeType == other.runtimeType &&
+        other.transcriptionState == transcriptionState &&
         other.taskState == taskState &&
         other.uploadState == uploadState &&
         other.phraseState == phraseState &&
@@ -75,6 +82,7 @@ class AppState {
   @override
   int get hashCode {
     return userState.hashCode ^
+        transcriptionState.hashCode ^
         taskState.hashCode ^
         uploadState.hashCode ^
         usersState.hashCode ^
