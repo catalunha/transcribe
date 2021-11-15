@@ -54,13 +54,14 @@ class SetPhraseListPhraseAction extends ReduxAction<AppState> {
     );
   }
 
-  @override
-  void after() {
-    if (state.phraseState.phraseCurrent != null) {
-      dispatch(SetPhraseCurrentPhraseAction(
-          id: state.phraseState.phraseCurrent!.id));
-    }
-  }
+  // @override
+  // void after() {
+  //   if (state.phraseState.phraseCurrent != null) {
+  //     print('phraseCurrent: ${state.phraseState.phraseCurrent!.id}');
+  //     dispatch(SetPhraseCurrentPhraseAction(
+  //         id: state.phraseState.phraseCurrent!.id));
+  //   }
+  // }
 }
 
 class SetPhraseListArchivedPhraseAction extends ReduxAction<AppState> {
@@ -185,7 +186,7 @@ class ArchiveDocPhraseAction extends ReduxAction<AppState> {
     DocumentReference docRef =
         firebaseFirestore.collection(PhraseModel.collection).doc(phraseId);
 
-    // dispatch(SetTaskCurrentTaskAction(id: null));
+    dispatch(SetPhraseCurrentPhraseAction(id: ''));
 
     await docRef.update({'isArchived': isArchived});
 

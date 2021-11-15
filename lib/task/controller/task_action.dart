@@ -57,15 +57,15 @@ class SetTaskListTaskAction extends ReduxAction<AppState> {
     );
   }
 
-  @override
-  void after() {
-    super.after();
+  // @override
+  // void after() {
+  //   super.after();
 
-    if (state.taskState.taskCurrent != null) {
-      dispatch(SetTaskCurrentTaskAction(id: state.taskState.taskCurrent!.id));
-      // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
-    }
-  }
+  //   if (state.taskState.taskCurrent != null) {
+  //     dispatch(SetTaskCurrentTaskAction(id: state.taskState.taskCurrent!.id));
+  //     // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
+  //   }
+  // }
 }
 
 class SetTaskListArchivedTaskAction extends ReduxAction<AppState> {
