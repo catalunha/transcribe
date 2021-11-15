@@ -9,44 +9,31 @@ import 'transcription_model.dart';
 class TranscriptionState {
   final IList<TranscriptionModel>? transcriptionIList;
   final TranscriptionModel? transcriptionCurrent;
+  final IList<TranscriptionModel>? transcriptionIListArchived;
   const TranscriptionState({
     this.transcriptionCurrent,
     this.transcriptionIList,
+    this.transcriptionIListArchived,
   });
   factory TranscriptionState.initialState() => TranscriptionState(
         transcriptionCurrent: null,
         transcriptionIList: IList(),
+        transcriptionIListArchived: IList(),
       );
   TranscriptionState copyWith({
     TranscriptionModel? transcriptionCurrent,
     IList<TranscriptionModel>? transcriptionIList,
+    IList<TranscriptionModel>? transcriptionIListArchived,
     bool taskPhraseCurrentSetNull = false,
     bool taskPhraseListSetNull = false,
   }) {
-    // if (transcriptionIList != null) {
-    //   for (var task in transcriptionIList) {
-    //     print('copyWith list : $task');
-    //   }
-    // }
-    // if (transcriptionIList == null || transcriptionIList.isEmpty) {
-    //   print('copyWith list : null');
-    // }
-    // print('copyWith current: $transcriptionCurrent');
-    // if (this.transcriptionIList != null) {
-    //   for (var task in this.transcriptionIList!) {
-    //     print('this list : $task');
-    //   }
-    // }
-    // if (this.transcriptionIList == null || this.transcriptionIList!.isEmpty) {
-    //   print('this list : null');
-    // }
-    // print('this current: ${this.transcriptionCurrent}');
-
     return TranscriptionState(
       transcriptionCurrent: taskPhraseCurrentSetNull
           ? null
           : transcriptionCurrent ?? this.transcriptionCurrent,
       transcriptionIList: transcriptionIList ?? this.transcriptionIList,
+      transcriptionIListArchived:
+          transcriptionIListArchived ?? this.transcriptionIListArchived,
     );
   }
 
@@ -61,10 +48,13 @@ class TranscriptionState {
     return other is TranscriptionState &&
         runtimeType == other.runtimeType &&
         other.transcriptionCurrent == transcriptionCurrent &&
-        other.transcriptionIList == transcriptionIList;
+        other.transcriptionIList == transcriptionIList &&
+        other.transcriptionIListArchived == transcriptionIListArchived;
   }
 
   @override
   int get hashCode =>
-      transcriptionCurrent.hashCode ^ transcriptionIList.hashCode;
+      transcriptionCurrent.hashCode ^
+      transcriptionIList.hashCode ^
+      transcriptionIListArchived.hashCode;
 }

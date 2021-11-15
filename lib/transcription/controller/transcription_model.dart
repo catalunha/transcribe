@@ -49,6 +49,10 @@ class TranscriptionModel {
     );
   }
 
+  TranscriptionModel copy() {
+    return TranscriptionModel.fromMap(toMap());
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

@@ -319,7 +319,7 @@ class StreamDocsTranscriptionsTaskAction extends ReduxAction<AppState> {
                 (docSnapshot) => TranscriptionModel.fromMap(docSnapshot.data()))
             .toList());
     streamList.listen((List<TranscriptionModel> transcriptionModelModelList) {
-      dispatch(SetTranscriptionListTaskAction(
+      dispatch(SetTranscriptionListTranscriptionAction(
           transcriptionIList: IList(transcriptionModelModelList)));
     });
 

@@ -5,33 +5,23 @@ import 'package:transcribe/theme/app_icon.dart';
 
 import 'controller/transcription_model.dart';
 
-class TranscriptionList extends StatelessWidget {
+class TranscriptionListArchived extends StatelessWidget {
   final IList<TranscriptionModel> transcriptionIList;
   final Function(String) onArchive;
+  final Function(String) onDelete;
 
-  const TranscriptionList({
+  const TranscriptionListArchived({
     Key? key,
     required this.transcriptionIList,
     required this.onArchive,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select one tasks for solve'),
-        actions: [
-          IconButton(
-            tooltip: 'Archived sentences',
-            icon: Icon(AppIconData.box),
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                '/transcription_archived',
-              );
-            },
-          )
-        ],
+        title: Text('Your tasks archived'),
       ),
       body: Column(
         children: [
@@ -57,30 +47,25 @@ class TranscriptionList extends StatelessWidget {
           child: Card(
             child: ListTile(
               tileColor: transcription.isSolved ? Colors.green : null,
-              leading: Icon(AppIconData.edit),
+              leading: IconButton(
+                tooltip: 'delete this sentence',
+                icon: Icon(AppIconData.delete),
+                onPressed: () {
+                  onDelete(transcription.id);
+                },
+              ),
               title: Text(
                 transcription.task.title,
                 // textAlign: TextAlign.start,
                 style: TextStyle(fontSize: 30),
               ),
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  '/transcription_edit',
-                  arguments: transcription.id,
-                );
-              },
-              trailing: transcription.isSolved
-                  ? IconButton(
-                      tooltip: 'Archive this sentence',
-                      icon: Icon(AppIconData.inbox),
-                      onPressed: () {
-                        onArchive(transcription.id);
-                      },
-                    )
-                  : Container(
-                      width: 1,
-                    ),
+              trailing: IconButton(
+                tooltip: 'unarchive this sentence',
+                icon: Icon(AppIconData.outbox),
+                onPressed: () {
+                  onArchive(transcription.id);
+                },
+              ),
             ),
           ),
 

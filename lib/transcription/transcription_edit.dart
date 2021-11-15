@@ -68,6 +68,17 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
                 children: buildPhrase(),
               ),
             ),
+            listEquals(widget.phraseCorrect, widget.phraseUnordened)
+                ? const Center(
+                    child: Text(
+                      'Good job. Save now please !',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 30,
+                      ),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),

@@ -12,6 +12,7 @@ import 'task/controller/task_people_list_connector.dart';
 import 'team/controller/team_addedit_connector.dart';
 import 'team/team_page.dart';
 import 'transcription/controller/transcription_edit_connector.dart';
+import 'transcription/controller/transcription_list_archived_connector.dart';
 import 'transcription/controller/transcription_list_connector.dart';
 import 'users/controller/users_list_connector.dart';
 
@@ -42,11 +43,13 @@ class Routes {
     '/task_people_list': (BuildContext context) => TaskPeopleListConnector(
           taskId: ModalRoute.of(context)!.settings.arguments.toString(),
         ),
-    // //transcription
-    // '/transcription_list': (BuildContext context) =>
-    //     const TranscriptionListConnector(),
-    // '/transcription_edit': (BuildContext context) => TranscriptionEditConnector(
-    //       addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
-    //     ),
+    //transcription
+    '/transcription_list': (BuildContext context) =>
+        const TranscriptionListConnector(),
+    '/transcription_edit': (BuildContext context) => TranscriptionEditConnector(
+          addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
+        ),
+    '/transcription_archived': (BuildContext context) =>
+        const TranscriptionListArchivedConnector(),
   };
 }
