@@ -4,3 +4,4 @@ Projeto desenvolvido pelo Prof Catalunha e Prof Fábio Costa para aprendizado de
 
 
 # Outros
+git remote set-url origin https://github.com/catalunha/transcribe.git
