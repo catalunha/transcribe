@@ -5,3 +5,8 @@ Projeto desenvolvido pelo Prof Catalunha e Prof Fábio Costa para aprendizado de
 
 # Outros
 git remote add origin https://github.com/catalunha/transcribe.git
+
+
+git remote remove origin
+git remote add origin https://[TOKEN]@github.com/[USER]/[REPO]
+git push
