@@ -53,6 +53,10 @@ class PhraseModel {
     );
   }
 
+  PhraseModel copy() {
+    return PhraseModel.fromMap(toMap());
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

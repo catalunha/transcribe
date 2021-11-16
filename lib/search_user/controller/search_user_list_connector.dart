@@ -5,20 +5,20 @@ import 'package:transcribe/team/controller/team_action.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 import '../../app_state.dart';
-import '../users_list.dart';
-import 'users_action.dart';
+import '../search_user_list.dart';
+import 'search_user_action.dart';
 
-class UsersListConnector extends StatelessWidget {
-  const UsersListConnector({Key? key}) : super(key: key);
+class SearchUserListConnector extends StatelessWidget {
+  const SearchUserListConnector({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, UsersPageVm>(
       vm: () => UsersPageVmFactory(this),
       onInit: (store) async {
-        await store.dispatch(ReadDocsUserUsersAction());
+        await store.dispatch(ReadDocsUserSearchUserAction());
       },
-      builder: (context, vm) => UsersList(
+      builder: (context, vm) => SearchUserList(
         userIdIListInTeam: vm.userIdIListInTeam,
         userRefIList: vm.userRefIList,
         onAddOrDeleteUser: vm.onAddOrDeleteUser,
@@ -27,14 +27,14 @@ class UsersListConnector extends StatelessWidget {
   }
 }
 
-class UsersPageVmFactory extends VmFactory<AppState, UsersListConnector> {
+class UsersPageVmFactory extends VmFactory<AppState, SearchUserListConnector> {
   UsersPageVmFactory(widget) : super(widget);
   @override
   UsersPageVm fromStore() => UsersPageVm(
         userIdIListInTeam: state.teamState.teamCurrent!.userMap.keys.toIList(),
         userRefIList: state.usersState.userRefIList!,
         onAddOrDeleteUser: (bool addOrDelete, String userId) {
-          dispatch(AddOrDeleteUserInTeamUsersAction(
+          dispatch(AddOrDeleteUserInTeamSearchUserAction(
               addOrDelete: addOrDelete, userId: userId));
         },
       );

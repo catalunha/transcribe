@@ -5,10 +5,10 @@ import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/widget/input_checkbox.dart';
 import 'package:transcribe/widget/input_checkbox_delete.dart';
 import 'package:transcribe/widget/input_title.dart';
-import 'package:transcribe/widget/input_users.dart';
+import 'package:transcribe/search_user/search_user.dart';
 import 'package:transcribe/widget/required_inform.dart';
-import 'package:transcribe/widget/search_phrase.dart';
-import 'package:transcribe/widget/search_team.dart';
+import 'package:transcribe/search_phrase/search_phrase.dart';
+import 'package:transcribe/search_team/search_team.dart';
 
 import 'controller/transcription_edit_connector.dart';
 

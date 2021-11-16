@@ -19,8 +19,12 @@ class TeamAddEditConnector extends StatelessWidget {
       onInit: (store) {
         store.dispatch(SetTeamCurrentTeamAction(id: addOrEditId));
       },
+      onDispose: (store) {
+        store.dispatch(SetNulTeamCurrentTeamAction());
+      },
       vm: () => TeamAddEditFactory(this),
       builder: (context, vm) => TeamAddEdit(
+        addOrEditId: addOrEditId,
         formControllerTeam: vm.formControllerTeam,
         onSave: vm.onSave,
         onDeleteUser: vm.onDeleteUser,
@@ -36,6 +40,9 @@ class TeamAddEditFactory extends VmFactory<AppState, TeamAddEditConnector> {
         formControllerTeam:
             FormControllerTeam(teamModel: state.teamState.teamCurrent!),
         onSave: (TeamModel teamModel) {
+          print('onSave teamModel.isDeleted:${teamModel.isDeleted}');
+          teamModel = teamModel.copyWith(isDeleted: teamModel.isDeleted);
+          print('teamModel teamModel.isDeleted:${teamModel.isDeleted}');
           if (widget!.addOrEditId.isEmpty) {
             dispatch(AddDocTeamAction(teamModel: teamModel));
           } else {
@@ -65,6 +72,8 @@ class TeamAddEditVm extends Vm {
 class FormControllerTeam {
   final formKey = GlobalKey<FormState>();
   bool isFormValid = false;
+  bool isFieldsExtraValid = false;
+  bool? isUserMapValid;
   TeamModel teamModel;
   FormControllerTeam({
     required this.teamModel,
@@ -83,8 +92,21 @@ class FormControllerTeam {
     );
   }
 
+  onFieldExtraValidation() {
+    if (teamModel.userMap.isNotEmpty) {
+      isUserMapValid = true;
+    } else {
+      isUserMapValid = false;
+    }
+    print('isUserMapValid:$isUserMapValid');
+
+    isFieldsExtraValid = (isUserMapValid ?? false);
+    print('isFieldsExtraInvalid:$isFieldsExtraValid');
+  }
+
   void onCheckValidation() async {
     final form = formKey.currentState;
+
     if (form!.validate()) {
       isFormValid = true;
     }

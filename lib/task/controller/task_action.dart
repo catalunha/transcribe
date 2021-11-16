@@ -56,16 +56,6 @@ class SetTaskListTaskAction extends ReduxAction<AppState> {
       ),
     );
   }
-
-  // @override
-  // void after() {
-  //   super.after();
-
-  //   if (state.taskState.taskCurrent != null) {
-  //     dispatch(SetTaskCurrentTaskAction(id: state.taskState.taskCurrent!.id));
-  //     // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
-  //   }
-  // }
 }
 
 class SetTaskListArchivedTaskAction extends ReduxAction<AppState> {
@@ -85,58 +75,45 @@ class SetTaskListArchivedTaskAction extends ReduxAction<AppState> {
 }
 
 class SetTaskCurrentTaskAction extends ReduxAction<AppState> {
-  final String? id;
+  final String id;
   SetTaskCurrentTaskAction({
     required this.id,
   });
   @override
   AppState reduce() {
-    if (id == null) {
-      return state.copyWith(
-        taskState: state.taskState.copyWith(
-          taskPhraseCurrentSetNull: true,
-        ),
-      );
+    TaskModel taskModel;
+    if (id.isNotEmpty) {
+      taskModel = state.taskState.taskIList!
+          .firstWhere((element) => element.id == id)
+          .copy();
     } else {
-      TaskModel taskModelTemp;
-      TaskModel taskModel;
-      if (id!.isNotEmpty) {
-        IList<TaskModel> taskModelIList = state.taskState.taskIList!;
-        taskModelTemp =
-            taskModelIList.firstWhere((element) => element.id == id);
-        taskModel = taskModelTemp.copyWith();
-      } else {
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-        CollectionReference docRef =
-            firebaseFirestore.collection(TaskModel.collection);
-        String idNew = docRef.doc().id;
-        taskModel = TaskModel(
-          id: idNew,
-          title: '',
-        );
-      }
-      return state.copyWith(
-        taskState: state.taskState.copyWith(
-          taskCurrent: taskModel,
-        ),
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      CollectionReference docRef =
+          firebaseFirestore.collection(TaskModel.collection);
+      String idNew = docRef.doc().id;
+      taskModel = TaskModel(
+        id: idNew,
+        title: '',
       );
     }
-    // print('SetTaskCurrentTaskAction: ${state.taskState.taskCurrent}');
-    // print('SetTaskCurrentTaskAction: ${taskModel.id}');
+    return state.copyWith(
+      taskState: state.taskState.copyWith(
+        taskCurrent: taskModel,
+      ),
+    );
   }
 }
 
-// // class SetNulPhraseTaskAction extends ReduxAction<AppState> {
-// //   @override
-// //   AppState reduce() {
-// //     return state.copyWith(
-// //       taskState: state.taskState.copyWith(
-// //         taskPhraseCurrentSetNull: true,
-// //         taskPhraseListSetNull: true,
-// //       ),
-// //     );
-// //   }
-// // }
+class SetNulTaskCurrentTaskAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() {
+    return state.copyWith(
+      taskState: state.taskState.copyWith(
+        taskCurrentSetNull: true,
+      ),
+    );
+  }
+}
 
 class AddDocTaskAction extends ReduxAction<AppState> {
   final TaskModel taskModel;
@@ -216,7 +193,7 @@ class ArchiveDocTaskAction extends ReduxAction<AppState> {
     DocumentReference docRef =
         firebaseFirestore.collection(TaskModel.collection).doc(taskId);
 
-    dispatch(SetTaskCurrentTaskAction(id: null));
+    // dispatch(SetTaskCurrentTaskAction(id: null));
 
     await docRef.update({'isArchived': isArchived});
 
@@ -236,7 +213,7 @@ class DeleteDocTaskAction extends ReduxAction<AppState> {
         firebaseFirestore.collection(TaskModel.collection).doc(taskId);
 
     dispatch(DeleteTranscriptionsTaskAction(taskId: taskId));
-    dispatch(SetTaskCurrentTaskAction(id: null));
+    // dispatch(SetTaskCurrentTaskAction(id: null));
     await docRef.delete();
 
     return null;
@@ -293,13 +270,6 @@ class SetTeamTaskAction extends ReduxAction<AppState> {
         taskCurrent: taskModel,
       ),
     );
-  }
-
-  @override
-  void after() {
-    // TODO: implement after
-    super.after();
-    // print('team taskcurrent 2: ${state.taskState.taskCurrent!.team}');
   }
 }
 

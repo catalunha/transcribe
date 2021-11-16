@@ -24,11 +24,10 @@ class TranscriptionState {
     TranscriptionModel? transcriptionCurrent,
     IList<TranscriptionModel>? transcriptionIList,
     IList<TranscriptionModel>? transcriptionIListArchived,
-    bool taskPhraseCurrentSetNull = false,
-    bool taskPhraseListSetNull = false,
+    bool transcriptionCurrentSetNull = false,
   }) {
     return TranscriptionState(
-      transcriptionCurrent: taskPhraseCurrentSetNull
+      transcriptionCurrent: transcriptionCurrentSetNull
           ? null
           : transcriptionCurrent ?? this.transcriptionCurrent,
       transcriptionIList: transcriptionIList ?? this.transcriptionIList,

@@ -21,7 +21,7 @@ class TeamState {
     bool teamIListSetNull = false,
   }) {
     return TeamState(
-      teamCurrent: teamCurrent ?? this.teamCurrent,
+      teamCurrent: teamCurrentSetNull ? null : teamCurrent ?? this.teamCurrent,
       teamIList: teamIList ?? this.teamIList,
     );
   }

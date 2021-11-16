@@ -67,7 +67,7 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
                     formControllerPhrase.onChange(phrase: value);
                   },
                 ),
-                InputFileConnector(
+                const InputFileConnector(
                   label: 'Send the audio',
                   requiredField: true,
                 ),
@@ -117,8 +117,8 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
         onPressed: () {
           formControllerPhrase.onCheckValidation();
           if (formControllerPhrase.isFormValid) {
-            Navigator.pop(context);
-            widget.onSave(formControllerPhrase.phraseModel.copyWith());
+            // Navigator.pop(context);
+            widget.onSave(formControllerPhrase.phraseModel);
           }
         },
       ),

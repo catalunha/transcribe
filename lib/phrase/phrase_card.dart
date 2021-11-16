@@ -17,31 +17,59 @@ class PhraseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 10,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ListTile(
-            // tileColor: ThemeApp.surfaceLight,
-            title: Text(
-              phrase.phraseList.join(' '),
-              style: TextStyle(
-                // color: ThemeApp.onSurface,
-                fontWeight: FontWeight.bold,
+      child: Container(
+        width: double.infinity,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                phrase.phraseList.join(' '),
+                style: TextStyle(
+                  // color: ThemeApp.onSurface,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
-            subtitle: Text(
-              phrase.group,
-              style: TextStyle(
-                // color: ThemeApp.onSurfaceLight,
-                fontWeight: FontWeight.bold,
+            Align(
+              alignment: Alignment.topLeft,
+              child: Text(
+                phrase.group,
+                style: TextStyle(
+                    // color: ThemeApp.onSurfaceLight,
+                    // fontWeight: FontWeight.bold,
+                    ),
               ),
             ),
-          ),
-          Wrap(
-            children: widgetList ?? [],
-          )
-        ],
+            Container(
+              height: 1,
+              color: Colors.green,
+            ),
+            // ListTile(
+            //   // tileColor: ThemeApp.surfaceLight,
+            //   title: Text(
+            //     phrase.phraseList.join(' '),
+            //     style: TextStyle(
+            //       // color: ThemeApp.onSurface,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            //   subtitle: Text(
+            //     phrase.group,
+            //     style: TextStyle(
+            //       // color: ThemeApp.onSurfaceLight,
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
+            Wrap(
+              children: widgetList ?? [],
+            )
+          ],
+        ),
       ),
     );
   }

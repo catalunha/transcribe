@@ -23,9 +23,9 @@ class TranscriptionEditConnector extends StatelessWidget {
         store.dispatch(
             SetTranscriptionCurrentTranscriptionAction(id: addOrEditId));
       },
-      // onDispose: (store) {
-      //   store.dispatch(ResetPhraseCurrentTranscriptionAction());
-      // },
+      onDispose: (store) {
+        store.dispatch(SetNulTranscriptioCurrentTeamAction());
+      },
       vm: () => TranscriptionEditFactory(this),
       builder: (context, vm) => TranscriptionEdit(
         phraseAudio: vm.phraseAudio,

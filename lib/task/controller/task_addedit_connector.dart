@@ -22,6 +22,9 @@ class TaskAddEditConnector extends StatelessWidget {
       onInit: (store) {
         store.dispatch(SetTaskCurrentTaskAction(id: addOrEditId));
       },
+      onDispose: (store) {
+        store.dispatch(SetNulTaskCurrentTaskAction());
+      },
       vm: () => TaskAddEditFactory(this),
       builder: (context, vm) => TaskAddEdit(
         formControllerTask: vm.formControllerTask,
@@ -62,6 +65,10 @@ class TaskAddEditVm extends Vm {
 class FormControllerTask {
   final formKey = GlobalKey<FormState>();
   bool isFormValid = false;
+  bool isFieldsExtraValid = false;
+  bool? isTeamValid;
+  bool? isPhraseValid;
+
   TaskModel taskModel;
   FormControllerTask({
     required this.taskModel,
@@ -80,8 +87,26 @@ class FormControllerTask {
     );
   }
 
+  onFieldExtraValidation() {
+    if (taskModel.team != null) {
+      isTeamValid = true;
+    } else {
+      isTeamValid = false;
+    }
+    print('isTeamInvalid:$isTeamValid');
+    if (taskModel.phrase != null) {
+      isPhraseValid = true;
+    } else {
+      isPhraseValid = false;
+    }
+    print('isPhraseInvalid:$isPhraseValid');
+    isFieldsExtraValid = (isTeamValid ?? false) && (isPhraseValid ?? false);
+    print('isFieldsExtraInvalid:$isFieldsExtraValid');
+  }
+
   void onCheckValidation() async {
     final form = formKey.currentState;
+
     if (form!.validate()) {
       isFormValid = true;
     }

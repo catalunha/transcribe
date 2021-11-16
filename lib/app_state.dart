@@ -2,18 +2,18 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 
 import 'phrase/controller/phrase_state.dart';
+import 'search_user/controller/search_user_state.dart';
 import 'task/controller/task_state.dart';
 import 'team/controller/team_state.dart';
 import 'transcription/controller/transcription_state.dart';
 import 'upload/controller/upload_state.dart';
 import 'user/controller/user_state.dart';
-import 'users/controller/users_state.dart';
 
 @immutable
 class AppState {
   final Wait wait;
   final UserState userState;
-  final UsersState usersState;
+  final SearchUserState usersState;
   final TeamState teamState;
   final PhraseState phraseState;
   final UploadState uploadState;
@@ -34,7 +34,7 @@ class AppState {
   static AppState initialState() => AppState(
         wait: Wait(),
         userState: UserState.initialState(),
-        usersState: UsersState.initialState(),
+        usersState: SearchUserState.initialState(),
         teamState: TeamState.initialState(),
         phraseState: PhraseState.initialState(),
         uploadState: UploadState.initialState(),
@@ -44,7 +44,7 @@ class AppState {
   AppState copyWith({
     Wait? wait,
     UserState? userState,
-    UsersState? usersState,
+    SearchUserState? usersState,
     TeamState? teamState,
     PhraseState? phraseState,
     UploadState? uploadState,

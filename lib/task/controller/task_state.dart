@@ -23,12 +23,10 @@ class TaskState {
     TaskModel? taskCurrent,
     IList<TaskModel>? taskIList,
     IList<TaskModel>? taskIListArchived,
-    bool taskPhraseCurrentSetNull = false,
-    bool taskPhraseListSetNull = false,
+    bool taskCurrentSetNull = false,
   }) {
     return TaskState(
-      taskCurrent:
-          taskPhraseCurrentSetNull ? null : taskCurrent ?? this.taskCurrent,
+      taskCurrent: taskCurrentSetNull ? null : taskCurrent ?? this.taskCurrent,
       taskIList: taskIList ?? this.taskIList,
       taskIListArchived: taskIListArchived ?? this.taskIListArchived,
     );

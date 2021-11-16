@@ -25,11 +25,14 @@ class PhraseAddEditConnector extends StatelessWidget {
               url: store.state.phraseState.phraseCurrent!.phraseAudio));
         }
       },
+      onDispose: (store) {
+        store.dispatch(SetNulPhraseCurrentPhraseAction());
+      },
       vm: () => PhraseAddEditFactory(this),
       builder: (context, vm) => PhraseAddEdit(
+        addOrEditId: addOrEditId.isEmpty ? true : false,
         formControllerPhrase: vm.formControllerPhrase,
         onSave: vm.onSave,
-        addOrEditId: vm.addOrEditId,
       ),
     );
   }
@@ -46,11 +49,12 @@ class PhraseAddEditFactory extends VmFactory<AppState, PhraseAddEditConnector> {
               state.uploadState.urlForDownload!.isNotEmpty) {
             phraseModel = phraseModel.copyWith(
                 phraseAudio: state.uploadState.urlForDownload);
-          }
-          if (widget!.addOrEditId.isEmpty) {
-            await dispatch(CreateDocPhraseAction(phraseModel: phraseModel));
-          } else {
-            await dispatch(UpdateDocPhraseAction(phraseModel: phraseModel));
+            if (widget!.addOrEditId.isEmpty) {
+              await dispatch(CreateDocPhraseAction(phraseModel: phraseModel));
+            } else {
+              await dispatch(UpdateDocPhraseAction(phraseModel: phraseModel));
+            }
+            dispatch(NavigateAction.pop());
           }
         },
         addOrEditId: widget!.addOrEditId.isEmpty,

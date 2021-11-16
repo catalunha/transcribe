@@ -12,15 +12,15 @@ class SearchPhrase extends StatelessWidget {
   final String label;
   final String messageTooltip;
   final bool required;
-  // final void Function() search;
+  final bool? isFieldValid;
   const SearchPhrase({
     Key? key,
     required this.label,
     required this.phrase,
     this.icon = AppIconData.people,
-    // required this.search,
     this.required = false,
     this.messageTooltip = '',
+    required this.isFieldValid,
   }) : super(key: key);
 
   @override
@@ -85,12 +85,25 @@ class SearchPhrase extends StatelessWidget {
                 width: 15,
               ),
               Expanded(
-                flex: 15,
-                child: phrase != null
-                    ? PhraseCard(
-                        phrase: phrase!,
-                      )
-                    : Container(),
+                // flex: 15,
+                child: Column(
+                  children: [
+                    phrase != null
+                        ? PhraseCard(
+                            phrase: phrase!,
+                          )
+                        : Container(),
+                    isFieldValid ?? true
+                        ? Container()
+                        : const Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'This field cannot be empty.',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          )
+                  ],
+                ),
               ),
             ],
           ),

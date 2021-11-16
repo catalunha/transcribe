@@ -11,7 +11,7 @@ class SearchTeam extends StatelessWidget {
   final String label;
   final String messageTooltip;
   final bool required;
-  // final void Function() search;
+  final bool? isFieldValid;
   const SearchTeam({
     Key? key,
     required this.label,
@@ -20,6 +20,7 @@ class SearchTeam extends StatelessWidget {
     // required this.search,
     this.required = false,
     this.messageTooltip = '',
+    required this.isFieldValid,
   }) : super(key: key);
 
   @override
@@ -84,13 +85,25 @@ class SearchTeam extends StatelessWidget {
                 width: 15,
               ),
               Expanded(
-                flex: 15,
-                child: team != null
-                    ? TeamCard(
-                        team: team!,
-                      )
-                    : Container(),
-              ),
+                  // flex: 15,
+                  child: Column(
+                children: [
+                  team != null
+                      ? TeamCard(
+                          team: team!,
+                        )
+                      : Container(),
+                  isFieldValid ?? true
+                      ? Container()
+                      : const Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'This field cannot be empty.',
+                            style: TextStyle(color: Colors.red, fontSize: 12),
+                          ),
+                        )
+                ],
+              )),
             ],
           ),
         ],

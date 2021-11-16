@@ -76,7 +76,7 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              color: Colors.green,
+              color: Colors.black,
               child: IconButton(
                 padding: EdgeInsets.all(20),
                 key: const Key('play_button'),
@@ -85,7 +85,7 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
                 icon: const Icon(
                   Icons.play_arrow,
                 ),
-                color: Colors.black,
+                color: Colors.white,
                 // disabledColor: Colors.black,
               ),
             ),
@@ -96,18 +96,18 @@ class _PlayerAudioWidgetState extends State<PlayerAudioWidget> {
             //   icon: const Icon(Icons.pause),
             //   color: Colors.cyan,
             // ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Container(
-              color: Colors.green,
+              color: Colors.black,
               child: IconButton(
                 padding: EdgeInsets.all(20),
                 key: const Key('stop_button'),
                 onPressed: _isPlaying || _isPaused ? _stop : null,
                 iconSize: 34.0,
                 icon: const Icon(Icons.stop),
-                color: Colors.black,
+                color: Colors.white,
               ),
             ),
             // IconButton(

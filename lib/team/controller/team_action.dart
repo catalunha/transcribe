@@ -14,8 +14,7 @@ class StreamDocsTeamAction extends ReduxAction<AppState> {
     collRef = firebaseFirestore
         .collection(TeamModel.collection)
         .where('teacher.id', isEqualTo: state.userState.userCurrent!.id)
-        .where('isArchived', isEqualTo: false)
-        .where('isDeleted', isEqualTo: false);
+        .where('isArchived', isEqualTo: false);
 
     Stream<QuerySnapshot<Map<String, dynamic>>> streamQuerySnapshot =
         collRef.snapshots();
@@ -48,12 +47,12 @@ class SetTeamListTeamAction extends ReduxAction<AppState> {
     );
   }
 
-  @override
-  void after() {
-    if (state.teamState.teamCurrent != null) {
-      dispatch(SetTeamCurrentTeamAction(id: state.teamState.teamCurrent!.id));
-    }
-  }
+  // @override
+  // void after() {
+  //   if (state.teamState.teamCurrent != null) {
+  //     dispatch(SetTeamCurrentTeamAction(id: state.teamState.teamCurrent!.id));
+  //   }
+  // }
 }
 
 class SetTeamCurrentTeamAction extends ReduxAction<AppState> {
@@ -65,20 +64,25 @@ class SetTeamCurrentTeamAction extends ReduxAction<AppState> {
   AppState reduce() {
     TeamModel teamModel;
     if (id.isNotEmpty) {
-      teamModel =
-          state.teamState.teamIList!.firstWhere((element) => element.id == id);
+      teamModel = state.teamState.teamIList!
+          .firstWhere((element) => element.id == id)
+          .copy();
     } else {
+      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      CollectionReference docRef =
+          firebaseFirestore.collection(TeamModel.collection);
+      String idNew = docRef.doc().id;
       teamModel = TeamModel(
-          id: '',
-          teacher: UserRef.fromMap({
-            'id': state.userState.userCurrent!.id,
-            'email': state.userState.userCurrent!.email,
-            'photoURL': state.userState.userCurrent!.photoURL,
-            'displayName': state.userState.userCurrent!.displayName
-          }),
-          name: '',
-          // userList: <String, UserRef>{}.keys.toList(),
-          userMap: <String, UserRef>{});
+        id: idNew,
+        teacher: UserRef.fromMap({
+          'id': state.userState.userCurrent!.id,
+          'email': state.userState.userCurrent!.email,
+          'photoURL': state.userState.userCurrent!.photoURL,
+          'displayName': state.userState.userCurrent!.displayName
+        }),
+        name: '',
+        userMap: <String, UserRef>{},
+      );
     }
     return state.copyWith(
       teamState: state.teamState.copyWith(
@@ -88,17 +92,16 @@ class SetTeamCurrentTeamAction extends ReduxAction<AppState> {
   }
 }
 
-// class SetNulPhraseTeamAction extends ReduxAction<AppState> {
-//   @override
-//   AppState reduce() {
-//     return state.copyWith(
-//       teamState: state.teamState.copyWith(
-//         teamPhraseCurrentSetNull: true,
-//         teamPhraseListSetNull: true,
-//       ),
-//     );
-//   }
-// }
+class SetNulTeamCurrentTeamAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() {
+    return state.copyWith(
+      teamState: state.teamState.copyWith(
+        teamCurrentSetNull: true,
+      ),
+    );
+  }
+}
 
 class AddDocTeamAction extends ReduxAction<AppState> {
   final TeamModel teamModel;
@@ -110,7 +113,8 @@ class AddDocTeamAction extends ReduxAction<AppState> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     CollectionReference docRef =
         firebaseFirestore.collection(TeamModel.collection);
-    await docRef.add(teamModel.toMap());
+    await docRef.doc(teamModel.id).set(teamModel.toMap());
+
     return null;
   }
 }
@@ -125,8 +129,7 @@ class UpdateDocTeamAction extends ReduxAction<AppState> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     DocumentReference docRef =
         firebaseFirestore.collection(TeamModel.collection).doc(teamModel.id);
-
-    dispatch(SetTeamCurrentTeamAction(id: ''));
+    print('delete: ${teamModel.isDeleted}');
     if (teamModel.isDeleted) {
       await docRef.delete();
     } else {

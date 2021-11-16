@@ -22,10 +22,13 @@ class TeamCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            team.name,
-            textAlign: TextAlign.start,
-            style: TextStyle(fontSize: 20),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Text(
+              team.name,
+              // textAlign: TextAlign.start,
+              style: TextStyle(fontSize: 20),
+            ),
           ),
           // Text(team.id),
           // Container(

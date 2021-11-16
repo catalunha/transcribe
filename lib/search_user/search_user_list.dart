@@ -4,12 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
-class UsersList extends StatelessWidget {
+class SearchUserList extends StatelessWidget {
   final IList<String> userIdIListInTeam;
   final IList<UserRef> userRefIList;
   final Function(bool, String) onAddOrDeleteUser;
 
-  const UsersList({
+  const SearchUserList({
     Key? key,
     required this.userRefIList,
     required this.onAddOrDeleteUser,

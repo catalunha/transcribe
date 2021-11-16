@@ -3,10 +3,10 @@ import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/widget/input_checkbox.dart';
 import 'package:transcribe/widget/input_checkbox_delete.dart';
 import 'package:transcribe/widget/input_title.dart';
-import 'package:transcribe/widget/input_users.dart';
+import 'package:transcribe/search_user/search_user.dart';
 import 'package:transcribe/widget/required_inform.dart';
-import 'package:transcribe/widget/search_phrase.dart';
-import 'package:transcribe/widget/search_team.dart';
+import 'package:transcribe/search_phrase/search_phrase.dart';
+import 'package:transcribe/search_team/search_team.dart';
 
 import 'controller/task_addedit_connector.dart';
 import 'controller/task_model.dart';
@@ -55,11 +55,13 @@ class _TaskAddEditState extends State<TaskAddEdit> {
                 label: 'Select team for this task',
                 team: widget.formControllerTask.taskModel.team,
                 required: true,
+                isFieldValid: widget.formControllerTask.isTeamValid,
               ),
               SearchPhrase(
                 label: 'Select phrase for this task',
                 phrase: widget.formControllerTask.taskModel.phrase,
                 required: true,
+                isFieldValid: widget.formControllerTask.isPhraseValid,
               ),
               // formControllerTask.taskModel.id.isEmpty
               //     ? Container()
@@ -95,8 +97,11 @@ class _TaskAddEditState extends State<TaskAddEdit> {
         tooltip: 'Save this data in cloud',
         child: Icon(AppIconData.saveInCloud),
         onPressed: () {
+          setState(() {});
           formControllerTask.onCheckValidation();
-          if (formControllerTask.isFormValid) {
+          widget.formControllerTask.onFieldExtraValidation();
+          if (formControllerTask.isFormValid &&
+              widget.formControllerTask.isFieldsExtraValid) {
             Navigator.pop(context);
             widget.onSave(formControllerTask.taskModel);
           }

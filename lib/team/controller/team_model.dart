@@ -10,14 +10,15 @@ class TeamModel {
   final String id;
   final UserRef teacher;
   final String name;
-  final Map<String, UserRef> userMap; //<userId,UserRef>
+
+  /// userMap{userId:UserRef}
+  final Map<String, UserRef> userMap;
   final bool isArchived;
   final bool isDeleted;
   TeamModel({
     required this.id,
     required this.teacher,
     required this.name,
-    // required this.userList,
     required this.userMap,
     this.isArchived = false,
     this.isDeleted = false,
@@ -26,7 +27,6 @@ class TeamModel {
   TeamModel copyWith({
     UserRef? teacher,
     String? name,
-    // List<String>? userList,
     Map<String, UserRef>? userMap,
     bool? isArchived,
     bool? isDeleted,
@@ -35,11 +35,14 @@ class TeamModel {
       id: id,
       teacher: teacher ?? this.teacher,
       name: name ?? this.name,
-      // userList: userList ?? this.userList,
       userMap: userMap ?? this.userMap,
       isArchived: isArchived ?? this.isArchived,
       isDeleted: isDeleted ?? this.isDeleted,
     );
+  }
+
+  TeamModel copy() {
+    return TeamModel.fromMap(toMap());
   }
 
   Map<String, dynamic> toMap() {
@@ -48,7 +51,6 @@ class TeamModel {
     data['teacher'] = teacher.toMap();
     data['name'] = name;
     data['isArchived'] = isArchived;
-    data['isDeleted'] = isDeleted;
     data['userList'] = userMap.keys.toList();
     data["userMap"] = <String, dynamic>{};
     for (var item in userMap.entries) {
@@ -70,7 +72,6 @@ class TeamModel {
       name: map['name'],
       userMap: _userMap,
       isArchived: map['isArchived'],
-      isDeleted: map['isDeleted'],
     );
   }
 
@@ -94,7 +95,6 @@ class TeamModel {
         other.name == name &&
         other.isArchived == isArchived &&
         other.isDeleted == isDeleted &&
-        // listEquals(other.userList, userList) &&
         mapEquals(other.userMap, userMap);
   }
 
@@ -105,7 +105,6 @@ class TeamModel {
         name.hashCode ^
         isArchived.hashCode ^
         isDeleted.hashCode ^
-        // userList.hashCode ^
         userMap.hashCode;
   }
 }

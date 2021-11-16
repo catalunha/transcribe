@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
-class InputUsers extends StatelessWidget {
+class SearchUser extends StatelessWidget {
   final List<UserRef> userRefList;
   final IconData icon;
   final String label;
   final String messageTooltip;
   final bool required;
+  final bool? isFieldValid;
   final void Function(String) onDeleteUser;
   final void Function() search;
-  const InputUsers({
+  const SearchUser({
     Key? key,
     required this.label,
     required this.userRefList,
@@ -19,6 +20,7 @@ class InputUsers extends StatelessWidget {
     required this.search,
     this.required = false,
     this.messageTooltip = '',
+    required this.isFieldValid,
   }) : super(key: key);
 
   @override
@@ -51,20 +53,20 @@ class InputUsers extends StatelessWidget {
                     onPressed: () {
                       search();
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       AppIconData.search,
                       color: Colors.white,
                     ),
                     label: Text(
                       label,
                       softWrap: true,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
                   ),
                   required
-                      ? Text(
+                      ? const Text(
                           ' *',
                           style: TextStyle(
                             color: Colors.red,
@@ -93,13 +95,25 @@ class InputUsers extends StatelessWidget {
                 width: 15,
               ),
               Expanded(
-                flex: 15,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: userRefList
-                        .map((e) => listTilePerson(userRef: e))
-                        .toList(),
-                  ),
+                child: Column(
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
+                        children: userRefList
+                            .map((e) => listTilePerson(userRef: e))
+                            .toList(),
+                      ),
+                    ),
+                    isFieldValid ?? true
+                        ? Container()
+                        : const Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'This field cannot be empty.',
+                              style: TextStyle(color: Colors.red, fontSize: 12),
+                            ),
+                          ),
+                  ],
                 ),
               ),
             ],

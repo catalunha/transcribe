@@ -54,24 +54,24 @@ class SetTranscriptionListTranscriptionAction extends ReduxAction<AppState> {
     );
   }
 
-  @override
-  void after() {
-    super.after();
-    dispatch(ViewTranscriptionListTranscriptionAction());
-    // if (state.transcriptionState.transcriptionCurrent != null) {
-    //   dispatch(SetTranscriptionCurrentTranscriptionAction(id: state.taskState.taskCurrent!.id));
-    //   // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
-    // }
-  }
+  // @override
+  // void after() {
+  //   super.after();
+  //   dispatch(ViewTranscriptionListTranscriptionAction());
+  //   // if (state.transcriptionState.transcriptionCurrent != null) {
+  //   //   dispatch(SetTranscriptionCurrentTranscriptionAction(id: state.taskState.taskCurrent!.id));
+  //   //   // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
+  //   // }
+  // }
 }
 
-class ViewTranscriptionListTranscriptionAction extends ReduxAction<AppState> {
-  @override
-  AppState? reduce() {
-    print('TranscriptionList: ${state.transcriptionState.transcriptionIList}');
-    return null;
-  }
-}
+// class ViewTranscriptionListTranscriptionAction extends ReduxAction<AppState> {
+//   @override
+//   AppState? reduce() {
+//     print('TranscriptionList: ${state.transcriptionState.transcriptionIList}');
+//     return null;
+//   }
+// }
 
 class SetTranscriptionListArchivedTranscriptionAction
     extends ReduxAction<AppState> {
@@ -88,26 +88,26 @@ class SetTranscriptionListArchivedTranscriptionAction
     );
   }
 
-  @override
-  void after() {
-    super.after();
-    dispatch(ViewTranscriptionListArchivedTranscriptionAction());
-    // if (state.transcriptionState.transcriptionCurrent != null) {
-    //   dispatch(SetTranscriptionCurrentTranscriptionAction(id: state.taskState.taskCurrent!.id));
-    //   // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
-    // }
-  }
+  // @override
+  // void after() {
+  //   super.after();
+  //   dispatch(ViewTranscriptionListArchivedTranscriptionAction());
+  //   // if (state.transcriptionState.transcriptionCurrent != null) {
+  //   //   dispatch(SetTranscriptionCurrentTranscriptionAction(id: state.taskState.taskCurrent!.id));
+  //   //   // print('SetTaskListTaskAction.after: ${state.taskState.taskCurrent}');
+  //   // }
+  // }
 }
 
-class ViewTranscriptionListArchivedTranscriptionAction
-    extends ReduxAction<AppState> {
-  @override
-  AppState? reduce() {
-    print(
-        'transcriptionIListArchived: ${state.transcriptionState.transcriptionIListArchived}');
-    return null;
-  }
-}
+// class ViewTranscriptionListArchivedTranscriptionAction
+//     extends ReduxAction<AppState> {
+//   @override
+//   AppState? reduce() {
+//     print(
+//         'transcriptionIListArchived: ${state.transcriptionState.transcriptionIListArchived}');
+//     return null;
+//   }
+// }
 
 // class ResetPhraseCurrentTranscriptionAction extends ReduxAction<AppState> {
 //   ResetPhraseCurrentTranscriptionAction();
@@ -155,6 +155,17 @@ class SetTranscriptionCurrentTranscriptionAction extends ReduxAction<AppState> {
     return state.copyWith(
       transcriptionState: state.transcriptionState.copyWith(
         transcriptionCurrent: transcriptionModel,
+      ),
+    );
+  }
+}
+
+class SetNulTranscriptioCurrentTeamAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() {
+    return state.copyWith(
+      transcriptionState: state.transcriptionState.copyWith(
+        transcriptionCurrentSetNull: true,
       ),
     );
   }
@@ -231,7 +242,7 @@ class UpdateDocTranscriptionAction extends ReduxAction<AppState> {
         transcriptionModel.copyWith(isSolved: orderedSolved || writtenSolved);
 
     // Transcription transcription = taskModel.transcriptionMap![userId]!;
-//TODO
+
 // remover da lista
     // dispatch(SetTaskCurrentTaskAction(id: ''));
 

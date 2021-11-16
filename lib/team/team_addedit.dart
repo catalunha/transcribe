@@ -3,13 +3,14 @@ import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/widget/input_checkbox.dart';
 import 'package:transcribe/widget/input_checkbox_delete.dart';
 import 'package:transcribe/widget/input_title.dart';
-import 'package:transcribe/widget/input_users.dart';
+import 'package:transcribe/search_user/search_user.dart';
 import 'package:transcribe/widget/required_inform.dart';
 
 import 'controller/team_addedit_connector.dart';
 import 'controller/team_model.dart';
 
 class TeamAddEdit extends StatefulWidget {
+  final String addOrEditId;
   final FormControllerTeam formControllerTeam;
   final Function(TeamModel) onSave;
   final Function(String) onDeleteUser;
@@ -19,6 +20,7 @@ class TeamAddEdit extends StatefulWidget {
     required this.formControllerTeam,
     required this.onSave,
     required this.onDeleteUser,
+    required this.addOrEditId,
   }) : super(key: key);
 
   @override
@@ -27,16 +29,14 @@ class TeamAddEdit extends StatefulWidget {
 
 class _TeamAddEditState extends State<TeamAddEdit> {
   final FormControllerTeam formControllerTeam;
-
+  bool invalidUserMap = false;
   _TeamAddEditState(this.formControllerTeam);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(formControllerTeam.teamModel.id.isEmpty
-            ? 'Add team.'
-            : 'Edit team.'),
+        title: Text(widget.addOrEditId.isEmpty ? 'Add team.' : 'Edit team.'),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -53,7 +53,7 @@ class _TeamAddEditState extends State<TeamAddEdit> {
                   formControllerTeam.onChange(name: value);
                 },
               ),
-              InputUsers(
+              SearchUser(
                 label: 'Select people for this team',
                 userRefList:
                     formControllerTeam.teamModel.userMap.values.toList(),
@@ -64,10 +64,14 @@ class _TeamAddEditState extends State<TeamAddEdit> {
                 search: () async {
                   Navigator.pushNamed(
                     context,
-                    '/users_list',
+                    '/search_user_list',
                   );
                 },
+                isFieldValid: widget.formControllerTeam.isUserMapValid,
               ),
+              // widget.formControllerTeam.hasInvalidFields
+              //     ? Text('${formControllerTeam.validateRequiredText("")}')
+              //     : Container(),
               // formControllerTeam.teamModel.id.isEmpty
               //     ? Container()
               //     : InputCheckBox(
@@ -80,14 +84,14 @@ class _TeamAddEditState extends State<TeamAddEdit> {
               //           setState(() {});
               //         },
               //       ),
-              formControllerTeam.teamModel.id.isEmpty
+              widget.addOrEditId.isEmpty
                   ? Container()
                   : InputCheckBoxDelete(
-                      title: 'Delete this team',
+                      title: 'Delete this team:',
                       subtitle: 'Delete forever',
-                      value: widget.formControllerTeam.teamModel.isDeleted,
+                      value: formControllerTeam.teamModel.isDeleted,
                       onChanged: (value) {
-                        widget.formControllerTeam.onChange(isDeleted: value);
+                        formControllerTeam.onChange(isDeleted: value);
                         setState(() {});
                       },
                     ),
@@ -100,12 +104,16 @@ class _TeamAddEditState extends State<TeamAddEdit> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Save this data in cloud',
-        child: Icon(AppIconData.saveInCloud),
+        child: const Icon(AppIconData.saveInCloud),
         onPressed: () {
           formControllerTeam.onCheckValidation();
-          if (formControllerTeam.isFormValid) {
+          widget.formControllerTeam.onFieldExtraValidation();
+          setState(() {});
+
+          if (formControllerTeam.isFormValid &&
+              widget.formControllerTeam.isFieldsExtraValid) {
             Navigator.pop(context);
-            widget.onSave(formControllerTeam.teamModel.copyWith());
+            widget.onSave(formControllerTeam.teamModel);
           }
         },
       ),

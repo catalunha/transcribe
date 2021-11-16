@@ -89,7 +89,8 @@ class SetPhraseCurrentPhraseAction extends ReduxAction<AppState> {
     PhraseModel phraseModel;
     if (id.isNotEmpty) {
       phraseModel = state.phraseState.phraseIList!
-          .firstWhere((element) => element.id == id);
+          .firstWhere((element) => element.id == id)
+          .copy();
     } else {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       CollectionReference docRef =
@@ -117,6 +118,17 @@ class SetPhraseCurrentPhraseAction extends ReduxAction<AppState> {
   }
 }
 
+class SetNulPhraseCurrentPhraseAction extends ReduxAction<AppState> {
+  @override
+  AppState reduce() {
+    return state.copyWith(
+      phraseState: state.phraseState.copyWith(
+        phraseCurrentSetNull: true,
+      ),
+    );
+  }
+}
+
 class CreateDocPhraseAction extends ReduxAction<AppState> {
   final PhraseModel phraseModel;
 
@@ -127,10 +139,7 @@ class CreateDocPhraseAction extends ReduxAction<AppState> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     CollectionReference docRef =
         firebaseFirestore.collection(PhraseModel.collection);
-    // PhraseModel phraseModelNew = phraseModel.copyWith(
-    //     phraseList: PhraseModel.setPhraseList(phraseModel.phrase));
     await docRef.doc(phraseModel.id).set(phraseModel.toMap());
-    // await docRef.add(phraseModel.toMap());
     return null;
   }
 }
@@ -146,28 +155,18 @@ class UpdateDocPhraseAction extends ReduxAction<AppState> {
     DocumentReference docRef = firebaseFirestore
         .collection(PhraseModel.collection)
         .doc(phraseModel.id);
-    PhraseModel phraseModelNew = phraseModel.copyWith();
-    PhraseModel phraseModelOld = state.phraseState.phraseCurrent!;
+    PhraseModel phraseModelNew = phraseModel.copy();
+    PhraseModel phraseModelOld = state.phraseState.phraseCurrent!.copy();
     if (listEquals(phraseModelNew.phraseList, phraseModelOld.phraseList)) {
       phraseModelNew = phraseModel.copyWith(
         phraseImage: '',
         phraseListImage: [],
       );
     }
-    // dispatch(SetPhraseCurrentPhraseAction(id: ''));
-    if (phraseModelNew.isDeleted) {
-      await docRef.delete();
-    } else {
-      await docRef.update(phraseModelNew.toMap()).then((value) {
-        return state.copyWith(
-          phraseState: state.phraseState.copyWith(
-            phraseCurrentSetNull: true,
-          ),
-        );
-      });
-    }
 
-    // return null;
+    await docRef.update(phraseModelNew.toMap());
+
+    return null;
   }
 }
 

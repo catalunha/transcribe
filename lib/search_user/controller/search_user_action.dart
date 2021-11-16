@@ -26,7 +26,7 @@ import '../../app_state.dart';
 //   }
 // }
 
-class ReadDocsUserUsersAction extends ReduxAction<AppState> {
+class ReadDocsUserSearchUserAction extends ReduxAction<AppState> {
   @override
   Future<AppState?> reduce() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -43,15 +43,15 @@ class ReadDocsUserUsersAction extends ReduxAction<AppState> {
           ),
         )
         .toIList();
-    dispatch(SetUserRefListUsersAction(userModelList: userModelList));
+    dispatch(SetUserRefListSearchUserAction(userModelList: userModelList));
     return null;
   }
 }
 
-class SetUserRefListUsersAction extends ReduxAction<AppState> {
+class SetUserRefListSearchUserAction extends ReduxAction<AppState> {
   final IList<UserModel> userModelList;
 
-  SetUserRefListUsersAction({required this.userModelList});
+  SetUserRefListSearchUserAction({required this.userModelList});
   @override
   AppState reduce() {
     IList<UserRef> userRefList = IList();
@@ -81,11 +81,11 @@ class SetUserRefListUsersAction extends ReduxAction<AppState> {
   }
 }
 
-class AddOrDeleteUserInTeamUsersAction extends ReduxAction<AppState> {
+class AddOrDeleteUserInTeamSearchUserAction extends ReduxAction<AppState> {
   final bool addOrDelete;
   final String userId;
 
-  AddOrDeleteUserInTeamUsersAction(
+  AddOrDeleteUserInTeamSearchUserAction(
       {required this.addOrDelete, required this.userId});
   @override
   AppState reduce() {
