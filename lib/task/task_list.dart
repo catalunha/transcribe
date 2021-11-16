@@ -1,6 +1,5 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
 import 'controller/task_model.dart';
@@ -21,11 +20,11 @@ class TaskList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My tasks'),
+        title: const Text('My tasks'),
         actions: [
           IconButton(
             tooltip: 'Archived sentences',
-            icon: Icon(AppIconData.box),
+            icon: const Icon(AppIconData.box),
             onPressed: () {
               Navigator.pushNamed(
                 context,
@@ -48,7 +47,7 @@ class TaskList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Create new task.',
-        child: Icon(AppIconData.addInCloud),
+        child: const Icon(AppIconData.addInCloud),
         onPressed: () {
           Navigator.pushNamed(
             context,
@@ -71,7 +70,7 @@ class TaskList extends StatelessWidget {
           widgetList: [
             IconButton(
               tooltip: 'People in this task.',
-              icon: Icon(AppIconData.people),
+              icon: const Icon(AppIconData.people),
               onPressed: () {
                 Navigator.pushNamed(
                   context,
@@ -82,7 +81,7 @@ class TaskList extends StatelessWidget {
             ),
             IconButton(
               tooltip: 'Archive this task.',
-              icon: Icon(AppIconData.inbox),
+              icon: const Icon(AppIconData.inbox),
               onPressed: () {
                 onArchive(task.id);
               },
@@ -99,7 +98,7 @@ class TaskList extends StatelessWidget {
       ));
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any task."),
       ));

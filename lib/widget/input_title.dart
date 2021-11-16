@@ -38,12 +38,12 @@ class InputTitle extends StatelessWidget {
                   Text(
                     label,
                     softWrap: true,
-                    style: TextStyle(
+                    style: const TextStyle(
                         // color: Colors.white,
                         ),
                   ),
                   required
-                      ? Text(
+                      ? const Text(
                           ' *',
                           style: TextStyle(
                             color: Colors.red,
@@ -68,12 +68,12 @@ class InputTitle extends StatelessWidget {
                 height: 48,
                 color: Colors.blue,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 15,
               ),
               Expanded(
                 child: TextFormField(
-                  style: TextStyle(
+                  style: const TextStyle(
                       // color: ThemeApp.onBackground,
                       ),
                   controller: controller,
@@ -81,7 +81,7 @@ class InputTitle extends StatelessWidget {
                   validator: validator,
                   onChanged: onChanged,
                   // style: AppTextStyles.input,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     // label// style: AppTextStyles.input,
                     border: InputBorder.none,
                   ),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:transcribe/phrase/controller/phrase_action.dart';
 import 'package:transcribe/phrase/controller/phrase_model.dart';
 import '../../app_state.dart';
-import '../phrase_list.dart';
 import '../phrase_list_archived.dart';
 
 class PhraseListArchivedConnector extends StatelessWidget {

@@ -129,7 +129,6 @@ class UpdateDocTeamAction extends ReduxAction<AppState> {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     DocumentReference docRef =
         firebaseFirestore.collection(TeamModel.collection).doc(teamModel.id);
-    print('delete: ${teamModel.isDeleted}');
     if (teamModel.isDeleted) {
       await docRef.delete();
     } else {

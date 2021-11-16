@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 

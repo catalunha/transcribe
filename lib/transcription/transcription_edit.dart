@@ -2,15 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/player_audio/player_audio_widget.dart';
 import 'package:transcribe/theme/app_icon.dart';
-import 'package:transcribe/widget/input_checkbox.dart';
-import 'package:transcribe/widget/input_checkbox_delete.dart';
-import 'package:transcribe/widget/input_title.dart';
-import 'package:transcribe/search_user/search_user.dart';
-import 'package:transcribe/widget/required_inform.dart';
-import 'package:transcribe/search_phrase/search_phrase.dart';
-import 'package:transcribe/search_team/search_team.dart';
-
-import 'controller/transcription_edit_connector.dart';
 
 class TranscriptionEdit extends StatefulWidget {
   final List<String> phraseCorrect;
@@ -39,7 +30,7 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Transcribing'),
+        title: const Text('Transcribing'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -84,7 +75,7 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Save this transcription in cloud',
-        child: Icon(AppIconData.saveInCloud),
+        child: const Icon(AppIconData.saveInCloud),
         onPressed: () {
           Navigator.pop(context);
           widget.onSave();
@@ -138,7 +129,7 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
       alignment: Alignment.center,
       child: Text(
         name,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 32,
         ),

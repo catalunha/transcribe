@@ -19,11 +19,11 @@ class PhraseList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My sentences'),
+        title: const Text('My sentences'),
         actions: [
           IconButton(
             tooltip: 'Archived sentences',
-            icon: Icon(AppIconData.box),
+            icon: const Icon(AppIconData.box),
             onPressed: () {
               Navigator.pushNamed(
                 context,
@@ -46,7 +46,7 @@ class PhraseList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Create new sentence.',
-        child: Icon(AppIconData.addInCloud),
+        child: const Icon(AppIconData.addInCloud),
         onPressed: () {
           Navigator.pushNamed(
             context,
@@ -69,7 +69,7 @@ class PhraseList extends StatelessWidget {
           widgetList: [
             IconButton(
               tooltip: 'Edit this sentence.',
-              icon: Icon(AppIconData.edit),
+              icon: const Icon(AppIconData.edit),
               onPressed: () {
                 Navigator.pushNamed(
                   context,
@@ -80,7 +80,7 @@ class PhraseList extends StatelessWidget {
             ),
             IconButton(
               tooltip: 'Archive this sentence',
-              icon: Icon(AppIconData.inbox),
+              icon: const Icon(AppIconData.inbox),
               onPressed: () {
                 onArchive(phrase.id);
               },
@@ -90,7 +90,7 @@ class PhraseList extends StatelessWidget {
       ));
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any sentence."),
       ));

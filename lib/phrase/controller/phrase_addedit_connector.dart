@@ -1,7 +1,6 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/upload/controller/upload_action.dart';
-import 'package:transcribe/upload/controller/upload_state.dart';
 import '../../app_state.dart';
 import '../phrase_addedit.dart';
 import 'phrase_action.dart';

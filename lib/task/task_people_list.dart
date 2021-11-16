@@ -5,9 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/transcription/controller/transcription_model.dart';
 
-import 'controller/task_model.dart';
-import 'task_card.dart';
-
 class TaskPeopleList extends StatelessWidget {
   final IList<TranscriptionModel> transcriptionIList;
 
@@ -20,7 +17,7 @@ class TaskPeopleList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('People in this task'),
+        title: const Text('People in this task'),
       ),
       body: Column(
         children: [
@@ -51,7 +48,7 @@ class TaskPeopleList extends StatelessWidget {
                 children: [
                   ListTile(
                     leading: transcription.student.photoURL == null
-                        ? Icon(AppIconData.undefined)
+                        ? const Icon(AppIconData.undefined)
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
                             child: Image.network(
@@ -63,7 +60,7 @@ class TaskPeopleList extends StatelessWidget {
                     title: Text('${transcription.student.displayName}'),
                     subtitle: Text(transcription.student.email),
                     trailing: IconButton(
-                      icon: Icon(AppIconData.email),
+                      icon: const Icon(AppIconData.email),
                       onPressed: () {
                         Future<void> _copyToClipboard() async {
                           await Clipboard.setData(
@@ -94,7 +91,7 @@ class TaskPeopleList extends StatelessWidget {
                     child: Text(
                       transcription.phraseOrdered!.join(' '),
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
                   Container(
@@ -106,7 +103,7 @@ class TaskPeopleList extends StatelessWidget {
                     child: Text(
                       transcription.phraseWritten!,
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
                     ),
                   ),
                 ],
@@ -115,7 +112,7 @@ class TaskPeopleList extends StatelessWidget {
       );
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any person in this task."),
       ));

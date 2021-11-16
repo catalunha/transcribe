@@ -1,8 +1,6 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/foundation.dart';
-import 'package:transcribe/task/controller/task_model.dart';
 
-import '../../task/controller/task_model.dart';
 import 'transcription_model.dart';
 
 @immutable

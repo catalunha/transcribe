@@ -21,7 +21,7 @@ class TranscriptionListArchived extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your tasks archived'),
+        title: const Text('Your tasks archived'),
       ),
       body: Column(
         children: [
@@ -49,7 +49,7 @@ class TranscriptionListArchived extends StatelessWidget {
               tileColor: transcription.isSolved ? Colors.green : null,
               leading: IconButton(
                 tooltip: 'delete this sentence',
-                icon: Icon(AppIconData.delete),
+                icon: const Icon(AppIconData.delete),
                 onPressed: () {
                   onDelete(transcription.id);
                 },
@@ -57,11 +57,11 @@ class TranscriptionListArchived extends StatelessWidget {
               title: Text(
                 transcription.task.title,
                 // textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 30),
+                style: const TextStyle(fontSize: 30),
               ),
               trailing: IconButton(
                 tooltip: 'unarchive this sentence',
-                icon: Icon(AppIconData.outbox),
+                icon: const Icon(AppIconData.outbox),
                 onPressed: () {
                   onArchive(transcription.id);
                 },
@@ -142,7 +142,7 @@ class TranscriptionListArchived extends StatelessWidget {
       // );
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any task."),
       ));

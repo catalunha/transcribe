@@ -17,7 +17,7 @@ class RequiredInForm extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
+            children: const [
               Text(
                 'This data ',
                 style: TextStyle(
@@ -38,7 +38,7 @@ class RequiredInForm extends StatelessWidget {
             ],
           ),
           Text(message,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.blue,
               )),
           SizedBox(

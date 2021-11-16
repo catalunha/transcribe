@@ -21,7 +21,7 @@ class PhraseArchivedList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My sentences'),
+        title: const Text('My sentences'),
       ),
       body: Column(
         children: [
@@ -36,7 +36,7 @@ class PhraseArchivedList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Create new sentence.',
-        child: Icon(AppIconData.addInCloud),
+        child: const Icon(AppIconData.addInCloud),
         onPressed: () {
           Navigator.pushNamed(
             context,
@@ -59,14 +59,14 @@ class PhraseArchivedList extends StatelessWidget {
           widgetList: [
             IconButton(
               tooltip: 'unarchive this sentence',
-              icon: Icon(AppIconData.outbox),
+              icon: const Icon(AppIconData.outbox),
               onPressed: () {
                 onArchive(phrase.id);
               },
             ),
             IconButton(
               tooltip: 'delete this sentence',
-              icon: Icon(AppIconData.delete),
+              icon: const Icon(AppIconData.delete),
               onPressed: () {
                 onDelete(phrase.id);
               },
@@ -76,7 +76,7 @@ class PhraseArchivedList extends StatelessWidget {
       ));
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any sentence."),
       ));

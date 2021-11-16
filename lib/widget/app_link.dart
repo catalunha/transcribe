@@ -6,7 +6,7 @@ class AppLink extends StatelessWidget {
   final String? url;
   final String? tooltipMsg;
   final IconData? icon;
-  AppLink({
+  const AppLink({
     Key? key,
     required this.url,
     this.icon = AppIconData.linkOn,

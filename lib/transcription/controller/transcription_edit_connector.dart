@@ -1,12 +1,8 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:transcribe/task/controller/task_action.dart';
-import 'package:transcribe/task/controller/task_model.dart';
-import 'package:transcribe/task/controller/task_model.dart';
 import 'package:transcribe/transcription/controller/transcription_action.dart';
 
 import '../../app_state.dart';
-import '../transcription_edit.dart';
 import '../transcription_edit.dart';
 
 class TranscriptionEditConnector extends StatelessWidget {

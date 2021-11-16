@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transcribe/theme/app_icon.dart';
-import 'package:transcribe/widget/input_checkbox.dart';
-import 'package:transcribe/widget/input_checkbox_delete.dart';
 import 'package:transcribe/widget/input_title.dart';
-import 'package:transcribe/search_user/search_user.dart';
 import 'package:transcribe/widget/required_inform.dart';
 import 'package:transcribe/search_phrase/search_phrase.dart';
 import 'package:transcribe/search_team/search_team.dart';
@@ -22,19 +19,23 @@ class TaskAddEdit extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TaskAddEditState createState() => _TaskAddEditState(formControllerTask);
+  _TaskAddEditState createState() => _TaskAddEditState();
 }
 
 class _TaskAddEditState extends State<TaskAddEdit> {
-  final FormControllerTask formControllerTask;
+  late FormControllerTask formControllerTask;
 
-  _TaskAddEditState(this.formControllerTask);
+  @override
+  void initState() {
+    super.initState();
+    formControllerTask = widget.formControllerTask;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add task.'),
+        title: const Text('Add task.'),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -95,7 +96,7 @@ class _TaskAddEditState extends State<TaskAddEdit> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Save this data in cloud',
-        child: Icon(AppIconData.saveInCloud),
+        child: const Icon(AppIconData.saveInCloud),
         onPressed: () {
           setState(() {});
           formControllerTask.onCheckValidation();

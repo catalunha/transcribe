@@ -33,7 +33,7 @@ class InputEmptyBox extends StatelessWidget {
                 // color: AppColors.primary,
               ),
             ),
-            Container(
+            const SizedBox(
               width: 1,
               height: 48,
               // color: AppColors.stroke,

@@ -40,9 +40,7 @@ class TeamAddEditFactory extends VmFactory<AppState, TeamAddEditConnector> {
         formControllerTeam:
             FormControllerTeam(teamModel: state.teamState.teamCurrent!),
         onSave: (TeamModel teamModel) {
-          print('onSave teamModel.isDeleted:${teamModel.isDeleted}');
           teamModel = teamModel.copyWith(isDeleted: teamModel.isDeleted);
-          print('teamModel teamModel.isDeleted:${teamModel.isDeleted}');
           if (widget!.addOrEditId.isEmpty) {
             dispatch(AddDocTeamAction(teamModel: teamModel));
           } else {
@@ -98,10 +96,7 @@ class FormControllerTeam {
     } else {
       isUserMapValid = false;
     }
-    print('isUserMapValid:$isUserMapValid');
-
     isFieldsExtraValid = (isUserMapValid ?? false);
-    print('isFieldsExtraInvalid:$isFieldsExtraValid');
   }
 
   void onCheckValidation() async {

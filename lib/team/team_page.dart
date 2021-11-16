@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
 import 'controller/team_list_connector.dart';
-import 'controller/team_model.dart';
-import 'team_card.dart';
 
 class TeamPage extends StatelessWidget {
   const TeamPage({
@@ -15,12 +12,12 @@ class TeamPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My teams'),
+        title: const Text('My teams'),
       ),
-      body: TeamListConnector(),
+      body: const TeamListConnector(),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Create new team.',
-        child: Icon(AppIconData.addInCloud),
+        child: const Icon(AppIconData.addInCloud),
         onPressed: () {
           Navigator.pushNamed(
             context,

@@ -20,10 +20,10 @@ class SplashConnector extends StatelessWidget {
             vm.startLogin();
           }
           if (vm.isAuthenticated && vm.isInFirestore) {
-            return HomePageConnector();
+            return const HomePageConnector();
           }
           if (vm.isUnAuthenticated && !vm.isAuthenticating) {
-            return LoginConnector();
+            return const LoginConnector();
           }
           return SplashPage(
             isUnInitialized: vm.isUnInitialized,

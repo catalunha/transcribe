@@ -48,7 +48,7 @@ class SearchUserList extends StatelessWidget {
           title: Text('${user.displayName}'),
           subtitle: Text(user.email),
           leading: user.photoURL == null
-              ? Icon(AppIconData.undefined)
+              ? const Icon(AppIconData.undefined)
               : ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: Image.network(
@@ -72,7 +72,7 @@ class SearchUserList extends StatelessWidget {
                   backgroundColor: Colors.green.shade900,
                   content: Text(
                     'This email ${user.email} is copied',
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   ));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },

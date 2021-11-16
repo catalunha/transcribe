@@ -19,11 +19,11 @@ class TranscriptionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select one tasks for solve'),
+        title: const Text('Select one tasks for solve'),
         actions: [
           IconButton(
             tooltip: 'Archived sentences',
-            icon: Icon(AppIconData.box),
+            icon: const Icon(AppIconData.box),
             onPressed: () {
               Navigator.pushNamed(
                 context,
@@ -57,11 +57,11 @@ class TranscriptionList extends StatelessWidget {
           child: Card(
             child: ListTile(
               tileColor: transcription.isSolved ? Colors.green : null,
-              leading: Icon(AppIconData.edit),
+              leading: const Icon(AppIconData.edit),
               title: Text(
                 transcription.task.title,
                 // textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 30),
+                style: const TextStyle(fontSize: 30),
               ),
               onTap: () {
                 Navigator.pushNamed(
@@ -73,7 +73,7 @@ class TranscriptionList extends StatelessWidget {
               trailing: transcription.isSolved
                   ? IconButton(
                       tooltip: 'Archive this transcription',
-                      icon: Icon(AppIconData.inbox),
+                      icon: const Icon(AppIconData.inbox),
                       onPressed: () {
                         onArchive(transcription.id);
                       },
@@ -157,7 +157,7 @@ class TranscriptionList extends StatelessWidget {
       // );
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any task."),
       ));

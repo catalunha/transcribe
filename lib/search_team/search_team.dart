@@ -3,7 +3,6 @@ import 'package:transcribe/search_team/controller/search_team_list_connector.dar
 import 'package:transcribe/team/controller/team_model.dart';
 import 'package:transcribe/team/team_card.dart';
 import 'package:transcribe/theme/app_icon.dart';
-import 'package:transcribe/user/controller/user_model.dart';
 
 class SearchTeam extends StatelessWidget {
   final TeamModel? team;
@@ -43,20 +42,20 @@ class SearchTeam extends StatelessWidget {
                           builder: (BuildContext context) =>
                               const SearchTeamListConnector());
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       AppIconData.search,
                       color: Colors.white,
                     ),
                     label: Text(
                       label,
                       softWrap: true,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
                   ),
                   required
-                      ? Text(
+                      ? const Text(
                           ' *',
                           style: TextStyle(
                             color: Colors.red,

@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
 import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 
@@ -59,7 +57,7 @@ class TaskModel {
   }
 
   Map<String, dynamic> toMap() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
 
     data['id'] = id;
     data['name'] = title;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transcribe/theme/app_icon.dart';
 import 'package:transcribe/upload/controller/input_file_connector.dart';
-import 'package:transcribe/widget/input_checkbox.dart';
-import 'package:transcribe/widget/input_checkbox_delete.dart';
 import 'package:transcribe/widget/input_description.dart';
 import 'package:transcribe/widget/input_title.dart';
 import 'package:transcribe/widget/required_inform.dart';
@@ -22,17 +20,17 @@ class PhraseAddEdit extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PhraseAddEditState createState() =>
-      _PhraseAddEditState(formControllerPhrase);
+  _PhraseAddEditState createState() => _PhraseAddEditState();
 }
 
 class _PhraseAddEditState extends State<PhraseAddEdit> {
-  final FormControllerPhase formControllerPhrase;
+  late FormControllerPhase formControllerPhrase;
 
-  _PhraseAddEditState(this.formControllerPhrase);
+  // _PhraseAddEditState();
   @override
   void initState() {
     super.initState();
+    formControllerPhrase = widget.formControllerPhrase;
   }
 
   @override
@@ -113,7 +111,7 @@ class _PhraseAddEditState extends State<PhraseAddEdit> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Save this data in cloud',
-        child: Icon(AppIconData.saveInCloud),
+        child: const Icon(AppIconData.saveInCloud),
         onPressed: () {
           formControllerPhrase.onCheckValidation();
           if (formControllerPhrase.isFormValid) {

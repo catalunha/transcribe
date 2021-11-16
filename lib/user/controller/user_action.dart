@@ -35,9 +35,9 @@ class GetDocGoogleAccountUserAction extends ReduxAction<AppState> {
         .get();
     var documentListMapIdData = querySnapshot.docs
         .map((queryDocumentSnapshot) =>
-            {'${queryDocumentSnapshot.id}': queryDocumentSnapshot.data()})
+            {queryDocumentSnapshot.id: queryDocumentSnapshot.data()})
         .toList();
-    if (documentListMapIdData.length == 0) {
+    if (documentListMapIdData.isEmpty) {
       await dispatch(CreateDocWithGoogleAccountUserAction());
       return null;
     } else if (documentListMapIdData.length == 1) {

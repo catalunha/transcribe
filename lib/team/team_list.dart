@@ -39,7 +39,7 @@ class TeamList extends StatelessWidget {
           widgetList: [
             IconButton(
               tooltip: 'Edit this team.',
-              icon: Icon(AppIconData.edit),
+              icon: const Icon(AppIconData.edit),
               onPressed: () {
                 Navigator.pushNamed(
                   context,
@@ -53,7 +53,7 @@ class TeamList extends StatelessWidget {
       ));
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any team."),
       ));

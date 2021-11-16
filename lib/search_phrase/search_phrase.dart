@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:transcribe/phrase/controller/phrase_model.dart';
-import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/phrase/phrase_card.dart';
 import 'package:transcribe/search_phrase/controller/search_phrase_list_connector.dart';
 import 'package:transcribe/theme/app_icon.dart';
-import 'package:transcribe/user/controller/user_model.dart';
 
 class SearchPhrase extends StatelessWidget {
   final PhraseModel? phrase;
@@ -43,20 +41,20 @@ class SearchPhrase extends StatelessWidget {
                           builder: (BuildContext context) =>
                               const SearchPhraseListConnector());
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       AppIconData.search,
                       color: Colors.white,
                     ),
                     label: Text(
                       label,
                       softWrap: true,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
                   ),
                   required
-                      ? Text(
+                      ? const Text(
                           ' *',
                           style: TextStyle(
                             color: Colors.red,

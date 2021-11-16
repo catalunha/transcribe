@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:transcribe/task/controller/task_model.dart';
-import 'package:transcribe/theme/app_icon.dart';
-import 'package:transcribe/user/controller/user_model.dart';
 
 class TranscriptionCard extends StatelessWidget {
   final TaskModel task;
@@ -21,12 +18,12 @@ class TranscriptionCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Text(
               task.title,
               textAlign: TextAlign.start,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           Container(

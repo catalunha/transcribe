@@ -17,7 +17,7 @@ class PhraseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 10,
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -27,7 +27,7 @@ class PhraseCard extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 phrase.phraseList.join(' '),
-                style: TextStyle(
+                style: const TextStyle(
                   // color: ThemeApp.onSurface,
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -38,7 +38,7 @@ class PhraseCard extends StatelessWidget {
               alignment: Alignment.topLeft,
               child: Text(
                 phrase.group,
-                style: TextStyle(
+                style: const TextStyle(
                     // color: ThemeApp.onSurfaceLight,
                     // fontWeight: FontWeight.bold,
                     ),

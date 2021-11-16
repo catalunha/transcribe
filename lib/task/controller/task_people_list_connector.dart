@@ -1,13 +1,10 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:transcribe/task/controller/task_model.dart';
 import 'package:transcribe/task/controller/task_action.dart';
-import 'package:transcribe/task/controller/task_model.dart';
 import 'package:transcribe/transcription/controller/transcription_model.dart';
 
 import '../../app_state.dart';
-import '../task_list.dart';
 import '../task_people_list.dart';
 import 'task_action.dart';
 

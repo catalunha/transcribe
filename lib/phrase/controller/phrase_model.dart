@@ -82,9 +82,11 @@ class PhraseModel {
       isArchived: map['isArchived'],
       isDeleted: map['isDeleted'],
       phraseImage: map['phraseImage'],
-      phraseListImage: map['phraseListImage'] != null
-          ? map['phraseListImage'].cast<String>()
-          : null,
+      phraseListImage: map['phraseListImage']?.cast<String>() ?? null,
+
+      // phraseListImage: map['phraseListImage'] != null
+      //     ? map['phraseListImage'].cast<String>()
+      //     : null,
     );
   }
 

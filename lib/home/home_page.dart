@@ -43,8 +43,8 @@ class HomePage extends StatelessWidget {
               ),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.text_fields_rounded),
-                  title: Text('Create a sentence'),
+                  leading: const Icon(Icons.text_fields_rounded),
+                  title: const Text('Create a sentence'),
                   onTap: () async {
                     Navigator.pushNamed(
                       context,
@@ -55,8 +55,8 @@ class HomePage extends StatelessWidget {
               ),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.task),
-                  title: Text('Create a task'),
+                  leading: const Icon(Icons.task),
+                  title: const Text('Create a task'),
                   onTap: () async {
                     Navigator.pushNamed(
                       context,
@@ -68,8 +68,8 @@ class HomePage extends StatelessWidget {
             ],
             Card(
               child: ListTile(
-                leading: Icon(Icons.multitrack_audio),
-                title: Text('Transcribe an audio'),
+                leading: const Icon(Icons.multitrack_audio),
+                title: const Text('Transcribe an audio'),
                 onTap: () async {
                   Navigator.pushNamed(
                     context,

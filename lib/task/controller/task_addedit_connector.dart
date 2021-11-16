@@ -1,12 +1,9 @@
 import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/task/controller/task_model.dart';
-import 'package:transcribe/task/controller/task_model.dart';
 
 import '../../app_state.dart';
 import '../task_addedit.dart';
-import '../task_addedit.dart';
-import 'task_action.dart';
 import 'task_action.dart';
 
 class TaskAddEditConnector extends StatelessWidget {
@@ -93,15 +90,12 @@ class FormControllerTask {
     } else {
       isTeamValid = false;
     }
-    print('isTeamInvalid:$isTeamValid');
     if (taskModel.phrase != null) {
       isPhraseValid = true;
     } else {
       isPhraseValid = false;
     }
-    print('isPhraseInvalid:$isPhraseValid');
     isFieldsExtraValid = (isTeamValid ?? false) && (isPhraseValid ?? false);
-    print('isFieldsExtraInvalid:$isFieldsExtraValid');
   }
 
   void onCheckValidation() async {

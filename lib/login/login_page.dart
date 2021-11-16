@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transcribe/theme/app_images.dart';
 
-import 'google_login_button.dart';
-
 class LoginPage extends StatelessWidget {
   final VoidCallback signIn;
   const LoginPage({
@@ -16,7 +14,7 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       // backgroundColor: AppColors.background,
-      body: Container(
+      body: SizedBox(
         width: size.width,
         height: size.height,
         child: Stack(

@@ -46,7 +46,7 @@ class TeamModel {
   }
 
   Map<String, dynamic> toMap() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['teacher'] = teacher.toMap();
     data['name'] = name;

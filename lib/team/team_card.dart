@@ -27,7 +27,7 @@ class TeamCard extends StatelessWidget {
             child: Text(
               team.name,
               // textAlign: TextAlign.start,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           // Text(team.id),
@@ -78,7 +78,7 @@ class TeamCard extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               icon: userRef.photoURL == null
-                  ? Icon(AppIconData.undefined)
+                  ? const Icon(AppIconData.undefined)
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
@@ -103,7 +103,7 @@ class TeamCard extends StatelessWidget {
         '${userRef.displayName?.substring(0, 6)}...',
       );
     } else {
-      return Text('...');
+      return const Text('...');
     }
   }
 }

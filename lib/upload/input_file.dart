@@ -38,7 +38,7 @@ class InputFile extends StatelessWidget {
               children: [
                 Text(label),
                 requiredField
-                    ? Text(
+                    ? const Text(
                         ' *',
                         style: TextStyle(
                           color: Colors.red,
@@ -51,8 +51,8 @@ class InputFile extends StatelessWidget {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Icon(
                   AppIconData.attachFile,
                   color: Colors.blue,
@@ -68,24 +68,23 @@ class InputFile extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     ListTile(
-                      leading: Icon(AppIconData.search),
-                      title: Text('1º Select the file'),
+                      leading: const Icon(AppIconData.search),
+                      title: const Text('1º Select the file'),
                       subtitle: Text(selectedLocalFileName),
                       onTap: selectLocalFile,
                     ),
                     ListTile(
-                      leading: Icon(AppIconData.saveInCloud),
-                      title: Text('2º Send for clound'),
+                      leading: const Icon(AppIconData.saveInCloud),
+                      title: const Text('2º Send for clound'),
                       subtitle: percentageOfUpload > 0
-                          ? Text('Sending...')
-                          : Text(''),
+                          ? const Text('Sending...')
+                          : const Text(''),
                       onTap: uploadingFile,
-                      trailing:
-                          Text('${percentageOfUpload.toStringAsFixed(2)}'),
+                      trailing: Text(percentageOfUpload.toStringAsFixed(2)),
                     ),
                     ListTile(
-                      leading: Icon(AppIconData.linkOn),
-                      title: Text('3º Check de audio in web'),
+                      leading: const Icon(AppIconData.linkOn),
+                      title: const Text('3º Check de audio in web'),
                       subtitle: Text(urlForDownload),
                       onTap: () async {
                         if (urlForDownload.isNotEmpty) {

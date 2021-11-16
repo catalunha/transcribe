@@ -5,7 +5,6 @@ import 'package:transcribe/phrase/controller/phrase_model.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 import 'package:transcribe/transcription/controller/transcription_action.dart';
 import 'package:transcribe/transcription/controller/transcription_model.dart';
-import 'package:transcribe/user/controller/user_model.dart';
 
 import '../../app_state.dart';
 import 'task_model.dart';

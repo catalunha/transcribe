@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:transcribe/theme/app_icon.dart';
-import 'package:transcribe/widget/input_checkbox.dart';
 import 'package:transcribe/widget/input_checkbox_delete.dart';
 import 'package:transcribe/widget/input_title.dart';
 import 'package:transcribe/search_user/search_user.dart';
@@ -24,13 +23,17 @@ class TeamAddEdit extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _TeamAddEditState createState() => _TeamAddEditState(formControllerTeam);
+  _TeamAddEditState createState() => _TeamAddEditState();
 }
 
 class _TeamAddEditState extends State<TeamAddEdit> {
-  final FormControllerTeam formControllerTeam;
+  late FormControllerTeam formControllerTeam;
   bool invalidUserMap = false;
-  _TeamAddEditState(this.formControllerTeam);
+  @override
+  void initState() {
+    super.initState();
+    formControllerTeam = widget.formControllerTeam;
+  }
 
   @override
   Widget build(BuildContext context) {

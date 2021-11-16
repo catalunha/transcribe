@@ -13,6 +13,7 @@ import 'upload_state.dart';
 
 class RestartingStateUploadAction extends ReduxAction<AppState> {
   RestartingStateUploadAction();
+  @override
   AppState reduce() {
     return state.copyWith(uploadState: UploadState.initialState());
   }
@@ -21,6 +22,7 @@ class RestartingStateUploadAction extends ReduxAction<AppState> {
 class SetUrlForDownloadUploadAction extends ReduxAction<AppState> {
   final String url;
   SetUrlForDownloadUploadAction({required this.url});
+  @override
   AppState reduce() {
     return state.copyWith(
         uploadState: state.uploadState.copyWith(urlForDownload: url));
@@ -51,6 +53,7 @@ class UploadingFileUploadAction extends ReduxAction<AppState> {
   final String pathInFirestore;
 
   UploadingFileUploadAction({required this.pathInFirestore});
+  @override
   Future<AppState> reduce() async {
     UploadForFirebase uploadForFirebase = UploadForFirebase();
     String? file = state.uploadState.fileName;
@@ -65,6 +68,7 @@ class UploadingFileUploadAction extends ReduxAction<AppState> {
     }
   }
 
+  @override
   void after() => dispatch(StreamUploadTask());
 }
 
@@ -72,6 +76,7 @@ class UpdateUploadPorcentageUploadAction extends ReduxAction<AppState> {
   final double value;
 
   UpdateUploadPorcentageUploadAction({required this.value});
+  @override
   AppState reduce() {
     return state.copyWith(
       uploadState: state.uploadState.copyWith(
@@ -83,6 +88,7 @@ class UpdateUploadPorcentageUploadAction extends ReduxAction<AppState> {
 
 class UpdateUrlForDownloadUploadAction extends ReduxAction<AppState> {
   UpdateUrlForDownloadUploadAction();
+  @override
   Future<AppState?> reduce() async {
     if (state.uploadState.uploadTask != null) {
       UploadTask task = state.uploadState.uploadTask!;
@@ -100,6 +106,7 @@ class UpdateUrlForDownloadUploadAction extends ReduxAction<AppState> {
 }
 
 class StreamUploadTask extends ReduxAction<AppState> {
+  @override
   Future<AppState?> reduce() async {
     if (state.uploadState.uploadTask != null) {
       UploadTask uploadTask = state.uploadState.uploadTask!;
@@ -117,6 +124,7 @@ class StreamUploadTask extends ReduxAction<AppState> {
     }
   }
 
+  @override
   void after() => dispatch(UpdateUrlForDownloadUploadAction());
 }
 
@@ -126,7 +134,7 @@ class UploadForFirebase {
   Uint8List? fileBytes;
   late final FilePickerResult? pickFile;
   Future<bool> selectFile() async {
-    this.pickFile = await FilePicker.platform.pickFiles(
+    pickFile = await FilePicker.platform.pickFiles(
       type: FileType.any,
       allowMultiple: false,
     );
@@ -147,8 +155,8 @@ class UploadForFirebase {
   }
 
   void _fileInWeb() {
-    this.fileBytes = pickFile!.files.first.bytes;
-    this.fileName = pickFile!.files.first.name;
+    fileBytes = pickFile!.files.first.bytes;
+    fileName = pickFile!.files.first.name;
     // print('$fileName');
   }
 
@@ -156,23 +164,23 @@ class UploadForFirebase {
     final path = pickFile!.files.single.path!;
 
     file = File(path);
-    this.fileBytes = file!.readAsBytesSync();
-    this.fileName = basename(file!.path);
+    fileBytes = file!.readAsBytesSync();
+    fileName = basename(file!.path);
     // print('$fileName');
   }
 
   UploadTask? uploadingFile(File file, String pathInFirestore) {
     final fileName = basename(file.path);
     final destination = '$pathInFirestore/$fileName';
-    var task;
+    UploadTask task;
     try {
       final ref = FirebaseStorage.instance.ref(destination);
       task = ref.putFile(file);
     } on FirebaseException catch (e) {
-      // print('--> uploadingFile error $e');
+      print('--> uploadingFile error $e');
       return null;
     }
-    if (task == null) return null;
+    // if (task == null) return null;
     return task;
   }
 
@@ -183,7 +191,7 @@ class UploadForFirebase {
       final ref = FirebaseStorage.instance.ref('$pathInFirestore/$fileName');
       task = ref.putData(fileBytes);
     } on FirebaseException catch (e) {
-      // print('--> uploadingBytes error $e');
+      print('--> uploadingBytes error $e');
       return null;
     }
     return task;

@@ -1,6 +1,5 @@
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:transcribe/team/controller/team_model.dart';
 import 'package:transcribe/team/team_card.dart';
 import 'package:transcribe/theme/app_icon.dart';
@@ -40,7 +39,7 @@ class SearchTeamList extends StatelessWidget {
           widgetList: [
             IconButton(
               tooltip: 'Select this team.',
-              icon: Icon(AppIconData.select),
+              icon: const Icon(AppIconData.select),
               onPressed: () {
                 onSetTeam(team.id);
                 Navigator.pop(context);
@@ -51,7 +50,7 @@ class SearchTeamList extends StatelessWidget {
       ));
     }
     if (list.isEmpty) {
-      list.add(ListTile(
+      list.add(const ListTile(
         leading: Icon(AppIconData.smile),
         title: Text("Ops. You don't have any team."),
       ));

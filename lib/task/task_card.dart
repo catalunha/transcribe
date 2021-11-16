@@ -22,12 +22,12 @@ class TaskCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,
             child: Text(
               task.title,
               textAlign: TextAlign.start,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
           ),
           Container(
@@ -36,7 +36,7 @@ class TaskCard extends StatelessWidget {
             child: Text(
               task.phrase!.phraseList.join(' '),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, color: Colors.black),
+              style: const TextStyle(fontSize: 20, color: Colors.black),
             ),
           ),
           Wrap(
@@ -81,7 +81,7 @@ class TaskCard extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               icon: userRef.photoURL == null
-                  ? Icon(AppIconData.undefined)
+                  ? const Icon(AppIconData.undefined)
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
                       child: Image.network(
@@ -106,7 +106,7 @@ class TaskCard extends StatelessWidget {
         '${userRef.displayName?.substring(0, 6)}...',
       );
     } else {
-      return Text('...');
+      return const Text('...');
     }
   }
 }
