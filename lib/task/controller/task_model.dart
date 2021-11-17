@@ -67,7 +67,6 @@ class TaskModel {
     data['isShowPhraseImage'] = isShowPhraseImage;
     data['isShowPhraseListImage'] = isShowPhraseListImage;
     data['isArchived'] = isArchived;
-    data['isDeleted'] = isDeleted;
     return data;
   }
 
@@ -81,7 +80,6 @@ class TaskModel {
       isShowPhraseImage: map['isShowPhraseImage'],
       isShowPhraseListImage: map['isShowPhraseListImage'],
       isArchived: map['isArchived'],
-      isDeleted: map['isDeleted'],
     );
   }
 

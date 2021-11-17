@@ -171,9 +171,9 @@ class SetNulTranscriptioCurrentTeamAction extends ReduxAction<AppState> {
   }
 }
 
-class SetNewOrderTranscriptionAction extends ReduxAction<AppState> {
+class PhraseOrderingTranscriptionAction extends ReduxAction<AppState> {
   final List<String> newOrder;
-  SetNewOrderTranscriptionAction({
+  PhraseOrderingTranscriptionAction({
     required this.newOrder,
   });
   // @override
@@ -218,6 +218,27 @@ class SetNewOrderTranscriptionAction extends ReduxAction<AppState> {
   //   print(
   //       'SetNewOrderTranscriptionAction.after current: ${state.taskState.taskCurrent!}');
   // }
+}
+
+class PhraseTypingTranscriptionAction extends ReduxAction<AppState> {
+  final String text;
+  PhraseTypingTranscriptionAction({
+    required this.text,
+  });
+
+  @override
+  AppState reduce() {
+    TranscriptionModel transcriptionModel =
+        state.transcriptionState.transcriptionCurrent!;
+
+    transcriptionModel = transcriptionModel.copyWith(phraseWritten: text);
+
+    return state.copyWith(
+      transcriptionState: state.transcriptionState.copyWith(
+        transcriptionCurrent: transcriptionModel,
+      ),
+    );
+  }
 }
 
 class UpdateDocTranscriptionAction extends ReduxAction<AppState> {

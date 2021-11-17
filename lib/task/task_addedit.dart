@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transcribe/theme/app_icon.dart';
+import 'package:transcribe/widget/input_checkbox.dart';
 import 'package:transcribe/widget/input_title.dart';
 import 'package:transcribe/widget/required_inform.dart';
 import 'package:transcribe/search_phrase/search_phrase.dart';
@@ -64,18 +65,17 @@ class _TaskAddEditState extends State<TaskAddEdit> {
                 required: true,
                 isFieldValid: widget.formControllerTask.isPhraseValid,
               ),
-              // formControllerTask.taskModel.id.isEmpty
-              //     ? Container()
-              //     : InputCheckBox(
-              //         title: 'Archived this task',
-              //         subtitle: 'Select to archive this task.',
-              //         icon: AppIconData.inbox,
-              //         value: formControllerTask.taskModel.isArchived,
-              //         onChanged: (value) {
-              //           formControllerTask.onChange(isArchived: value);
-              //           setState(() {});
-              //         },
-              //       ),
+              InputCheckBox(
+                title: 'Write the sentence instead of ordering',
+                subtitle:
+                    'if checked. student must write the sentence. not ordering.',
+                icon: AppIconData.check,
+                value: formControllerTask.taskModel.isWritten,
+                onChanged: (value) {
+                  formControllerTask.onChange(isWritten: value);
+                  setState(() {});
+                },
+              ),
               // formControllerTask.taskModel.id.isEmpty
               //     ? Container()
               //     : InputCheckBoxDelete(

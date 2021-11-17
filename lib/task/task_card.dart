@@ -8,10 +8,12 @@ import 'controller/task_model.dart';
 class TaskCard extends StatelessWidget {
   final TaskModel task;
   final List<Widget>? widgetList;
+  final Color colorPhrase;
   const TaskCard({
     Key? key,
     required this.task,
     this.widgetList,
+    this.colorPhrase = Colors.blue,
   }) : super(key: key);
 
   @override
@@ -32,11 +34,14 @@ class TaskCard extends StatelessWidget {
           ),
           Container(
             width: double.infinity,
-            color: Colors.blue,
+            color: colorPhrase,
             child: Text(
               task.phrase!.phraseList.join(' '),
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+              ),
             ),
           ),
           Wrap(

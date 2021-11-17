@@ -25,9 +25,12 @@ class TranscriptionEditConnector extends StatelessWidget {
       vm: () => TranscriptionEditFactory(this),
       builder: (context, vm) => TranscriptionEdit(
         phraseAudio: vm.phraseAudio,
-        phraseUnordened: vm.phraseUnordened,
-        phraseCorrect: vm.phraseCorrect,
-        onNewOrder: vm.onNewOrder,
+        isWritten: vm.isWritten,
+        phraseWritten: vm.phraseWritten,
+        phraseOrdered: vm.phraseOrdered,
+        phraseList: vm.phraseList,
+        onPhraseOrdering: vm.onPhraseOrdering,
+        onPhraseTyping: vm.onPhraseTyping,
         onSave: vm.onSave,
       ),
     );
@@ -41,12 +44,19 @@ class TranscriptionEditFactory
   TranscriptionEditVm fromStore() => TranscriptionEditVm(
         phraseAudio: state
             .transcriptionState.transcriptionCurrent!.task.phrase!.phraseAudio,
-        phraseUnordened:
-            state.transcriptionState.transcriptionCurrent!.phraseOrdered!,
-        phraseCorrect: state
+        phraseList: state
             .transcriptionState.transcriptionCurrent!.task.phrase!.phraseList,
-        onNewOrder: (List<String> newOrder) {
-          dispatch(SetNewOrderTranscriptionAction(newOrder: newOrder));
+        phraseOrdered:
+            state.transcriptionState.transcriptionCurrent!.phraseOrdered!,
+        isWritten:
+            state.transcriptionState.transcriptionCurrent!.task.isWritten,
+        phraseWritten:
+            state.transcriptionState.transcriptionCurrent!.phraseWritten!,
+        onPhraseOrdering: (List<String> newOrder) {
+          dispatch(PhraseOrderingTranscriptionAction(newOrder: newOrder));
+        },
+        onPhraseTyping: (String text) {
+          dispatch(PhraseTypingTranscriptionAction(text: text));
         },
         onSave: () {
           dispatch(UpdateDocTranscriptionAction());
@@ -63,20 +73,28 @@ class TranscriptionEditFactory
 }
 
 class TranscriptionEditVm extends Vm {
-  final List<String> phraseCorrect;
-  final List<String> phraseUnordened;
+  final List<String> phraseList;
+  final bool isWritten;
+  final List<String> phraseOrdered;
+  final String phraseWritten;
   final String phraseAudio;
-  final Function(List<String>) onNewOrder;
+  final Function(List<String>) onPhraseOrdering;
+  final Function(String) onPhraseTyping;
   final Function() onSave;
   TranscriptionEditVm({
-    required this.phraseCorrect,
-    required this.phraseUnordened,
+    required this.phraseList,
+    required this.isWritten,
+    required this.phraseOrdered,
+    required this.phraseWritten,
     required this.phraseAudio,
-    required this.onNewOrder,
+    required this.onPhraseOrdering,
+    required this.onPhraseTyping,
     required this.onSave,
   }) : super(equals: [
-          phraseCorrect,
-          phraseUnordened,
+          phraseList,
+          isWritten,
+          phraseOrdered,
+          phraseWritten,
           phraseAudio,
         ]);
 }

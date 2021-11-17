@@ -31,3 +31,11 @@ Warning:
 The certificate uses the SHA1withRSA signature algorithm which is considered a security risk. This algorithm will be disabled in a future update.
 catalunha@pop-os:~/myapps/transcribe$ 
 
+
+# Outros
+git remote add origin https://github.com/catalunha/transcribe.git
+
+
+git remote remove origin
+git remote add origin https://[TOKEN]@github.com/[USER]/[REPO]
+git push

@@ -67,6 +67,7 @@ class TaskList extends StatelessWidget {
         key: ValueKey(task),
         child: TaskCard(
           task: task,
+          colorPhrase: task.isWritten ? Colors.grey : Colors.blue,
           widgetList: [
             IconButton(
               tooltip: 'People in this task.',

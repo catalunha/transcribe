@@ -2,12 +2,10 @@
 
 Projeto desenvolvido pelo Prof Catalunha e Prof Fábio Costa para aprendizado de ingles através da transcrição de audio e imagens.
 
+# Colaboradores
 
-# Outros
-git remote add origin https://github.com/catalunha/transcribe.git
+* Cristiano 
 
+# Copyright
 
-git remote remove origin
-git remote add origin https://[TOKEN]@github.com/[USER]/[REPO]
-git push
-
+Copyright (c) 2021 Brintec Education and Fabio Costa. See LICENSE.txt for further details.

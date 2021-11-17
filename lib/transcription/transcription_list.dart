@@ -57,12 +57,15 @@ class TranscriptionList extends StatelessWidget {
           child: Card(
             child: ListTile(
               tileColor: transcription.isSolved ? Colors.green : null,
-              leading: const Icon(AppIconData.edit),
+              leading: transcription.task.isWritten
+                  ? const Icon(AppIconData.digit)
+                  : const Icon(AppIconData.order),
               title: Text(
                 transcription.task.title,
                 // textAlign: TextAlign.start,
                 style: const TextStyle(fontSize: 30),
               ),
+              // subtitle: Text(transcription.id),
               onTap: () {
                 Navigator.pushNamed(
                   context,

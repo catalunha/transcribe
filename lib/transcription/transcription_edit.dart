@@ -4,19 +4,27 @@ import 'package:transcribe/player_audio/player_audio_widget.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
 class TranscriptionEdit extends StatefulWidget {
-  final List<String> phraseCorrect;
-  final List<String> phraseUnordened;
+  final List<String> phraseList;
+  final bool isWritten;
+  final String phraseWritten;
+
+  final List<String> phraseOrdered;
   final String phraseAudio;
-  final Function(List<String>) onNewOrder;
+  final Function(List<String>) onPhraseOrdering;
+  final Function(String) onPhraseTyping;
+
   final Function() onSave;
 
   const TranscriptionEdit({
     Key? key,
-    required this.phraseUnordened,
+    required this.phraseOrdered,
     required this.phraseAudio,
-    required this.onNewOrder,
+    required this.onPhraseOrdering,
     required this.onSave,
-    required this.phraseCorrect,
+    required this.phraseList,
+    required this.isWritten,
+    required this.phraseWritten,
+    required this.onPhraseTyping,
   }) : super(key: key);
 
   @override
@@ -25,6 +33,13 @@ class TranscriptionEdit extends StatefulWidget {
 
 class _TranscriptionEditState extends State<TranscriptionEdit> {
   _TranscriptionEditState();
+  final TextEditingController textEditingController = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    textEditingController.text = widget.phraseWritten;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,23 +58,9 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
               child: Text('Click to listen the audio:'),
             ),
             audio(),
-            const Align(
-              alignment: Alignment.topLeft,
-              child: Text('Move the boxes to order the sentence:'),
-            ),
-            Container(
-              constraints: const BoxConstraints(
-                maxHeight: 80,
-              ),
-              // color: Colors.yellow,
-              child: ReorderableListView(
-                // padding: const EdgeInsets.all(10),
-                scrollDirection: Axis.horizontal,
-                onReorder: _onReorder,
-                children: buildPhrase(),
-              ),
-            ),
-            listEquals(widget.phraseCorrect, widget.phraseUnordened)
+            if (widget.isWritten) ...typing() else ...ordering(),
+            listEquals(widget.phraseList, widget.phraseOrdered) ||
+                    (widget.phraseList.join(' ') == widget.phraseWritten)
                 ? const Center(
                     child: Text(
                       'Good job. Save now please !',
@@ -84,6 +85,47 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
     );
   }
 
+  List<Widget> typing() {
+    return [
+      const Align(
+        alignment: Alignment.topLeft,
+        child: Text('And type the sentence:'),
+      ),
+      TextField(
+        style: TextStyle(fontSize: 32),
+        controller: textEditingController,
+        onChanged: (value) {
+          widget.onPhraseTyping(value);
+        },
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'here',
+        ),
+      ),
+    ];
+  }
+
+  List<Widget> ordering() {
+    return [
+      const Align(
+        alignment: Alignment.topLeft,
+        child: Text('And move the boxes to order the sentence:'),
+      ),
+      Container(
+        constraints: const BoxConstraints(
+          maxHeight: 80,
+        ),
+        // color: Colors.yellow,
+        child: ReorderableListView(
+          // padding: const EdgeInsets.all(10),
+          scrollDirection: Axis.horizontal,
+          onReorder: _onReorder,
+          children: buildPhrase(),
+        ),
+      ),
+    ];
+  }
+
   PlayerAudioWidget audio() {
     setState(() {});
     return PlayerAudioWidget(url: widget.phraseAudio);
@@ -95,21 +137,21 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
         newIndex -= 1;
       }
     });
-    // print('widget.phraseUnordened 1: ${widget.phraseUnordened}');
+    // print('widget.phraseOrdered 1: ${widget.phraseOrdered}');
     List<String> listTemp = [];
-    listTemp.addAll(widget.phraseUnordened);
+    listTemp.addAll(widget.phraseOrdered);
     String resourceId = listTemp[oldIndex];
     listTemp.removeAt(oldIndex);
     listTemp.insert(newIndex, resourceId);
-    // print('widget.phraseUnordened 2: ${widget.phraseUnordened}');
-    widget.onNewOrder(listTemp);
-    // print('widget.phraseUnordened 3: ${widget.phraseUnordened}');
+    // print('widget.phraseOrdered 2: ${widget.phraseOrdered}');
+    widget.onPhraseOrdering(listTemp);
+    // print('widget.phraseOrdered 3: ${widget.phraseOrdered}');
   }
 
   List<Widget> buildPhrase() {
     List<Widget> temp = [];
 
-    for (var item in widget.phraseUnordened) {
+    for (var item in widget.phraseOrdered) {
       temp.add(word(item));
     }
     return temp;
@@ -120,7 +162,7 @@ class _TranscriptionEditState extends State<TranscriptionEdit> {
       key: ValueKey(name),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: listEquals(widget.phraseCorrect, widget.phraseUnordened)
+        color: listEquals(widget.phraseList, widget.phraseOrdered)
             ? Colors.green
             : Colors.blue,
       ),

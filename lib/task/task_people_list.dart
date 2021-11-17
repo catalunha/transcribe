@@ -82,30 +82,34 @@ class TaskPeopleList extends StatelessWidget {
                     height: 1,
                     color: Colors.blue,
                   ),
-                  Container(
-                    width: double.infinity,
-                    color: listEquals(transcription.phraseOrdered!,
-                            transcription.task.phrase!.phraseList)
-                        ? Colors.green
-                        : null,
-                    child: Text(
-                      transcription.phraseOrdered!.join(' '),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
-                  Container(
-                    width: double.infinity,
-                    color: transcription.phraseWritten ==
-                            transcription.task.phrase!.phraseList.join(' ')
-                        ? Colors.green
-                        : null,
-                    child: Text(
-                      transcription.phraseWritten!,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  ),
+                  transcription.task.isWritten
+                      ? Container(
+                          width: double.infinity,
+                          color: transcription.phraseWritten ==
+                                  transcription.task.phrase!.phraseList
+                                      .join(' ')
+                              ? Colors.green
+                              : null,
+                          child: Text(
+                            transcription.phraseWritten!,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.white),
+                          ),
+                        )
+                      : Container(
+                          width: double.infinity,
+                          color: listEquals(transcription.phraseOrdered!,
+                                  transcription.task.phrase!.phraseList)
+                              ? Colors.green
+                              : null,
+                          child: Text(
+                            transcription.phraseOrdered!.join(' '),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 20, color: Colors.white),
+                          ),
+                        ),
                 ],
               ),
             )),

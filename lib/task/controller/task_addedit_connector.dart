@@ -74,12 +74,14 @@ class FormControllerTask {
       value?.isEmpty ?? true ? 'This field cannot be empty.' : null;
   void onChange({
     String? name,
+    bool? isWritten,
     bool? isArchived,
     bool? isDeleted,
   }) {
     taskModel = taskModel.copyWith(
       title: name,
       isArchived: isArchived,
+      isWritten: isWritten,
       isDeleted: isDeleted,
     );
   }
