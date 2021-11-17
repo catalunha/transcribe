@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:transcribe/phrase/phrase_card.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
+import '../routes.dart';
 import 'controller/phrase_model.dart';
 
 class PhraseList extends StatelessWidget {
@@ -51,7 +52,7 @@ class PhraseList extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/phrase_addOrEdit',
-            arguments: '',
+            arguments: ArgumentsRoutes(['add', '']),
           );
         },
       ),
@@ -74,7 +75,7 @@ class PhraseList extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   '/phrase_addOrEdit',
-                  arguments: phrase.id,
+                  arguments: ArgumentsRoutes(['edit', phrase.id]),
                 );
               },
             ),
@@ -84,7 +85,18 @@ class PhraseList extends StatelessWidget {
               onPressed: () {
                 onArchive(phrase.id);
               },
-            )
+            ),
+            IconButton(
+              tooltip: 'Copy this sentence with...',
+              icon: const Icon(AppIconData.clone),
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/phrase_addOrEdit',
+                  arguments: ArgumentsRoutes(['add', phrase.id]),
+                );
+              },
+            ),
           ],
         ),
       ));

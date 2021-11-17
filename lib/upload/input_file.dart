@@ -75,7 +75,7 @@ class InputFile extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(AppIconData.saveInCloud),
-                      title: const Text('2º Send for clound'),
+                      title: const Text('2º Send for cloud'),
                       subtitle: percentageOfUpload > 0
                           ? const Text('Sending...')
                           : const Text(''),

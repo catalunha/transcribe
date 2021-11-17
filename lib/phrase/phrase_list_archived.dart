@@ -21,7 +21,7 @@ class PhraseArchivedList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My sentences'),
+        title: const Text('My sentences archived'),
       ),
       body: Column(
         children: [

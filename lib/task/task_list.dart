@@ -2,6 +2,7 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/theme/app_icon.dart';
 
+import '../routes.dart';
 import 'controller/task_model.dart';
 import 'task_card.dart';
 
@@ -52,7 +53,7 @@ class TaskList extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/task_addOrEdit',
-            arguments: '',
+            arguments: ArgumentsRoutes(['add', '']),
           );
         },
       ),
@@ -85,6 +86,17 @@ class TaskList extends StatelessWidget {
               icon: const Icon(AppIconData.inbox),
               onPressed: () {
                 onArchive(task.id);
+              },
+            ),
+            IconButton(
+              tooltip: 'Copy this task with...',
+              icon: const Icon(AppIconData.clone),
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  '/task_addOrEdit',
+                  arguments: ArgumentsRoutes(['add', task.id]),
+                );
               },
             ),
             // IconButton(

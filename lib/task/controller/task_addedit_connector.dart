@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:transcribe/task/controller/task_model.dart';
 
 import '../../app_state.dart';
+import '../../routes.dart';
 import '../task_addedit.dart';
 import 'task_action.dart';
 
 class TaskAddEditConnector extends StatelessWidget {
-  final String addOrEditId;
+  final ArgumentsRoutes addOrEditId;
   const TaskAddEditConnector({
     Key? key,
     required this.addOrEditId,

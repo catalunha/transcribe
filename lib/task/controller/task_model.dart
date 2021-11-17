@@ -28,6 +28,7 @@ class TaskModel {
   });
 
   TaskModel copyWith({
+    String? id,
     String? title,
     TeamModel? team,
     bool teamSetNull = false,
@@ -39,7 +40,7 @@ class TaskModel {
     bool? isDeleted,
   }) {
     return TaskModel(
-      id: id,
+      id: id ?? this.id,
       title: title ?? this.title,
       team: teamSetNull ? null : team ?? this.team,
       phrase: phrase ?? this.phrase,

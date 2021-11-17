@@ -23,6 +23,7 @@ class AppIconData {
   static const diagram = Icons.line_style;
   static const order = Icons.swipe_sharp;
   static const digit = Icons.keyboard_alt_outlined;
+  static const clone = Icons.theater_comedy_sharp;
 
   static const addInCloud = Icons.add;
   static const saveInCloud = Icons.cloud_upload_outlined;

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:transcribe/user/controller/user_model.dart';
 
 import '../../app_state.dart';
+import '../../routes.dart';
 import 'phrase_model.dart';
 
 class StreamDocsPhraseAction extends ReduxAction<AppState> {
@@ -53,15 +54,6 @@ class SetPhraseListPhraseAction extends ReduxAction<AppState> {
       ),
     );
   }
-
-  // @override
-  // void after() {
-  //   if (state.phraseState.phraseCurrent != null) {
-  //     print('phraseCurrent: ${state.phraseState.phraseCurrent!.id}');
-  //     dispatch(SetPhraseCurrentPhraseAction(
-  //         id: state.phraseState.phraseCurrent!.id));
-  //   }
-  // }
 }
 
 class SetPhraseListArchivedPhraseAction extends ReduxAction<AppState> {
@@ -80,36 +72,65 @@ class SetPhraseListArchivedPhraseAction extends ReduxAction<AppState> {
 }
 
 class SetPhraseCurrentPhraseAction extends ReduxAction<AppState> {
-  final String id;
+  final ArgumentsRoutes id;
   SetPhraseCurrentPhraseAction({
     required this.id,
   });
   @override
   AppState reduce() {
     PhraseModel phraseModel;
-    if (id.isNotEmpty) {
-      phraseModel = state.phraseState.phraseIList!
-          .firstWhere((element) => element.id == id)
-          .copy();
-    } else {
+    if (id.args[0] == 'add') {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       CollectionReference docRef =
           firebaseFirestore.collection(PhraseModel.collection);
       String idNew = docRef.doc().id;
-      // String idNew = '';
-      phraseModel = PhraseModel(
-        id: idNew,
-        teacher: UserRef.fromMap({
-          'id': state.userState.userCurrent!.id,
-          'email': state.userState.userCurrent!.email,
-          'photoURL': state.userState.userCurrent!.photoURL,
-          'displayName': state.userState.userCurrent!.displayName
-        }),
-        group: '',
-        phraseList: [],
-        phraseAudio: '',
-      );
+      if (id.args[1].isEmpty) {
+        phraseModel = PhraseModel(
+          id: idNew,
+          teacher: UserRef.fromMap({
+            'id': state.userState.userCurrent!.id,
+            'email': state.userState.userCurrent!.email,
+            'photoURL': state.userState.userCurrent!.photoURL,
+            'displayName': state.userState.userCurrent!.displayName
+          }),
+          group: '',
+          phraseList: [],
+          phraseAudio: '',
+        );
+      } else {
+        phraseModel = state.phraseState.phraseIList!
+            .firstWhere((element) => element.id == id.args[1])
+            .copyWith(id: idNew, phraseAudio: '');
+      }
+    } else {
+      phraseModel = state.phraseState.phraseIList!
+          .firstWhere((element) => element.id == id.args[1])
+          .copy();
     }
+
+    // if (id.args[0].isNotEmpty) {
+    //   phraseModel = state.phraseState.phraseIList!
+    //       .firstWhere((element) => element.id == id)
+    //       .copy();
+    // } else {
+    //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    //   CollectionReference docRef =
+    //       firebaseFirestore.collection(PhraseModel.collection);
+    //   String idNew = docRef.doc().id;
+    //   // String idNew = '';
+    //   phraseModel = PhraseModel(
+    //     id: idNew,
+    //     teacher: UserRef.fromMap({
+    //       'id': state.userState.userCurrent!.id,
+    //       'email': state.userState.userCurrent!.email,
+    //       'photoURL': state.userState.userCurrent!.photoURL,
+    //       'displayName': state.userState.userCurrent!.displayName
+    //     }),
+    //     group: '',
+    //     phraseList: [],
+    //     phraseAudio: '',
+    //   );
+    // }
     return state.copyWith(
       phraseState: state.phraseState.copyWith(
         phraseCurrent: phraseModel,
@@ -185,7 +206,7 @@ class ArchiveDocPhraseAction extends ReduxAction<AppState> {
     DocumentReference docRef =
         firebaseFirestore.collection(PhraseModel.collection).doc(phraseId);
 
-    dispatch(SetPhraseCurrentPhraseAction(id: ''));
+    // dispatch(SetPhraseCurrentPhraseAction(id: ['','']));
 
     await docRef.update({'isArchived': isArchived});
 

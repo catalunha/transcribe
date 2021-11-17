@@ -2,12 +2,13 @@ import 'package:async_redux/async_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:transcribe/upload/controller/upload_action.dart';
 import '../../app_state.dart';
+import '../../routes.dart';
 import '../phrase_addedit.dart';
 import 'phrase_action.dart';
 import 'phrase_model.dart';
 
 class PhraseAddEditConnector extends StatelessWidget {
-  final String addOrEditId;
+  final ArgumentsRoutes addOrEditId;
   const PhraseAddEditConnector({
     Key? key,
     required this.addOrEditId,
@@ -29,7 +30,7 @@ class PhraseAddEditConnector extends StatelessWidget {
       },
       vm: () => PhraseAddEditFactory(this),
       builder: (context, vm) => PhraseAddEdit(
-        addOrEditId: addOrEditId.isEmpty ? true : false,
+        addOrEditId: addOrEditId.args[0] == 'add' ? true : false,
         formControllerPhrase: vm.formControllerPhrase,
         onSave: vm.onSave,
       ),
@@ -48,7 +49,7 @@ class PhraseAddEditFactory extends VmFactory<AppState, PhraseAddEditConnector> {
               state.uploadState.urlForDownload!.isNotEmpty) {
             phraseModel = phraseModel.copyWith(
                 phraseAudio: state.uploadState.urlForDownload);
-            if (widget!.addOrEditId.isEmpty) {
+            if (widget!.addOrEditId.args[0] == 'add') {
               await dispatch(CreateDocPhraseAction(phraseModel: phraseModel));
             } else {
               await dispatch(UpdateDocPhraseAction(phraseModel: phraseModel));
@@ -56,22 +57,18 @@ class PhraseAddEditFactory extends VmFactory<AppState, PhraseAddEditConnector> {
             dispatch(NavigateAction.pop());
           }
         },
-        addOrEditId: widget!.addOrEditId.isEmpty,
       );
 }
 
 class PhraseAddEditVm extends Vm {
   final FormControllerPhase formControllerPhrase;
   final Function(PhraseModel) onSave;
-  final bool addOrEditId;
 
   PhraseAddEditVm({
     required this.formControllerPhrase,
     required this.onSave,
-    required this.addOrEditId,
   }) : super(equals: [
           formControllerPhrase,
-          addOrEditId,
         ]);
 }
 

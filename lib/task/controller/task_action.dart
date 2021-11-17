@@ -7,6 +7,7 @@ import 'package:transcribe/transcription/controller/transcription_action.dart';
 import 'package:transcribe/transcription/controller/transcription_model.dart';
 
 import '../../app_state.dart';
+import '../../routes.dart';
 import 'task_model.dart';
 
 class StreamDocsTaskAction extends ReduxAction<AppState> {
@@ -74,27 +75,47 @@ class SetTaskListArchivedTaskAction extends ReduxAction<AppState> {
 }
 
 class SetTaskCurrentTaskAction extends ReduxAction<AppState> {
-  final String id;
+  final ArgumentsRoutes id;
   SetTaskCurrentTaskAction({
     required this.id,
   });
   @override
   AppState reduce() {
     TaskModel taskModel;
-    if (id.isNotEmpty) {
-      taskModel = state.taskState.taskIList!
-          .firstWhere((element) => element.id == id)
-          .copy();
-    } else {
+    if (id.args[0] == 'add') {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       CollectionReference docRef =
           firebaseFirestore.collection(TaskModel.collection);
       String idNew = docRef.doc().id;
-      taskModel = TaskModel(
-        id: idNew,
-        title: '',
-      );
+      if (id.args[1].isEmpty) {
+        taskModel = TaskModel(
+          id: idNew,
+          title: '',
+        );
+      } else {
+        taskModel = state.taskState.taskIList!
+            .firstWhere((element) => element.id == id.args[1])
+            .copyWith(id: idNew);
+      }
+    } else {
+      taskModel = state.taskState.taskIList!
+          .firstWhere((element) => element.id == id.args[1])
+          .copy();
     }
+    // if (id.isNotEmpty) {
+    //   taskModel = state.taskState.taskIList!
+    //       .firstWhere((element) => element.id == id)
+    //       .copy();
+    // } else {
+    //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    //   CollectionReference docRef =
+    //       firebaseFirestore.collection(TaskModel.collection);
+    //   String idNew = docRef.doc().id;
+    //   taskModel = TaskModel(
+    //     id: idNew,
+    //     title: '',
+    //   );
+    // }
     return state.copyWith(
       taskState: state.taskState.copyWith(
         taskCurrent: taskModel,

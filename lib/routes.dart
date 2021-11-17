@@ -18,6 +18,12 @@ import 'transcription/controller/transcription_edit_connector.dart';
 import 'transcription/controller/transcription_list_archived_connector.dart';
 import 'transcription/controller/transcription_list_connector.dart';
 
+class ArgumentsRoutes {
+  final List<String> args;
+
+  ArgumentsRoutes(this.args);
+}
+
 class Routes {
   static final routes = {
     //login
@@ -37,14 +43,16 @@ class Routes {
     //phrase
     '/phrase_list': (BuildContext context) => const PhraseListConnector(),
     '/phrase_addOrEdit': (BuildContext context) => PhraseAddEditConnector(
-          addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
+          addOrEditId:
+              ModalRoute.of(context)!.settings.arguments as ArgumentsRoutes,
         ),
     '/phrase_archived': (BuildContext context) =>
         const PhraseListArchivedConnector(),
     //task
     '/task_list': (BuildContext context) => const TaskListConnector(),
     '/task_addOrEdit': (BuildContext context) => TaskAddEditConnector(
-          addOrEditId: ModalRoute.of(context)!.settings.arguments.toString(),
+          addOrEditId:
+              ModalRoute.of(context)!.settings.arguments as ArgumentsRoutes,
         ),
     '/task_people_list': (BuildContext context) => TaskPeopleListConnector(
           taskId: ModalRoute.of(context)!.settings.arguments.toString(),

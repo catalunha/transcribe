@@ -31,6 +31,7 @@ class PhraseModel {
   });
 
   PhraseModel copyWith({
+    String? id,
     UserRef? teacher,
     String? group,
     List<String>? phraseList,
@@ -41,7 +42,7 @@ class PhraseModel {
     List<String>? phraseListImage,
   }) {
     return PhraseModel(
-      id: id,
+      id: id ?? this.id,
       teacher: teacher ?? this.teacher,
       group: group ?? this.group,
       phraseList: phraseList ?? this.phraseList,
