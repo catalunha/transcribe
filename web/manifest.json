@@ -1,11 +1,11 @@
 {
-    "name": "transcribe",
-    "short_name": "transcribe",
+    "name": "Transcribing",
+    "short_name": "Transcribing...",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Listen and transcribe sentences.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
