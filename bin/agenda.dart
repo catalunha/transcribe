@@ -1,64 +1,64 @@
+// // import 'dart:convert';
+
+// // import 'package:flutter/foundation.dart';
+
 // import 'dart:convert';
 
-// import 'package:flutter/foundation.dart';
+// import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
-import 'dart:convert';
+// class Agenda {
+//   final String date;
+//   final IList<String> atividades;
+//   Agenda({
+//     required this.date,
+//     required this.atividades,
+//   });
 
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+//   Agenda copyWith({
+//     String? date,
+//     IList<String>? atividades,
+//   }) {
+//     return Agenda(
+//       date: date ?? this.date,
+//       atividades: atividades ?? this.atividades,
+//     );
+//   }
 
-class Agenda {
-  final String date;
-  final IList<String> atividades;
-  Agenda({
-    required this.date,
-    required this.atividades,
-  });
+//   Agenda copy() {
+//     return Agenda.fromJson(toJson());
+//   }
 
-  Agenda copyWith({
-    String? date,
-    IList<String>? atividades,
-  }) {
-    return Agenda(
-      date: date ?? this.date,
-      atividades: atividades ?? this.atividades,
-    );
-  }
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'date': date,
+//       'atividades': atividades.unlock,
+//     };
+//   }
 
-  Agenda copy() {
-    return Agenda.fromJson(toJson());
-  }
+//   factory Agenda.fromMap(Map<String, dynamic> map) {
+//     return Agenda(
+//       date: map['date'],
+//       atividades: IList(map['atividades'].cast<String>()),
+//     );
+//   }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'date': date,
-      'atividades': atividades.unlock,
-    };
-  }
+//   String toJson() => json.encode(toMap());
 
-  factory Agenda.fromMap(Map<String, dynamic> map) {
-    return Agenda(
-      date: map['date'],
-      atividades: IList(map['atividades'].cast<String>()),
-    );
-  }
+//   factory Agenda.fromJson(String source) => Agenda.fromMap(json.decode(source));
 
-  String toJson() => json.encode(toMap());
+//   @override
+//   String toString() => 'Agenda(date: $date, atividades: $atividades)';
 
-  factory Agenda.fromJson(String source) => Agenda.fromMap(json.decode(source));
+//   @override
+//   bool operator ==(Object other) {
+//     if (identical(this, other)) return true;
 
-  @override
-  String toString() => 'Agenda(date: $date, atividades: $atividades)';
+//     return other is Agenda &&
+//         runtimeType == other.runtimeType &&
+//         other.date == date &&
+//         other.atividades == atividades;
+//   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Agenda &&
-        runtimeType == other.runtimeType &&
-        other.date == date &&
-        other.atividades == atividades;
-  }
-
-  @override
-  int get hashCode => date.hashCode ^ atividades.hashCode;
-}
+//   @override
+//   int get hashCode => date.hashCode ^ atividades.hashCode;
+// }
