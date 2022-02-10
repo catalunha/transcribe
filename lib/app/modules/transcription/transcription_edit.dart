@@ -30,20 +30,22 @@ class TranscriptionEdit extends GetView<TranscriptionController> {
             audio(),
             if (controller.model.task.isWritten) ...typing() else ...ordering(),
             Obx(() {
-              return listEquals(controller.model.task.phrase!.phraseList,
-                          controller.model.phraseOrdered) ||
-                      (controller.model.task.phrase!.phraseList.join(' ') ==
-                          controller.model.phraseWritten)
-                  ? const Center(
-                      child: Text(
-                        'Good job. Save now please !',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 30,
-                        ),
-                      ),
-                    )
-                  : Container();
+              return
+                  // listEquals(controller.model.task.phrase!.phraseList,
+                  //             controller.model.phraseOrdered) ||
+                  //         (controller.model.task.phrase!.phraseList.join(' ') ==
+                  //             controller.model.phraseWritten)
+                  controller.model.isSolved
+                      ? const Center(
+                          child: Text(
+                            'Good job. Save now please !',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 30,
+                            ),
+                          ),
+                        )
+                      : Container();
             }),
           ],
         ),
@@ -59,12 +61,15 @@ class TranscriptionEdit extends GetView<TranscriptionController> {
   }
 
   List<Widget> typing() {
+    final myController = TextEditingController();
+    myController.text = 'ss';
     return [
       const Align(
         alignment: Alignment.topLeft,
         child: Text('And type the sentence:'),
       ),
       TextField(
+        controller: myController,
         style: const TextStyle(fontSize: 32),
         onChanged: (value) {
           controller.onChangeModel(phraseWritten: value);

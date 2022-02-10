@@ -73,11 +73,20 @@ class TranscriptionController extends GetxController {
     _model.update((value) {
       if (phraseWritten != null) {
         value!.phraseWritten = phraseWritten;
+        bool writtenSolved = false;
+        writtenSolved =
+            _model.value.task.phrase!.phraseList.join(' ') == phraseWritten;
+
+        onChangeModel(isSolved: writtenSolved);
       }
     });
     _model.update((value) {
       if (phraseOrdered != null) {
         value!.phraseOrdered = phraseOrdered;
+        bool orderedSolved = false;
+        orderedSolved =
+            listEquals(_model.value.task.phrase!.phraseList, phraseOrdered);
+        onChangeModel(isSolved: orderedSolved);
       }
     });
     _model.update((value) {

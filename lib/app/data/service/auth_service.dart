@@ -87,11 +87,11 @@ class AuthService extends GetxService {
   void signInWithGoogle() async {
     try {
       GoogleSignInAccount? googleSignInAccount = await googleSign.signIn();
-
       if (googleSignInAccount != null) {
+        print(
+            'googleSignInAccount.displayName: ${googleSignInAccount.displayName}');
         GoogleSignInAuthentication googleSignInAuthentication =
             await googleSignInAccount.authentication;
-
         AuthCredential credential = GoogleAuthProvider.credential(
           accessToken: googleSignInAuthentication.accessToken,
           idToken: googleSignInAuthentication.idToken,
